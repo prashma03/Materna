@@ -1,0 +1,20 @@
+{
+  "expo": {
+    "name": "Materna",
+    "slug": "materna",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/materna-app-icon.png",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "icon": "./assets/materna-app-icon.png",
+      "supportsTablet": true
+    },
+    "android": {
+      "icon": "./assets/materna-app-icon.png"
+    },
+    "plugins": [
+      "expo-asset"
+    ]
+  }
+}
