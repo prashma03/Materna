@@ -8,7 +8,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import { Sparkles, Sun, Moon, MessageCircle, MapPin, FileText, ShieldAlert } from "lucide-react-native";
+import { Sparkles, Sun, Moon, MessageCircle, MapPin, FileText, ShieldAlert, CheckCircle2, CalendarClock } from "lucide-react-native";
 import { scenarios } from "../data/sampleSensorData";
 import type { RiskLevel } from "../data/sampleSensorData";
 
@@ -16,6 +16,9 @@ type HomeScreenProps = {
   theme: "dark" | "light";
   toggleTheme: () => void;
   onAskMaterna: () => void;
+  onOpenHospitals: () => void;
+  onOpenProfile: () => void;
+  onEmergency: () => void;
   activeScenario: RiskLevel;
   onScenarioChange: (level: RiskLevel) => void;
 };
@@ -24,6 +27,9 @@ export default function HomeScreen({
   theme,
   toggleTheme,
   onAskMaterna,
+  onOpenHospitals,
+  onOpenProfile,
+  onEmergency,
   activeScenario,
   onScenarioChange,
 }: HomeScreenProps) {
@@ -127,30 +133,60 @@ export default function HomeScreen({
             <Text style={styles.primaryActionText}>Ask Materna about symptoms</Text>
           </Pressable>
 
+          <View style={[styles.planCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+            <View style={styles.planHeader}>
+              <CalendarClock size={18} color="#22C55E" />
+              <View style={{ flex: 1 }}>
+                <Text style={[styles.planTitle, { color: colors.text }]}>Today's care plan</Text>
+                <Text style={[styles.planSubtitle, { color: colors.mutedText }]}>
+                  Software check-ins to help identify risk earlier.
+                </Text>
+              </View>
+            </View>
+            {[
+              activeScenario === "Red"
+                ? "Review emergency symptoms and contact care team now"
+                : "Log any new symptoms before the end of the day",
+              "Keep profile and pregnancy history updated",
+              activeScenario === "Green"
+                ? "Know your closest hospital before you need it"
+                : "Confirm the safest hospital route for your current symptoms",
+            ].map((item) => (
+              <View key={item} style={styles.planItem}>
+                <CheckCircle2 size={16} color="#22C55E" />
+                <Text style={[styles.planItemText, { color: colors.softText }]}>{item}</Text>
+              </View>
+            ))}
+          </View>
+
           <Text style={[styles.sectionTitle, { color: colors.text }]}>Care tools</Text>
           <View style={styles.toolGrid}>
             <ToolCard
               icon={MessageCircle}
               title="AI symptom chat"
               body="Describe symptoms and get safe escalation guidance."
+              onPress={onAskMaterna}
               c={colors}
             />
             <ToolCard
               icon={ShieldAlert}
               title="Emergency support"
               body="Use the red button below to notify the linked doctor workflow."
+              onPress={onEmergency}
               c={colors}
             />
             <ToolCard
               icon={MapPin}
               title="Hospital navigation"
               body="Find nearby hospitals, emergency care, and county resources."
+              onPress={onOpenHospitals}
               c={colors}
             />
             <ToolCard
               icon={FileText}
               title="Profile report"
               body="Create a patient-approved profile and PDF summary."
+              onPress={onOpenProfile}
               c={colors}
             />
           </View>
@@ -169,19 +205,24 @@ function ToolCard({
   icon: Icon,
   title,
   body,
+  onPress,
   c,
 }: {
   icon: React.ComponentType<{ size: number; color: string }>;
   title: string;
   body: string;
+  onPress: () => void;
   c: any;
 }) {
   return (
-    <View style={[styles.toolCard, { backgroundColor: c.card, borderColor: c.border }]}>
+    <Pressable
+      onPress={onPress}
+      style={[styles.toolCard, { backgroundColor: c.card, borderColor: c.border }]}
+    >
       <Icon size={18} color="#22C55E" />
       <Text style={[styles.toolTitle, { color: c.text }]}>{title}</Text>
       <Text style={[styles.toolBody, { color: c.mutedText }]}>{body}</Text>
-    </View>
+    </Pressable>
   );
 }
 
@@ -213,6 +254,12 @@ const styles = StyleSheet.create({
   actionText: { fontSize: 13, fontWeight: "700" },
   primaryAction: { flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 8, borderRadius: 12, paddingVertical: 14, marginBottom: 20 },
   primaryActionText: { color: "#ffffff", fontSize: 14, fontWeight: "800" },
+  planCard: { borderWidth: 1, borderRadius: 14, padding: 14, marginBottom: 20 },
+  planHeader: { flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 10 },
+  planTitle: { fontSize: 14, fontWeight: "900" },
+  planSubtitle: { fontSize: 11, marginTop: 2 },
+  planItem: { flexDirection: "row", alignItems: "flex-start", gap: 8, paddingVertical: 7 },
+  planItemText: { flex: 1, fontSize: 12, lineHeight: 17, fontWeight: "600" },
   sectionTitle: { fontSize: 15, fontWeight: "900", marginBottom: 10 },
   toolGrid: { flexDirection: "row", flexWrap: "wrap", gap: 10 },
   toolCard: { width: "48%", minHeight: 132, borderWidth: 1, borderRadius: 12, padding: 12 },

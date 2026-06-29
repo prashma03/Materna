@@ -233,6 +233,9 @@ export default function App() {
               theme={theme}
               toggleTheme={toggleTheme}
               onAskMaterna={() => setShowChat(true)}
+              onOpenHospitals={() => setActiveTab("Hospitals")}
+              onOpenProfile={() => setActiveTab("Profile")}
+              onEmergency={() => setShowEmergency(true)}
               activeScenario={activeScenario}
               onScenarioChange={setActiveScenario}
             />

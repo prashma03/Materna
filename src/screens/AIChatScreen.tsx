@@ -99,6 +99,13 @@ const RESPONSES: { keywords: string[]; reply: string; alert?: boolean }[] = [
 const FALLBACK =
   "I'm here to help with pregnancy questions and symptoms. Could you describe what you're feeling in a bit more detail? For urgent concerns, please contact your doctor or call 911.";
 
+const QUICK_PROMPTS = [
+  "I have chest pain",
+  "My vision is blurry",
+  "My baby is moving less",
+  "I have swelling",
+];
+
 function getResponse(input: string): { reply: string; alert?: boolean } {
   const lower = input.toLowerCase();
   for (const r of RESPONSES) {
@@ -131,8 +138,8 @@ export default function AIChatScreen({
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<ScrollView>(null);
 
-  async function handleSend() {
-    const trimmed = input.trim();
+  async function handleSend(promptText?: string) {
+    const trimmed = (promptText ?? input).trim();
     if (!trimmed || isLoading) return;
 
     const userMsg: Message = {
@@ -244,6 +251,32 @@ export default function AIChatScreen({
         )}
       </ScrollView>
 
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+        contentContainerStyle={[
+          styles.quickPromptRow,
+          { borderTopColor: c.divider, backgroundColor: c.background },
+        ]}
+      >
+        {QUICK_PROMPTS.map((prompt) => (
+          <TouchableOpacity
+            key={prompt}
+            style={[
+              styles.quickPrompt,
+              { borderColor: c.inputBorder, backgroundColor: c.inputBg },
+            ]}
+            onPress={() => handleSend(prompt)}
+            disabled={isLoading}
+          >
+            <Text style={[styles.quickPromptText, { color: c.text }]}>
+              {prompt}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
+
       <View
         style={[
           styles.inputRow,
@@ -257,7 +290,7 @@ export default function AIChatScreen({
           placeholder="Describe a symptom or ask a question..."
           placeholderTextColor={c.placeholder}
           returnKeyType="send"
-          onSubmitEditing={handleSend}
+          onSubmitEditing={() => handleSend()}
           onFocus={() => setTimeout(() => scrollRef.current?.scrollToEnd({ animated: true }), 120)}
           multiline
         />
@@ -269,7 +302,7 @@ export default function AIChatScreen({
                 input.trim() && !isLoading ? c.accent : c.inputBorder,
             },
           ]}
-          onPress={handleSend}
+          onPress={() => handleSend()}
           disabled={!input.trim() || isLoading}
         >
           <Text style={styles.sendBtnText}>↑</Text>
@@ -324,6 +357,21 @@ const styles = StyleSheet.create({
   botBubble: { alignSelf: "flex-start", borderBottomLeftRadius: 4 },
   senderLabel: { fontSize: 10, fontWeight: "700", letterSpacing: 1, marginBottom: 4 },
   bubbleText: { fontSize: 15, lineHeight: 22 },
+  quickPromptRow: {
+    borderTopWidth: 1,
+    paddingHorizontal: 12,
+    paddingTop: 10,
+    paddingBottom: 2,
+    gap: 8,
+  },
+  quickPrompt: {
+    borderWidth: 1,
+    borderRadius: 999,
+    paddingHorizontal: 12,
+    paddingVertical: 7,
+    marginRight: 8,
+  },
+  quickPromptText: { fontSize: 12, fontWeight: "700" },
   inputRow: {
     flexDirection: "row",
     alignItems: "flex-end",
@@ -351,3 +399,4 @@ const styles = StyleSheet.create({
   },
   sendBtnText: { color: "#fff", fontSize: 18, fontWeight: "700" },
 });
+
