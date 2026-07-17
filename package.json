@@ -1,38 +1,38 @@
 {
-    "name":  "materna",
-    "version":  "1.0.0",
-    "main":  "index.js",
-    "scripts":  {
-                    "start":  "expo start",
-                    "web":  "expo start --web",
-                    "android":  "expo start --android",
-                    "ios":  "expo start --ios"
-                },
-    "dependencies":  {
-                         "@expo/metro-runtime":  "~6.1.2",
-                         "@react-native-async-storage/async-storage":  "2.2.0",
-                         "cors":  "^2.8.6",
-                         "expo":  "~54.0.35",
-                         "expo-asset":  "~12.0.13",
-                         "expo-file-system":  "~19.0.23",
-                         "expo-linking":  "~8.0.12",
-                         "expo-location":  "~19.0.8",
-                         "expo-print":  "~15.0.8",
-                         "expo-sharing":  "~14.0.8",
-                         "express":  "^5.2.1",
-                         "lucide-react-native":  "^1.17.0",
-                         "memoize-one":  "^6.0.0",
-                         "react":  "19.1.0",
-                         "react-dom":  "19.1.0",
-                         "react-native":  "0.81.5",
-                         "react-native-maps":  "1.20.1",
-                         "react-native-svg":  "15.12.1",
-                         "react-native-web":  "^0.21.0"
-                     },
-    "devDependencies":  {
-                            "@babel/core":  "^7.20.0",
-                            "@types/react":  "~19.1.10",
-                            "typescript":  "~5.9.2"
-                        },
-    "private":  true
+    "name": "materna",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "start": "expo start",
+        "web": "expo start --web",
+        "android": "expo start --android",
+        "ios": "expo start --ios"
+    },
+    "dependencies": {
+        "@expo/metro-runtime": "~6.1.2",
+        "@react-native-async-storage/async-storage": "2.2.0",
+        "cors": "^2.8.6",
+        "expo": "~54.0.36",
+        "expo-asset": "~12.0.13",
+        "expo-file-system": "~19.0.23",
+        "expo-linking": "~8.0.12",
+        "expo-location": "~19.0.8",
+        "expo-print": "~15.0.8",
+        "expo-sharing": "~14.0.8",
+        "express": "^5.2.1",
+        "lucide-react-native": "^1.17.0",
+        "memoize-one": "^6.0.0",
+        "react": "19.1.0",
+        "react-dom": "19.1.0",
+        "react-native": "0.81.5",
+        "react-native-maps": "1.20.1",
+        "react-native-svg": "15.12.1",
+        "react-native-web": "^0.21.0"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.20.0",
+        "@types/react": "~19.1.10",
+        "typescript": "~5.9.2"
+    },
+    "private": true
 }
