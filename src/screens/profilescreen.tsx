@@ -7,14 +7,30 @@ import {
   Platform,
   Pressable,
   ScrollView,
+  SafeAreaView,
   StyleSheet,
   Switch,
   Text,
   TextInput,
   TouchableOpacity,
+  useWindowDimensions,
   View,
 } from "react-native";
-import { FileText, Save } from "lucide-react-native";
+import {
+  Bell,
+  CalendarDays,
+  ChevronRight,
+  FileText,
+  HeartPulse,
+  Home,
+  Hospital,
+  Info,
+  LogOut,
+  MessageCircle,
+  Save,
+  Settings,
+  UserRound,
+} from "lucide-react-native";
 import {
   EMPTY_PROFILE,
   ProfileData,
@@ -32,8 +48,10 @@ interface Props {
 }
 
 export default function ProfileScreen({ theme }: Props) {
+  const { width } = useWindowDimensions();
   const dark = theme === "dark";
   const c = dark ? colors.dark : colors.light;
+  const isDesktop = Platform.OS === "web" && width >= 1000;
   const [profile, setProfile] = useState<ProfileData>(EMPTY_PROFILE);
   const [loading, setLoading] = useState(true);
   const [saved, setSaved] = useState(false);
@@ -163,6 +181,20 @@ export default function ProfileScreen({ theme }: Props) {
     );
   }
 
+  if (isDesktop) {
+    return (
+      <DesktopProfileScreen
+        profile={profile}
+        update={update}
+        handleSave={handleSave}
+        handleReport={handleReport}
+        saved={saved}
+        generatingReport={generatingReport}
+        reportStatus={reportStatus}
+      />
+    );
+  }
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1, backgroundColor: c.background }}
@@ -279,6 +311,414 @@ export default function ProfileScreen({ theme }: Props) {
 
 function SectionHeader({ label, color }: { label: string; color: string }) {
   return <Text style={[styles.sectionHeader, { color }]}>{label.toUpperCase()}</Text>;
+}
+
+function DesktopProfileScreen({
+  profile,
+  update,
+  handleSave,
+  handleReport,
+  saved,
+  generatingReport,
+  reportStatus,
+}: {
+  profile: ProfileData;
+  update: <K extends keyof ProfileData>(key: K, value: ProfileData[K]) => void;
+  handleSave: () => void;
+  handleReport: () => void;
+  saved: boolean;
+  generatingReport: boolean;
+  reportStatus: string;
+}) {
+  const [dobMonth, dobDay, dobYear] = splitDesktopDob(profile.dateOfBirth);
+
+  function updateDob(part: "month" | "day" | "year", value: string) {
+    const next = {
+      month: dobMonth,
+      day: dobDay,
+      year: dobYear,
+      [part]: value,
+    };
+    const monthNumber = getDesktopMonthNumber(next.month);
+    update(
+      "dateOfBirth",
+      `${String(monthNumber || 1).padStart(2, "0")}/${String(
+        Number(next.day) || 1
+      ).padStart(2, "0")}/${next.year || new Date().getFullYear() - 25}`
+    );
+  }
+
+  return (
+    <SafeAreaView style={desktopProfile.safeArea}>
+      <View style={desktopProfile.shell}>
+        <View style={desktopProfile.sidebar}>
+          <View style={desktopProfile.brandBlock}>
+            <View style={desktopProfile.brandMark}>
+              <Text style={desktopProfile.brandMarkText}>M</Text>
+            </View>
+            <View>
+              <Text style={desktopProfile.brandName}>MATERNA</Text>
+              <Text style={desktopProfile.brandTagline}>Care for you. Care for two.</Text>
+            </View>
+          </View>
+
+          <View style={desktopProfile.navList}>
+            {[
+              { label: "Today", icon: Home },
+              { label: "Hospitals", icon: Hospital },
+              { label: "Profile", icon: UserRound, active: true },
+              { label: "Settings", icon: Settings },
+            ].map((item) => {
+              const Icon = item.icon;
+              return (
+                <View
+                  key={item.label}
+                  style={[desktopProfile.navItem, item.active && desktopProfile.navItemActive]}
+                >
+                  <Icon size={22} color={item.active ? "#6D4AFF" : "#64748B"} />
+                  <Text
+                    style={[
+                      desktopProfile.navLabel,
+                      item.active && desktopProfile.navLabelActive,
+                    ]}
+                  >
+                    {item.label}
+                  </Text>
+                  {item.active ? <View style={desktopProfile.navDot} /> : null}
+                </View>
+              );
+            })}
+          </View>
+
+          <View style={desktopProfile.helpCard}>
+            <View style={desktopProfile.helpIcon}>
+              <HeartPulse size={26} color="#8B5CF6" />
+            </View>
+            <Text style={desktopProfile.helpTitle}>Need help?</Text>
+            <Text style={desktopProfile.helpSubtitle}>AI symptom chat</Text>
+            <Text style={desktopProfile.helpBody}>Get quick guidance anytime.</Text>
+            <Pressable style={desktopProfile.helpButton}>
+              <Text style={desktopProfile.helpButtonText}>Start chat</Text>
+              <ChevronRight size={17} color="#6D4AFF" />
+            </Pressable>
+          </View>
+
+          <View style={desktopProfile.profileMini}>
+            <View style={desktopProfile.profileInitials}>
+              <Text style={desktopProfile.profileInitialsText}>
+                {getInitials(profile.fullName || "Clara May")}
+              </Text>
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text style={desktopProfile.profileMiniName}>
+                {profile.fullName || "Clara May"}
+              </Text>
+              <Text style={desktopProfile.profileMiniMeta}>
+                {profile.pregnancyWeek || "23"} weeks pregnant
+              </Text>
+              <Text style={desktopProfile.profileMiniLink}>View profile</Text>
+            </View>
+            <ChevronRight size={17} color="#6D4AFF" />
+          </View>
+
+          <View style={desktopProfile.logoutRow}>
+            <LogOut size={20} color="#64748B" />
+            <Text style={desktopProfile.logoutText}>Log out</Text>
+          </View>
+        </View>
+
+        <ScrollView
+          style={desktopProfile.workspace}
+          contentContainerStyle={desktopProfile.workspaceContent}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={desktopProfile.card}>
+            <View style={desktopProfile.cardHeader}>
+              <View>
+                <Text style={desktopProfile.pageTitle}>My Profile</Text>
+                <Text style={desktopProfile.pageSubtitle}>
+                  Your information helps us personalize your care and alerts.
+                </Text>
+              </View>
+              <View style={desktopProfile.headerArt}>
+                <View style={desktopProfile.clipboard}>
+                  <View style={desktopProfile.clipTop} />
+                  <UserRound size={42} color="#8B5CF6" />
+                  <View style={desktopProfile.clipLine} />
+                  <View style={[desktopProfile.clipLine, { width: 68 }]} />
+                  <View style={[desktopProfile.clipLine, { width: 54 }]} />
+                </View>
+              </View>
+            </View>
+
+            <DesktopSectionTitle icon={UserRound} label="Personal" />
+            <DesktopField
+              label="Full name *"
+              value={profile.fullName}
+              onChangeText={(value) => update("fullName", value)}
+              placeholder="Clara May"
+            />
+
+            <View style={desktopProfile.twoColRow}>
+              <View style={desktopProfile.halfCol}>
+                <Text style={desktopProfile.desktopLabel}>Date of birth *</Text>
+                <View style={desktopProfile.dateInputs}>
+                  <DesktopField
+                    label=""
+                    sublabel="Month"
+                    value={dobMonth}
+                    onChangeText={(value) => updateDob("month", value)}
+                    placeholder="Jan"
+                    style={desktopProfile.dateInput}
+                  />
+                  <DesktopField
+                    label=""
+                    sublabel="Day"
+                    value={dobDay}
+                    onChangeText={(value) => updateDob("day", value)}
+                    placeholder="5"
+                    keyboardType="numeric"
+                    style={desktopProfile.dateInput}
+                  />
+                  <DesktopField
+                    label=""
+                    sublabel="Year"
+                    value={dobYear}
+                    onChangeText={(value) => updateDob("year", value)}
+                    placeholder="2001"
+                    keyboardType="numeric"
+                    style={desktopProfile.dateInput}
+                  />
+                </View>
+              </View>
+              <DesktopField
+                label="Country *"
+                value="United States"
+                onChangeText={() => undefined}
+                editable={false}
+                style={desktopProfile.halfCol}
+              />
+            </View>
+
+            <View style={desktopProfile.twoColRow}>
+              <DesktopField
+                label="Age *"
+                value={profile.age}
+                onChangeText={(value) => update("age", value)}
+                placeholder="23"
+                keyboardType="numeric"
+                style={desktopProfile.halfCol}
+              />
+              <DesktopField
+                label="Pregnancy week *"
+                value={profile.pregnancyWeek}
+                onChangeText={(value) => update("pregnancyWeek", value)}
+                placeholder="25"
+                keyboardType="numeric"
+                style={desktopProfile.halfCol}
+              />
+            </View>
+
+            <View style={desktopProfile.fourColRow}>
+              <DesktopField label="Weight (lbs)" value={profile.weightLbs} onChangeText={(value) => update("weightLbs", value)} placeholder="130" keyboardType="numeric" style={desktopProfile.quarterCol} />
+              <DesktopField label="Height (ft)" value={profile.heightFt} onChangeText={(value) => update("heightFt", value)} placeholder="5" keyboardType="numeric" style={desktopProfile.quarterCol} />
+              <DesktopField label="Height (in)" value={profile.heightIn} onChangeText={(value) => update("heightIn", value)} placeholder="4" keyboardType="numeric" style={desktopProfile.quarterCol} />
+              <DesktopField label="Previous pregnancies" value={profile.previousPregnancies} onChangeText={(value) => update("previousPregnancies", value)} placeholder="3" keyboardType="numeric" style={desktopProfile.quarterCol} />
+            </View>
+
+            <DesktopSectionTitle icon={HeartPulse} label="Medical History" />
+            <View style={desktopProfile.medicalGrid}>
+              <DesktopToggle label="History of miscarriage" value={profile.hasMiscarriage} onToggle={(value) => update("hasMiscarriage", value)} />
+              <DesktopToggle label="Anemia" value={profile.hasAnemia} onToggle={(value) => update("hasAnemia", value)} />
+              <DesktopToggle label="High blood pressure" value={profile.hasHighBP} onToggle={(value) => update("hasHighBP", value)} />
+              <DesktopToggle label="Previous C-section" value={profile.hasCSection} onToggle={(value) => update("hasCSection", value)} />
+              <DesktopToggle label="Diabetes" value={profile.hasDiabetes} onToggle={(value) => update("hasDiabetes", value)} />
+              <View style={desktopProfile.otherRow}>
+                <Text style={desktopProfile.toggleText}>Other medical conditions</Text>
+                <Info size={14} color="#94A3B8" />
+                <ChevronRight size={20} color="#64748B" />
+              </View>
+            </View>
+
+            <View style={desktopProfile.twoColRow}>
+              <DesktopField
+                label="County"
+                value={profile.county}
+                onChangeText={(value) => update("county", value)}
+                placeholder="Desha"
+                style={desktopProfile.halfCol}
+              />
+              <DesktopField
+                label="Emergency contact *"
+                value={profile.emergencyContact}
+                onChangeText={(value) => update("emergencyContact", value)}
+                placeholder="Name and phone"
+                style={desktopProfile.halfCol}
+              />
+            </View>
+
+            <View style={desktopProfile.actionRow}>
+              <DesktopToggle
+                label="Share with linked doctor"
+                value={profile.shareWithDoctor}
+                onToggle={(value) => update("shareWithDoctor", value)}
+                compact
+              />
+              <Pressable style={desktopProfile.saveButton} onPress={handleSave}>
+                <Save size={17} color="#FFFFFF" />
+                <Text style={desktopProfile.saveButtonText}>
+                  {saved ? "Profile saved" : "Save changes"}
+                </Text>
+              </Pressable>
+              <Pressable
+                style={desktopProfile.reportButton}
+                onPress={handleReport}
+                disabled={generatingReport}
+              >
+                {generatingReport ? (
+                  <ActivityIndicator size="small" color="#6D4AFF" />
+                ) : (
+                  <FileText size={17} color="#6D4AFF" />
+                )}
+                <Text style={desktopProfile.reportButtonText}>
+                  {generatingReport ? "Creating report..." : "Create PDF"}
+                </Text>
+              </Pressable>
+            </View>
+            {reportStatus ? <Text style={desktopProfile.reportStatus}>{reportStatus}</Text> : null}
+          </View>
+        </ScrollView>
+
+        <View style={desktopProfile.bottomNav}>
+          {[
+            { label: "Today", icon: CalendarDays },
+            { label: "Alerts", icon: Bell, alert: true },
+            { label: "Hospitals", icon: Hospital },
+            { label: "Profile", icon: UserRound, active: true },
+          ].map((item) => {
+            const Icon = item.icon;
+            const color = item.active ? "#22C55E" : item.alert ? "#FB7185" : "#64748B";
+            return (
+              <View key={item.label} style={desktopProfile.bottomItem}>
+                <View style={item.alert ? desktopProfile.alertBubble : undefined}>
+                  <Icon size={24} color={color} />
+                </View>
+                <Text
+                  style={[
+                    desktopProfile.bottomLabel,
+                    item.active && desktopProfile.bottomLabelActive,
+                    item.alert && desktopProfile.bottomLabelAlert,
+                  ]}
+                >
+                  {item.label}
+                </Text>
+              </View>
+            );
+          })}
+        </View>
+      </View>
+    </SafeAreaView>
+  );
+}
+
+function DesktopSectionTitle({ icon: Icon, label }: { icon: React.ComponentType<any>; label: string }) {
+  return (
+    <View style={desktopProfile.sectionTitleRow}>
+      <Icon size={25} color="#6D4AFF" />
+      <Text style={desktopProfile.sectionTitle}>{label.toUpperCase()}</Text>
+      <View style={desktopProfile.sectionRule} />
+    </View>
+  );
+}
+
+function DesktopField({
+  label,
+  sublabel,
+  value,
+  onChangeText,
+  placeholder,
+  keyboardType = "default",
+  editable = true,
+  style,
+}: {
+  label: string;
+  sublabel?: string;
+  value: string;
+  onChangeText: (value: string) => void;
+  placeholder?: string;
+  keyboardType?: "default" | "numeric" | "phone-pad" | "email-address";
+  editable?: boolean;
+  style?: object;
+}) {
+  return (
+    <View style={[desktopProfile.fieldWrap, style]}>
+      {label ? <Text style={desktopProfile.desktopLabel}>{label}</Text> : null}
+      <TextInput
+        style={[desktopProfile.desktopInput, !editable && desktopProfile.disabledInput]}
+        value={value}
+        onChangeText={onChangeText}
+        placeholder={placeholder}
+        placeholderTextColor="#94A3B8"
+        keyboardType={keyboardType}
+        editable={editable}
+      />
+      {sublabel ? <Text style={desktopProfile.sublabel}>{sublabel}</Text> : null}
+    </View>
+  );
+}
+
+function DesktopToggle({
+  label,
+  value,
+  onToggle,
+  compact = false,
+}: {
+  label: string;
+  value: boolean;
+  onToggle: (value: boolean) => void;
+  compact?: boolean;
+}) {
+  return (
+    <View style={[desktopProfile.toggleRow, compact && desktopProfile.toggleCompact]}>
+      <View style={desktopProfile.toggleLabelRow}>
+        <Text style={desktopProfile.toggleText}>{label}</Text>
+        <Info size={14} color="#94A3B8" />
+      </View>
+      <Switch
+        value={value}
+        onValueChange={onToggle}
+        trackColor={{ false: "#CBD5E1", true: "#6D4AFF" }}
+        thumbColor="#FFFFFF"
+      />
+    </View>
+  );
+}
+
+function splitDesktopDob(value: string) {
+  const [month, day, year] = value.split("/");
+  if (!month && !day && !year) return ["", "", ""];
+  const monthLabel = MONTHS[Number(month) - 1] || month || "";
+  return [monthLabel, day ? String(Number(day)) : "", year || ""];
+}
+
+function getDesktopMonthNumber(value: string) {
+  const numeric = Number(value);
+  if (numeric >= 1 && numeric <= 12) return numeric;
+  const index = MONTHS.findIndex(
+    (month) => month.toLowerCase() === value.trim().slice(0, 3).toLowerCase()
+  );
+  return index >= 0 ? index + 1 : 0;
+}
+
+function getInitials(name: string) {
+  return name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join("")
+    .toUpperCase();
 }
 
 function isCompleteDateOfBirth(value: string) {
@@ -483,6 +923,260 @@ function getColors(mode: "dark" | "light") {
 }
 
 const colors = { dark: getColors("dark"), light: getColors("light") };
+
+const desktopProfile = StyleSheet.create({
+  safeArea: { flex: 1, backgroundColor: "#F8FAFC" },
+  shell: { flex: 1, flexDirection: "row", backgroundColor: "#F8FAFC" },
+  sidebar: {
+    width: 296,
+    borderRightWidth: 1,
+    borderRightColor: "#E5E7EB",
+    backgroundColor: "#FFFFFF",
+    paddingHorizontal: 16,
+    paddingTop: 26,
+    paddingBottom: 74,
+  },
+  brandBlock: { flexDirection: "row", alignItems: "center", gap: 14, marginBottom: 48 },
+  brandMark: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#7C5CFF",
+  },
+  brandMarkText: { color: "#FFFFFF", fontSize: 24, fontWeight: "900" },
+  brandName: { color: "#6D4AFF", fontSize: 27, fontWeight: "900", letterSpacing: 6 },
+  brandTagline: { color: "#64748B", fontSize: 12, marginTop: 8 },
+  navList: { gap: 14, flex: 1 },
+  navItem: {
+    minHeight: 52,
+    borderRadius: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 16,
+    paddingHorizontal: 20,
+  },
+  navItemActive: { backgroundColor: "#F1ECFF" },
+  navLabel: { color: "#475569", fontSize: 16, fontWeight: "700", flex: 1 },
+  navLabelActive: { color: "#6D4AFF", fontWeight: "900" },
+  navDot: { width: 7, height: 7, borderRadius: 4, backgroundColor: "#6D4AFF" },
+  helpCard: {
+    borderWidth: 1,
+    borderColor: "#D8CCFF",
+    borderRadius: 10,
+    backgroundColor: "#FBF8FF",
+    padding: 18,
+    marginBottom: 24,
+  },
+  helpIcon: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: "#EFE8FF",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 16,
+  },
+  helpTitle: { color: "#0F172A", fontSize: 17, fontWeight: "900", marginBottom: 8 },
+  helpSubtitle: { color: "#0F172A", fontSize: 14, fontWeight: "900", marginBottom: 8 },
+  helpBody: { color: "#64748B", fontSize: 13, lineHeight: 20, marginBottom: 18 },
+  helpButton: {
+    height: 40,
+    borderWidth: 1,
+    borderColor: "#7C5CFF",
+    borderRadius: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 10,
+  },
+  helpButtonText: { color: "#6D4AFF", fontSize: 13, fontWeight: "900" },
+  profileMini: {
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: "#E5E7EB",
+    paddingVertical: 20,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
+  profileInitials: {
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    backgroundColor: "#EDE7FF",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  profileInitialsText: { color: "#6D4AFF", fontSize: 16, fontWeight: "900" },
+  profileMiniName: { color: "#0F172A", fontSize: 14, fontWeight: "900" },
+  profileMiniMeta: { color: "#64748B", fontSize: 11, marginTop: 6 },
+  profileMiniLink: { color: "#6D4AFF", fontSize: 12, fontWeight: "800", marginTop: 10 },
+  logoutRow: { height: 54, flexDirection: "row", alignItems: "center", gap: 14, paddingHorizontal: 10 },
+  logoutText: { color: "#64748B", fontSize: 14, fontWeight: "700" },
+  workspace: { flex: 1 },
+  workspaceContent: { paddingHorizontal: 54, paddingTop: 42, paddingBottom: 110 },
+  card: {
+    borderWidth: 1,
+    borderColor: "#E2E8F0",
+    borderRadius: 10,
+    backgroundColor: "#FFFFFF",
+    paddingHorizontal: 28,
+    paddingTop: 32,
+    paddingBottom: 34,
+    shadowColor: "#64748B",
+    shadowOpacity: 0.12,
+    shadowRadius: 24,
+  },
+  cardHeader: {
+    minHeight: 160,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+  },
+  pageTitle: { color: "#07153A", fontSize: 30, fontWeight: "900" },
+  pageSubtitle: { color: "#64748B", fontSize: 15, marginTop: 12 },
+  headerArt: {
+    width: 250,
+    height: 160,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#F3EDFF",
+    borderRadius: 90,
+    opacity: 0.9,
+  },
+  clipboard: {
+    width: 100,
+    height: 132,
+    borderWidth: 6,
+    borderColor: "#8B5CF6",
+    borderRadius: 8,
+    alignItems: "center",
+    paddingTop: 28,
+    backgroundColor: "#FFFFFFAA",
+  },
+  clipTop: {
+    position: "absolute",
+    top: -15,
+    width: 44,
+    height: 24,
+    borderRadius: 8,
+    backgroundColor: "#8B5CF6",
+  },
+  clipLine: { width: 58, height: 4, borderRadius: 2, backgroundColor: "#C4B5FD", marginTop: 12 },
+  sectionTitleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 14,
+    marginTop: 18,
+    marginBottom: 22,
+  },
+  sectionTitle: { color: "#6D4AFF", fontSize: 14, fontWeight: "900", letterSpacing: 0.5 },
+  sectionRule: { flex: 1, height: 1, backgroundColor: "#CBD5E1" },
+  fieldWrap: { marginBottom: 18 },
+  desktopLabel: { color: "#475569", fontSize: 13, fontWeight: "800", marginBottom: 8 },
+  desktopInput: {
+    minHeight: 44,
+    borderWidth: 1,
+    borderColor: "#CBD5E1",
+    borderRadius: 8,
+    paddingHorizontal: 14,
+    color: "#0F172A",
+    fontSize: 14,
+    backgroundColor: "#FFFFFF",
+  },
+  disabledInput: { color: "#0F172A", backgroundColor: "#FBFCFE" },
+  sublabel: { color: "#64748B", fontSize: 11, marginTop: 8, marginLeft: 10 },
+  twoColRow: { flexDirection: "row", gap: 38, alignItems: "flex-start" },
+  halfCol: { flex: 1 },
+  dateInputs: { flexDirection: "row", gap: 18 },
+  dateInput: { flex: 1 },
+  fourColRow: { flexDirection: "row", gap: 24, alignItems: "flex-start" },
+  quarterCol: { flex: 1 },
+  medicalGrid: { flexDirection: "row", flexWrap: "wrap", columnGap: 62 },
+  toggleRow: {
+    width: "47%",
+    minHeight: 52,
+    borderBottomWidth: 1,
+    borderBottomColor: "#E2E8F0",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 18,
+  },
+  toggleCompact: { width: 280, borderBottomWidth: 0 },
+  toggleLabelRow: { flexDirection: "row", alignItems: "center", gap: 8, flex: 1 },
+  toggleText: { color: "#475569", fontSize: 14, fontWeight: "600" },
+  otherRow: {
+    width: "47%",
+    minHeight: 52,
+    borderBottomWidth: 1,
+    borderBottomColor: "#E2E8F0",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  actionRow: {
+    borderTopWidth: 1,
+    borderTopColor: "#E2E8F0",
+    marginTop: 18,
+    paddingTop: 22,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    gap: 14,
+  },
+  saveButton: {
+    minHeight: 42,
+    borderRadius: 8,
+    paddingHorizontal: 18,
+    backgroundColor: "#6D4AFF",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 9,
+  },
+  saveButtonText: { color: "#FFFFFF", fontSize: 13, fontWeight: "900" },
+  reportButton: {
+    minHeight: 42,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#6D4AFF",
+    paddingHorizontal: 18,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 9,
+  },
+  reportButtonText: { color: "#6D4AFF", fontSize: 13, fontWeight: "900" },
+  reportStatus: { color: "#64748B", fontSize: 12, textAlign: "right", marginTop: 12 },
+  bottomNav: {
+    position: "absolute",
+    left: 296,
+    right: 0,
+    bottom: 0,
+    height: 76,
+    borderTopWidth: 1,
+    borderTopColor: "#E2E8F0",
+    backgroundColor: "#FFFFFFF2",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 86,
+  },
+  bottomItem: { alignItems: "center", justifyContent: "center", gap: 5, minWidth: 70 },
+  bottomLabel: { color: "#64748B", fontSize: 12, fontWeight: "800" },
+  bottomLabelActive: { color: "#22C55E" },
+  bottomLabelAlert: { color: "#FB7185" },
+  alertBubble: {
+    width: 42,
+    height: 42,
+    borderRadius: 21,
+    backgroundColor: "#FEE2E2",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: -2,
+  },
+});
 
 const styles = StyleSheet.create({
   loading: { flex: 1, alignItems: "center", justifyContent: "center", gap: 10 },

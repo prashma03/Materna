@@ -113,6 +113,7 @@ export default function App() {
   const inactiveColor = dark ? "#4a4f66" : "#9ca3af";
   const screenBg = dark ? "#05070A" : "#F8FAFC";
   const isDesktopPatient = Platform.OS === "web" && width >= 1000;
+  const isDesktopDoctor = Platform.OS === "web" && width >= 1000;
   const isDesktopLogin = Platform.OS === "web" && width >= 900;
 
   // ── LOGIN SCREEN ──────────────────────────────────────────
@@ -202,7 +203,7 @@ export default function App() {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: "#05070A" }}>
         <View style={{ flex: 1, alignItems: "center" }}>
-          <View style={{ width: "100%", maxWidth: 430, flex: 1 }}>
+          <View style={{ width: "100%", maxWidth: isDesktopDoctor ? 1600 : 430, flex: 1 }}>
             <DoctorWorkspace
               theme={theme}
               onLogout={() => setUserType(null)}
@@ -233,7 +234,7 @@ export default function App() {
   if (showEmergency) {
     return (
       <View style={{ flex: 1, backgroundColor: "#0a0a0f", alignItems: "center" }}>
-        <View style={{ width: "100%", maxWidth: 430, flex: 1 }}>
+        <View style={{ width: "100%", maxWidth: isDesktopPatient ? 1600 : 430, flex: 1 }}>
           <EmergencyScreen theme={theme} onClose={() => setShowEmergency(false)} />
         </View>
       </View>
@@ -484,7 +485,7 @@ function DesktopRoleCard({
       accessibilityLabel={title}
     >
       <View style={[desktopLogin.roleIcon, { backgroundColor: `${accent}1F` }]}>
-        <Icon size={62} color={accent} strokeWidth={1.8} />
+        <Icon size={52} color={accent} strokeWidth={1.8} />
       </View>
       <View style={desktopLogin.roleCopy}>
         <Text style={[desktopLogin.roleTitle, { color: accent }]}>{title}</Text>
@@ -511,7 +512,7 @@ const desktopLogin = StyleSheet.create({
     paddingVertical: 30,
     alignItems: "center",
   },
-  content: { width: "100%", maxWidth: 1660 },
+  content: { width: "100%", maxWidth: 1560 },
   heroRow: {
     minHeight: 190,
     flexDirection: "row",
@@ -589,7 +590,7 @@ const desktopLogin = StyleSheet.create({
   starOne: { position: "absolute", top: 18, left: 86, width: 4, height: 4, borderRadius: 2, backgroundColor: "#FEF08A" },
   starTwo: { position: "absolute", top: 80, right: 32, width: 5, height: 5, borderRadius: 3, backgroundColor: "#FEF08A" },
   starThree: { position: "absolute", top: 40, right: 118, width: 3, height: 3, borderRadius: 2, backgroundColor: "#FEF08A" },
-  sectionHeader: { flexDirection: "row", alignItems: "center", gap: 14, marginTop: 28, marginBottom: 22 },
+  sectionHeader: { flexDirection: "row", alignItems: "center", gap: 14, marginTop: 18, marginBottom: 18 },
   headerIcon: {
     width: 38,
     height: 38,
@@ -601,30 +602,30 @@ const desktopLogin = StyleSheet.create({
   sectionTitle: { color: "#4ADE80", fontSize: 21, fontWeight: "900", letterSpacing: 4 },
   headerLine: { flex: 1, height: 1, backgroundColor: "#1F2937" },
   roleCard: {
-    minHeight: 132,
+    height: 126,
     borderWidth: 1.5,
     borderRadius: 22,
     marginBottom: 12,
     overflow: "hidden",
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 36,
+    paddingHorizontal: 30,
     position: "relative",
   },
   roleIcon: {
-    width: 92,
-    height: 92,
-    borderRadius: 46,
+    width: 80,
+    height: 80,
+    borderRadius: 40,
     alignItems: "center",
     justifyContent: "center",
     marginRight: 36,
   },
-  roleCopy: { width: 440, zIndex: 2 },
-  roleTitle: { fontSize: 28, fontWeight: "900", marginBottom: 12 },
-  roleBody: { color: "#CBD5E1", fontSize: 20, lineHeight: 28 },
+  roleCopy: { width: 470, zIndex: 2 },
+  roleTitle: { fontSize: 27, fontWeight: "900", marginBottom: 10 },
+  roleBody: { color: "#CBD5E1", fontSize: 19, lineHeight: 26 },
   roleArt: {
     position: "absolute",
-    right: 170,
+    right: 150,
     height: "100%",
     width: 360,
     alignItems: "center",
@@ -644,30 +645,30 @@ const desktopLogin = StyleSheet.create({
     backgroundColor: "#02070D66",
   },
   featureStrip: {
-    minHeight: 116,
-    marginTop: 20,
+    minHeight: 104,
+    marginTop: 16,
     borderWidth: 1,
     borderColor: "#1F2937",
     borderRadius: 22,
     backgroundColor: "#071019",
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 34,
+    paddingHorizontal: 28,
     overflow: "hidden",
   },
   featureItem: { flex: 1, flexDirection: "row", alignItems: "center", gap: 18, zIndex: 2 },
   featureIcon: {
-    width: 58,
-    height: 58,
-    borderRadius: 29,
+    width: 54,
+    height: 54,
+    borderRadius: 27,
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
     borderColor: "#1E7A3A",
     backgroundColor: "#0B2718",
   },
-  featureTitle: { color: "#F8FAFC", fontSize: 15, fontWeight: "900", marginBottom: 8 },
-  featureBody: { color: "#CBD5E1", fontSize: 14, lineHeight: 21, maxWidth: 230 },
+  featureTitle: { color: "#F8FAFC", fontSize: 14, fontWeight: "900", marginBottom: 6 },
+  featureBody: { color: "#CBD5E1", fontSize: 13, lineHeight: 19, maxWidth: 220 },
   ruralLine: {
     position: "absolute",
     right: 0,
@@ -699,7 +700,7 @@ const desktopLogin = StyleSheet.create({
     borderColor: "#1F6B39",
     borderRadius: 130,
   },
-  footer: { color: "#64748B", textAlign: "center", fontSize: 15, marginTop: 30 },
+  footer: { color: "#64748B", textAlign: "center", fontSize: 14, marginTop: 16 },
 });
 
 const styles = StyleSheet.create({

@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
+  Platform,
+  Pressable,
   View,
   Text,
   StyleSheet,
@@ -9,7 +11,26 @@ import {
   Linking,
   Animated,
   Alert,
+  useWindowDimensions,
 } from "react-native";
+import {
+  AlertTriangle,
+  ArrowLeft,
+  Building2,
+  CalendarDays,
+  ClipboardList,
+  FileText,
+  Heart,
+  HeartPulse,
+  Home,
+  Hospital,
+  LogOut,
+  MessageCircle,
+  Phone,
+  Settings,
+  ShieldCheck,
+  Siren,
+} from "lucide-react-native";
 import { sendEmergencyAlert } from "../api/maternaAPI";
 import { sampleSensorData } from "../data/sampleSensorData";
 import { loadProfile } from "../storage/profileStorage";
@@ -38,8 +59,10 @@ const AMBULANCE = {
 };
 
 export default function EmergencyScreen({ theme, onClose }: Props) {
+  const { width } = useWindowDimensions();
   const dark = theme === "dark";
   const c = dark ? colors.dark : colors.light;
+  const isDesktop = Platform.OS === "web" && width >= 1000;
 
   const [phase, setPhase] = useState<"idle" | "activating" | "active">("idle");
   const [bedReserved, setBedReserved] = useState(false);
@@ -118,6 +141,26 @@ export default function EmergencyScreen({ theme, onClose }: Props) {
 
   function handleCallAmbulance() {
     setAmbulanceCalled(true);
+  }
+
+  if (isDesktop) {
+    return (
+      <DesktopEmergencyScreen
+        pulse={pulse}
+        phase={phase}
+        countdown={countdown}
+        doctorAlertStatus={doctorAlertStatus}
+        bedReserved={bedReserved}
+        ambulanceCalled={ambulanceCalled}
+        onClose={onClose}
+        onEmergencyPress={handleEmergencyPress}
+        onCancel={handleCancel}
+        onCall={handleCall}
+        onDirections={handleDirections}
+        onReserveBed={handleReserveBed}
+        onCallAmbulance={handleCallAmbulance}
+      />
+    );
   }
 
   return (
@@ -356,6 +399,354 @@ export default function EmergencyScreen({ theme, onClose }: Props) {
   );
 }
 
+function DesktopEmergencyScreen({
+  pulse,
+  phase,
+  countdown,
+  doctorAlertStatus,
+  bedReserved,
+  ambulanceCalled,
+  onClose,
+  onEmergencyPress,
+  onCancel,
+  onCall,
+  onDirections,
+  onReserveBed,
+  onCallAmbulance,
+}: {
+  pulse: Animated.Value;
+  phase: "idle" | "activating" | "active";
+  countdown: number;
+  doctorAlertStatus: "idle" | "sending" | "sent" | "failed";
+  bedReserved: boolean;
+  ambulanceCalled: boolean;
+  onClose?: () => void;
+  onEmergencyPress: () => void;
+  onCancel: () => void;
+  onCall: (phone: string) => void;
+  onDirections: () => void;
+  onReserveBed: () => void;
+  onCallAmbulance: () => void;
+}) {
+  const navItems = [
+    { label: "Dashboard", icon: Home },
+    { label: "Today", icon: CalendarDays },
+    { label: "Symptoms", icon: HeartPulse },
+    { label: "Care Plan", icon: ClipboardList },
+    { label: "Hospitals", icon: Hospital },
+    { label: "Reports", icon: FileText },
+    { label: "Emergency", icon: AlertTriangle, active: true },
+    { label: "Messages", icon: MessageCircle },
+    { label: "Settings", icon: Settings },
+  ];
+
+  return (
+    <SafeAreaView style={desktopEmergency.safe}>
+      <View style={desktopEmergency.shell}>
+        <View style={desktopEmergency.sidebar}>
+          <View style={desktopEmergency.brandRow}>
+            <View style={desktopEmergency.brandMark}>
+              <Heart size={34} color="#02070D" fill="#02070D" />
+            </View>
+            <View>
+              <Text style={desktopEmergency.brandName}>MATERNA</Text>
+              <Text style={desktopEmergency.brandTagline}>Care for you. Care for two.</Text>
+            </View>
+          </View>
+          <View style={desktopEmergency.navList}>
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <View
+                  key={item.label}
+                  style={[
+                    desktopEmergency.navItem,
+                    item.active && desktopEmergency.navItemActive,
+                  ]}
+                >
+                  <Icon size={20} color={item.active ? "#FB7185" : "#CBD5E1"} />
+                  <Text
+                    style={[
+                      desktopEmergency.navText,
+                      item.active && desktopEmergency.navTextActive,
+                    ]}
+                  >
+                    {item.label}
+                  </Text>
+                </View>
+              );
+            })}
+          </View>
+          <View style={desktopEmergency.doctorCard}>
+            <View style={desktopEmergency.doctorAvatar}>
+              <Text style={desktopEmergency.doctorAvatarText}>AP</Text>
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text style={desktopEmergency.doctorName}>Dr. Aisha Patel</Text>
+              <Text style={desktopEmergency.doctorMeta}>OB-GYN</Text>
+              <Text style={desktopEmergency.doctorHospital}>Delta Memorial Hospital</Text>
+            </View>
+          </View>
+          <View style={desktopEmergency.logoutRow}>
+            <LogOut size={20} color="#CBD5E1" />
+            <Text style={desktopEmergency.logoutText}>Log out</Text>
+          </View>
+        </View>
+
+        <ScrollView
+          style={desktopEmergency.contentScroll}
+          contentContainerStyle={desktopEmergency.content}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={desktopEmergency.card}>
+            <Pressable style={desktopEmergency.backRow} onPress={onClose}>
+              <ArrowLeft size={20} color="#CBD5E1" />
+              <Text style={desktopEmergency.backText}>Back</Text>
+            </Pressable>
+
+            <View style={desktopEmergency.hero}>
+              <View style={desktopEmergency.titleRow}>
+                <Text style={desktopEmergency.title}>EMERGENCY</Text>
+                <Siren size={42} color="#FB7185" />
+              </View>
+              <Text style={desktopEmergency.instructions}>
+                Press and hold if you are experiencing a medical emergency
+              </Text>
+
+              <View style={desktopEmergency.ecgWrap}>
+                <View style={desktopEmergency.ecgLine} />
+                <HeartPulse size={34} color="#EF4444" style={desktopEmergency.ecgLeft} />
+                <HeartPulse size={34} color="#EF4444" style={desktopEmergency.ecgRight} />
+                <Animated.View
+                  style={[
+                    desktopEmergency.buttonPulseOuter,
+                    { transform: [{ scale: pulse }] },
+                  ]}
+                >
+                  <Pressable
+                    style={desktopEmergency.bigEmergencyButton}
+                    onPress={onEmergencyPress}
+                    accessibilityRole="button"
+                    accessibilityLabel="Activate emergency"
+                  >
+                    <Siren size={58} color="#FFFFFF" />
+                    <Text style={desktopEmergency.buttonTitle}>
+                      {phase === "activating"
+                        ? `${countdown}`
+                        : phase === "active"
+                        ? "ACTIVE"
+                        : "EMERGENCY"}
+                    </Text>
+                    <Text style={desktopEmergency.buttonSub}>
+                      {phase === "active" ? "Doctor notified" : "Press and hold"}
+                    </Text>
+                  </Pressable>
+                </Animated.View>
+              </View>
+            </View>
+
+            {phase === "active" ? (
+              <DesktopEmergencyActive
+                doctorAlertStatus={doctorAlertStatus}
+                bedReserved={bedReserved}
+                ambulanceCalled={ambulanceCalled}
+                onCall={onCall}
+                onDirections={onDirections}
+                onReserveBed={onReserveBed}
+                onCallAmbulance={onCallAmbulance}
+                onCancel={onCancel}
+              />
+            ) : (
+              <DesktopEmergencyIdle onCall={onCall} />
+            )}
+          </View>
+        </ScrollView>
+      </View>
+    </SafeAreaView>
+  );
+}
+
+function DesktopEmergencyIdle({ onCall }: { onCall: (phone: string) => void }) {
+  return (
+    <>
+      <View style={desktopEmergency.actionGrid}>
+        <Pressable style={desktopEmergency.call911Card} onPress={() => onCall("911")}>
+          <View style={desktopEmergency.callIconRed}>
+            <Phone size={44} color="#FB7185" fill="#FB7185" />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={desktopEmergency.actionTitle}>Call 911</Text>
+            <Text style={desktopEmergency.actionBody}>For immediate help</Text>
+          </View>
+          <Text style={desktopEmergency.redArrow}>›</Text>
+        </Pressable>
+
+        <Pressable
+          style={desktopEmergency.callHospitalCard}
+          onPress={() => onCall(NEAREST_HOSPITAL.phone)}
+        >
+          <View style={desktopEmergency.callIconPurple}>
+            <Building2 size={44} color="#A78BFA" />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={desktopEmergency.actionTitle}>Call Hospital</Text>
+            <Text style={desktopEmergency.actionBody}>Reach your care team</Text>
+          </View>
+          <Text style={desktopEmergency.purpleArrow}>›</Text>
+        </Pressable>
+      </View>
+
+      <View style={desktopEmergency.infoGrid}>
+        <View style={desktopEmergency.whenCard}>
+          <View style={desktopEmergency.infoHeader}>
+            <AlertTriangle size={32} color="#FB7185" />
+            <Text style={desktopEmergency.infoTitle}>When to use Emergency</Text>
+          </View>
+          {[
+            "Severe bleeding or heavy spotting",
+            "Severe headache, blurred vision",
+            "Difficulty breathing or chest pain",
+            "Baby's movement stops or feels very low",
+            "Any other situation where you feel something is seriously wrong",
+          ].map((item) => (
+            <View key={item} style={desktopEmergency.checkLine}>
+              <View style={desktopEmergency.checkDot}>
+                <Text style={desktopEmergency.checkText}>✓</Text>
+              </View>
+              <Text style={desktopEmergency.checkLabel}>{item}</Text>
+            </View>
+          ))}
+        </View>
+
+        <View style={desktopEmergency.reassureCard}>
+          <View style={desktopEmergency.shieldIcon}>
+            <ShieldCheck size={52} color="#22C55E" />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={desktopEmergency.infoTitle}>You're not alone</Text>
+            <Text style={desktopEmergency.reassureText}>
+              Materna is here to keep you and your baby safe.
+            </Text>
+            <Text style={desktopEmergency.reassureText}>Get help when you need it.</Text>
+          </View>
+          <View style={desktopEmergency.motherSilhouette}>
+            <View style={desktopEmergency.motherHair} />
+            <View style={desktopEmergency.motherBody} />
+            <View style={desktopEmergency.motherBump} />
+          </View>
+        </View>
+      </View>
+
+      <View style={desktopEmergency.footerLine}>
+        <View style={desktopEmergency.footerRule} />
+        <Heart size={20} color="#EF4444" fill="#EF4444" />
+        <Text style={desktopEmergency.footerText}>Stay safe. We care.</Text>
+        <View style={desktopEmergency.footerRule} />
+      </View>
+    </>
+  );
+}
+
+function DesktopEmergencyActive({
+  doctorAlertStatus,
+  bedReserved,
+  ambulanceCalled,
+  onCall,
+  onDirections,
+  onReserveBed,
+  onCallAmbulance,
+  onCancel,
+}: {
+  doctorAlertStatus: "idle" | "sending" | "sent" | "failed";
+  bedReserved: boolean;
+  ambulanceCalled: boolean;
+  onCall: (phone: string) => void;
+  onDirections: () => void;
+  onReserveBed: () => void;
+  onCallAmbulance: () => void;
+  onCancel: () => void;
+}) {
+  const status =
+    doctorAlertStatus === "sending"
+      ? "Sending alert to linked doctor..."
+      : doctorAlertStatus === "sent"
+      ? "Linked doctor notified successfully"
+      : doctorAlertStatus === "failed"
+      ? "Doctor alert could not be delivered. Call 911 now."
+      : "Preparing doctor notification...";
+
+  return (
+    <View style={desktopEmergency.activeGrid}>
+      <View style={desktopEmergency.activePanel}>
+        <Text style={desktopEmergency.activeTitle}>Emergency response active</Text>
+        <Text style={desktopEmergency.activeBody}>{status}</Text>
+        <View style={desktopEmergency.activeActions}>
+          <Pressable style={desktopEmergency.activeRedButton} onPress={() => onCall("911")}>
+            <Phone size={19} color="#FFFFFF" />
+            <Text style={desktopEmergency.activeButtonText}>Call 911</Text>
+          </Pressable>
+          <Pressable
+            style={desktopEmergency.activeOutlineButton}
+            onPress={() => onCall(NEAREST_HOSPITAL.phone)}
+          >
+            <Text style={desktopEmergency.activeOutlineText}>Call hospital</Text>
+          </Pressable>
+        </View>
+      </View>
+
+      <View style={desktopEmergency.activePanel}>
+        <Text style={desktopEmergency.activeTitle}>{NEAREST_HOSPITAL.name}</Text>
+        <Text style={desktopEmergency.activeBody}>
+          {NEAREST_HOSPITAL.distance} away - {NEAREST_HOSPITAL.time}
+        </Text>
+        <Text style={desktopEmergency.activeBody}>
+          {bedReserved
+            ? "Bed reserved in Labor & Delivery"
+            : `${NEAREST_HOSPITAL.bedsAvailable} L&D beds available`}
+        </Text>
+        <View style={desktopEmergency.activeActions}>
+          <Pressable style={desktopEmergency.activeOutlineButton} onPress={onDirections}>
+            <Text style={desktopEmergency.activeOutlineText}>Navigate</Text>
+          </Pressable>
+          <Pressable
+            style={desktopEmergency.activePurpleButton}
+            onPress={onReserveBed}
+            disabled={bedReserved}
+          >
+            <Text style={desktopEmergency.activeButtonText}>
+              {bedReserved ? "Reserved" : "Reserve bed"}
+            </Text>
+          </Pressable>
+        </View>
+      </View>
+
+      <View style={desktopEmergency.activePanel}>
+        <Text style={desktopEmergency.activeTitle}>
+          {ambulanceCalled ? `${AMBULANCE.id} en route` : "Ambulance tracking"}
+        </Text>
+        <Text style={desktopEmergency.activeBody}>
+          {ambulanceCalled
+            ? `${AMBULANCE.driver} - ETA ${AMBULANCE.eta}`
+            : "Dispatch an ambulance to your location."}
+        </Text>
+        <View style={desktopEmergency.activeActions}>
+          <Pressable
+            style={desktopEmergency.activeRedButton}
+            onPress={ambulanceCalled ? () => onCall(AMBULANCE.phone) : onCallAmbulance}
+          >
+            <Text style={desktopEmergency.activeButtonText}>
+              {ambulanceCalled ? "Call paramedic" : "Dispatch ambulance"}
+            </Text>
+          </Pressable>
+          <Pressable style={desktopEmergency.activeOutlineButton} onPress={onCancel}>
+            <Text style={desktopEmergency.activeOutlineText}>Deactivate</Text>
+          </Pressable>
+        </View>
+      </View>
+    </View>
+  );
+}
+
 function getColors(mode: "dark" | "light") {
   const isDark = mode === "dark";
   return {
@@ -368,6 +759,331 @@ function getColors(mode: "dark" | "light") {
 }
 
 const colors = { dark: getColors("dark"), light: getColors("light") };
+
+const desktopEmergency = StyleSheet.create({
+  safe: { flex: 1, backgroundColor: "#02070D" },
+  shell: { flex: 1, flexDirection: "row", backgroundColor: "#02070D" },
+  sidebar: {
+    width: 274,
+    margin: 10,
+    borderWidth: 1,
+    borderColor: "#1F2937",
+    borderRadius: 8,
+    paddingHorizontal: 22,
+    paddingTop: 30,
+    paddingBottom: 22,
+    backgroundColor: "#070D16",
+  },
+  brandRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 14,
+    borderBottomWidth: 1,
+    borderBottomColor: "#1F2937",
+    paddingBottom: 28,
+    marginBottom: 24,
+  },
+  brandMark: {
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#22C55E",
+  },
+  brandName: { color: "#F8FAFC", fontSize: 24, fontWeight: "900" },
+  brandTagline: { color: "#94A3B8", fontSize: 11, marginTop: 6 },
+  navList: { flex: 1, gap: 8 },
+  navItem: {
+    minHeight: 48,
+    borderRadius: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 14,
+    paddingHorizontal: 16,
+  },
+  navItemActive: {
+    borderWidth: 1,
+    borderColor: "#BE123C",
+    backgroundColor: "#351018",
+  },
+  navText: { color: "#CBD5E1", fontSize: 15, fontWeight: "600" },
+  navTextActive: { color: "#FB7185", fontWeight: "900" },
+  doctorCard: {
+    borderWidth: 1,
+    borderColor: "#1F2937",
+    borderRadius: 8,
+    padding: 14,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    backgroundColor: "#071019",
+    marginBottom: 12,
+  },
+  doctorAvatar: {
+    width: 46,
+    height: 46,
+    borderRadius: 23,
+    backgroundColor: "#E2E8F0",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  doctorAvatarText: { color: "#0F172A", fontSize: 13, fontWeight: "900" },
+  doctorName: { color: "#F8FAFC", fontSize: 15, fontWeight: "900" },
+  doctorMeta: { color: "#CBD5E1", fontSize: 12, marginTop: 4 },
+  doctorHospital: { color: "#94A3B8", fontSize: 10, marginTop: 3 },
+  logoutRow: { height: 42, flexDirection: "row", alignItems: "center", gap: 14, paddingHorizontal: 18 },
+  logoutText: { color: "#CBD5E1", fontSize: 14, fontWeight: "700" },
+  contentScroll: { flex: 1 },
+  content: { paddingVertical: 10, paddingRight: 10 },
+  card: {
+    minHeight: 980,
+    borderWidth: 1,
+    borderColor: "#1F2937",
+    borderRadius: 8,
+    paddingHorizontal: 30,
+    paddingTop: 34,
+    paddingBottom: 22,
+    backgroundColor: "#060B13",
+  },
+  backRow: { flexDirection: "row", alignItems: "center", gap: 10, alignSelf: "flex-start" },
+  backText: { color: "#CBD5E1", fontSize: 15 },
+  hero: { alignItems: "center", marginTop: -4 },
+  titleRow: { flexDirection: "row", alignItems: "center", gap: 20 },
+  title: { color: "#FB7185", fontSize: 42, fontWeight: "900", letterSpacing: 10 },
+  instructions: { color: "#E5E7EB", fontSize: 17, marginTop: 18 },
+  ecgWrap: {
+    height: 320,
+    width: "100%",
+    maxWidth: 980,
+    alignItems: "center",
+    justifyContent: "center",
+    position: "relative",
+  },
+  ecgLine: { position: "absolute", height: 1, left: 20, right: 20, backgroundColor: "#8B1F2F" },
+  ecgLeft: { position: "absolute", left: 175, opacity: 0.9 },
+  ecgRight: { position: "absolute", right: 145, opacity: 0.9 },
+  buttonPulseOuter: {
+    width: 260,
+    height: 260,
+    borderRadius: 130,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: "#EF444455",
+    backgroundColor: "#EF44441A",
+    shadowColor: "#EF4444",
+    shadowOpacity: 0.8,
+    shadowRadius: 40,
+  },
+  bigEmergencyButton: {
+    width: 220,
+    height: 220,
+    borderRadius: 110,
+    borderWidth: 2,
+    borderColor: "#FCA5A5",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#EF233C",
+    shadowColor: "#EF4444",
+    shadowOpacity: 0.9,
+    shadowRadius: 35,
+  },
+  buttonTitle: { color: "#FFFFFF", fontSize: 27, fontWeight: "900", letterSpacing: 1, marginTop: 8 },
+  buttonSub: { color: "#FFFFFF", fontSize: 16, fontWeight: "700", marginTop: 8 },
+  actionGrid: {
+    width: "100%",
+    maxWidth: 1060,
+    alignSelf: "center",
+    flexDirection: "row",
+    gap: 36,
+    marginTop: 4,
+  },
+  call911Card: {
+    flex: 1,
+    minHeight: 150,
+    borderWidth: 1,
+    borderColor: "#BE123C",
+    borderRadius: 8,
+    backgroundColor: "#170B13",
+    paddingHorizontal: 30,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 24,
+  },
+  callHospitalCard: {
+    flex: 1,
+    minHeight: 150,
+    borderWidth: 1,
+    borderColor: "#6D28D9",
+    borderRadius: 8,
+    backgroundColor: "#100D22",
+    paddingHorizontal: 30,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 24,
+  },
+  callIconRed: {
+    width: 92,
+    height: 92,
+    borderRadius: 46,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#401522",
+  },
+  callIconPurple: {
+    width: 92,
+    height: 92,
+    borderRadius: 46,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#24153F",
+  },
+  actionTitle: { color: "#FFFFFF", fontSize: 24, fontWeight: "900" },
+  actionBody: { color: "#CBD5E1", fontSize: 15, marginTop: 12 },
+  redArrow: { color: "#FB7185", fontSize: 42, fontWeight: "300" },
+  purpleArrow: { color: "#A78BFA", fontSize: 42, fontWeight: "300" },
+  infoGrid: {
+    width: "100%",
+    maxWidth: 1060,
+    alignSelf: "center",
+    flexDirection: "row",
+    gap: 28,
+    marginTop: 30,
+  },
+  whenCard: {
+    flex: 1,
+    minHeight: 250,
+    borderWidth: 1,
+    borderColor: "#BE123C",
+    borderRadius: 8,
+    backgroundColor: "#170B13",
+    padding: 28,
+  },
+  reassureCard: {
+    flex: 1,
+    minHeight: 250,
+    borderWidth: 1,
+    borderColor: "#166534",
+    borderRadius: 8,
+    backgroundColor: "#071A16",
+    padding: 28,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 22,
+    overflow: "hidden",
+  },
+  infoHeader: { flexDirection: "row", alignItems: "center", gap: 18, marginBottom: 18 },
+  infoTitle: { color: "#FFFFFF", fontSize: 18, fontWeight: "900" },
+  checkLine: { flexDirection: "row", alignItems: "flex-start", gap: 14, marginTop: 13 },
+  checkDot: {
+    width: 18,
+    height: 18,
+    borderRadius: 9,
+    borderWidth: 1,
+    borderColor: "#EF4444",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 1,
+  },
+  checkText: { color: "#EF4444", fontSize: 11, fontWeight: "900" },
+  checkLabel: { color: "#E5E7EB", fontSize: 15, lineHeight: 23, flex: 1 },
+  shieldIcon: {
+    width: 70,
+    height: 70,
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 4,
+  },
+  reassureText: { color: "#E5E7EB", fontSize: 16, lineHeight: 27, marginTop: 16 },
+  motherSilhouette: {
+    width: 130,
+    height: 180,
+    alignItems: "center",
+    justifyContent: "flex-end",
+    opacity: 0.35,
+  },
+  motherHair: {
+    position: "absolute",
+    top: 18,
+    width: 82,
+    height: 82,
+    borderRadius: 41,
+    backgroundColor: "#14532D",
+  },
+  motherBody: {
+    width: 70,
+    height: 118,
+    borderTopLeftRadius: 34,
+    borderTopRightRadius: 34,
+    backgroundColor: "#22C55E",
+  },
+  motherBump: {
+    position: "absolute",
+    bottom: 14,
+    width: 82,
+    height: 70,
+    borderRadius: 41,
+    backgroundColor: "#16A34A",
+  },
+  footerLine: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 14,
+    marginTop: 26,
+  },
+  footerRule: { width: 78, height: 1, backgroundColor: "#1F2937" },
+  footerText: { color: "#E5E7EB", fontSize: 15 },
+  activeGrid: {
+    width: "100%",
+    maxWidth: 1060,
+    alignSelf: "center",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 18,
+    marginTop: 10,
+  },
+  activePanel: {
+    flex: 1,
+    minWidth: 320,
+    borderWidth: 1,
+    borderColor: "#BE123C",
+    borderRadius: 8,
+    backgroundColor: "#170B13",
+    padding: 22,
+  },
+  activeTitle: { color: "#FFFFFF", fontSize: 19, fontWeight: "900" },
+  activeBody: { color: "#E5E7EB", fontSize: 14, lineHeight: 22, marginTop: 12 },
+  activeActions: { flexDirection: "row", gap: 12, marginTop: 20, flexWrap: "wrap" },
+  activeRedButton: {
+    minHeight: 42,
+    borderRadius: 8,
+    paddingHorizontal: 18,
+    backgroundColor: "#E11D48",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+  },
+  activePurpleButton: {
+    minHeight: 42,
+    borderRadius: 8,
+    paddingHorizontal: 18,
+    backgroundColor: "#7C3AED",
+    justifyContent: "center",
+  },
+  activeOutlineButton: {
+    minHeight: 42,
+    borderRadius: 8,
+    paddingHorizontal: 18,
+    borderWidth: 1,
+    borderColor: "#374151",
+    justifyContent: "center",
+  },
+  activeButtonText: { color: "#FFFFFF", fontSize: 13, fontWeight: "900" },
+  activeOutlineText: { color: "#CBD5E1", fontSize: 13, fontWeight: "900" },
+});
 
 const styles = StyleSheet.create({
   scroll: { padding: 20, paddingBottom: 60 },

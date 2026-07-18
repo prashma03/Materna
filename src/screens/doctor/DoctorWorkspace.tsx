@@ -3,24 +3,38 @@ import {
   Alert,
   BackHandler,
   Linking,
+  Platform,
   Pressable,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
+  useWindowDimensions,
   View,
 } from "react-native";
 import {
+  Activity,
+  AlertTriangle,
   ArrowLeft,
+  BarChart3,
+  Bell,
+  CalendarDays,
+  ChevronRight,
+  ClipboardList,
   FileText,
   Home,
   Hospital,
+  LogOut,
   Mail,
   MapPin,
   MessageCircle,
+  MessageSquare,
   Phone,
+  Settings,
   Stethoscope,
+  TrendingUp,
+  UserPlus,
   UserRound,
   Users,
 } from "lucide-react-native";
@@ -271,7 +285,18 @@ function mergeReports(liveReports: any[]) {
   ];
 }
 
-export default function DoctorWorkspace({ theme, onLogout }: Props) {
+export default function DoctorWorkspace(props: Props) {
+  const { width } = useWindowDimensions();
+  const isDesktop = Platform.OS === "web" && width >= 1000;
+
+  if (isDesktop) {
+    return <DesktopDoctorDashboard onLogout={props.onLogout} />;
+  }
+
+  return <MobileDoctorWorkspace {...props} />;
+}
+
+function MobileDoctorWorkspace({ theme, onLogout }: Props) {
   const dark = theme === "dark";
   const c = dark ? colors.dark : colors.light;
   const [view, setView] = useState<DoctorView>("home");
@@ -460,6 +485,347 @@ export default function DoctorWorkspace({ theme, onLogout }: Props) {
         <DoctorBottomNav view={view} setView={setView} c={c} />
       )}
     </SafeAreaView>
+  );
+}
+
+function DesktopDoctorDashboard({ onLogout }: { onLogout: () => void }) {
+  const priorityPatients = [
+    { ...PATIENTS[0], status: "Stable", detail: "24 weeks - Due in 16 weeks" },
+    { ...PATIENTS[1], status: "High Risk", detail: "32 weeks - Hypertension" },
+    { ...PATIENTS[2], status: "High Risk", detail: "28 weeks - Diabetes, G2P1" },
+  ];
+  const highRiskCards = [
+    {
+      patient: PATIENTS[1],
+      meta: "32 weeks pregnant - BP 160/100 - High Risk",
+    },
+    {
+      patient: PATIENTS[2],
+      meta: "28 weeks pregnant - BP 150/95 - Gestational Diabetes",
+    },
+  ];
+  const reports = [
+    { name: "Maya Johnson", meta: "May 27, 2025 - Ultra Sound" },
+    { name: "Maria Gonzalez", meta: "May 26, 2025 - Lab Report" },
+  ];
+
+  return (
+    <SafeAreaView style={desktopDoc.safe}>
+      <View style={desktopDoc.shell}>
+        <View style={desktopDoc.sidebar}>
+          <View style={desktopDoc.brandWrap}>
+            <View style={desktopDoc.brandMark}>
+              <Stethoscope size={38} color="#02070D" strokeWidth={2.4} />
+            </View>
+            <View>
+              <Text style={desktopDoc.brandTitle}>MATERNA</Text>
+              <Text style={desktopDoc.brandSubtitle}>
+                Maternal health{"\n"}monitoring for rural Arkansas
+              </Text>
+            </View>
+          </View>
+
+          <View style={desktopDoc.navList}>
+            {[
+              { label: "Dashboard", icon: Home, active: true },
+              { label: "Patients", icon: Users },
+              { label: "Reports", icon: FileText },
+              { label: "Alerts", icon: Bell, badge: "6" },
+              { label: "Appointments", icon: CalendarDays },
+              { label: "Care Plans", icon: ClipboardList },
+              { label: "Messages", icon: MessageSquare },
+              { label: "Analytics", icon: BarChart3 },
+              { label: "Settings", icon: Settings },
+            ].map((item) => (
+              <DesktopNavItem key={item.label} {...item} />
+            ))}
+          </View>
+
+          <View style={desktopDoc.sidebarBottom}>
+            <View style={desktopDoc.doctorCard}>
+              <View style={desktopDoc.doctorPhoto}>
+                <Text style={desktopDoc.doctorPhotoText}>AP</Text>
+              </View>
+              <View>
+                <Text style={desktopDoc.doctorName}>Dr. Aisha Patel</Text>
+                <Text style={desktopDoc.doctorRole}>OB-GYN</Text>
+              </View>
+            </View>
+            <Pressable style={desktopDoc.logoutButton} onPress={onLogout}>
+              <LogOut size={17} color="#CBD5E1" />
+              <Text style={desktopDoc.logoutText}>Log out</Text>
+            </Pressable>
+          </View>
+        </View>
+
+        <ScrollView
+          style={desktopDoc.mainScroll}
+          contentContainerStyle={desktopDoc.mainContent}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={desktopDoc.mainColumn}>
+            <Text style={desktopDoc.greeting}>Good morning, Dr. Aisha</Text>
+            <Text style={desktopDoc.subGreeting}>
+              Here's what's happening with your patients today.
+            </Text>
+
+            <Text style={desktopDoc.sectionTitle}>Clinical overview</Text>
+            <Text style={desktopDoc.sectionSubtitle}>
+              Live updates and key clinical information
+            </Text>
+
+            <View style={desktopDoc.statsGrid}>
+              <DesktopStatCard
+                value="3"
+                label="Patients"
+                caption="New today"
+                color="#3B82F6"
+                icon={Activity}
+              />
+              <DesktopStatCard
+                value="2"
+                label="Critical"
+                caption="Requires attention"
+                color="#F43F5E"
+                icon={Activity}
+              />
+              <DesktopStatCard
+                value="3"
+                label="Improving"
+                caption="On track"
+                color="#22C55E"
+                icon={TrendingUp}
+              />
+              <DesktopStatCard
+                value="16"
+                label="Total active"
+                caption="Under your care"
+                color="#8B5CF6"
+                icon={Users}
+              />
+            </View>
+
+            {highRiskCards.map(({ patient, meta }) => (
+              <View key={patient.id} style={desktopDoc.highRiskCard}>
+                <View style={desktopDoc.highRiskIcon}>
+                  <AlertTriangle size={25} color="#FB7185" />
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={desktopDoc.highRiskLabel}>HIGH RISK REVIEW</Text>
+                  <Text style={desktopDoc.highRiskName}>{patient.name}</Text>
+                  <Text style={desktopDoc.highRiskMeta}>{meta}</Text>
+                </View>
+                <Text style={desktopDoc.criticalPill}>CRITICAL</Text>
+                <ChevronRight size={22} color="#CBD5E1" />
+              </View>
+            ))}
+
+            <View style={desktopDoc.sectionHeaderRow}>
+              <Text style={desktopDoc.sectionTitle}>Priority patients</Text>
+              <Text style={desktopDoc.viewAll}>View all</Text>
+            </View>
+            <View style={desktopDoc.patientList}>
+              {priorityPatients.map((patient) => (
+                <DesktopPatientRow key={patient.id} patient={patient} />
+              ))}
+            </View>
+
+            <View style={desktopDoc.sectionHeaderRow}>
+              <Text style={desktopDoc.sectionTitle}>Recent reports</Text>
+              <Text style={desktopDoc.viewAll}>View all</Text>
+            </View>
+            <View style={desktopDoc.reportList}>
+              {reports.map((report) => (
+                <DesktopReportRow key={report.name} report={report} />
+              ))}
+            </View>
+          </View>
+
+          <View style={desktopDoc.rightRail}>
+            <View style={desktopDoc.topTools}>
+              <View style={desktopDoc.dateCard}>
+                <CalendarDays size={21} color="#CBD5E1" />
+                <View>
+                  <Text style={desktopDoc.dateText}>May 28, 2025</Text>
+                  <Text style={desktopDoc.dateSubtext}>Wednesday</Text>
+                </View>
+              </View>
+              <View style={desktopDoc.bellButton}>
+                <Bell size={22} color="#CBD5E1" />
+                <Text style={desktopDoc.bellBadge}>6</Text>
+              </View>
+            </View>
+
+            <DesktopPanel title="Today's schedule" action="View calendar">
+              {[
+                ["09:00 AM", "Maya Johnson", "Routine Check-up"],
+                ["10:30 AM", "Maria Gonzalez", "High Risk Follow-up"],
+                ["12:00 PM", "Tanya Williams", "Prenatal Consultation"],
+                ["02:30 PM", "Sarah Davis", "Routine Check-up"],
+                ["04:00 PM", "Follow-up Reviews", "3 patients"],
+              ].map(([time, name, type], index) => (
+                <View key={`${time}-${name}`} style={desktopDoc.scheduleRow}>
+                  <Text style={desktopDoc.scheduleTime}>{time}</Text>
+                  <View style={desktopDoc.scheduleInfo}>
+                    <View
+                      style={[
+                        desktopDoc.scheduleDot,
+                        index === 1 && { backgroundColor: "#F43F5E" },
+                      ]}
+                    />
+                    <View>
+                      <Text style={desktopDoc.scheduleName}>{name}</Text>
+                      <Text style={desktopDoc.scheduleType}>{type}</Text>
+                    </View>
+                  </View>
+                </View>
+              ))}
+            </DesktopPanel>
+
+            <DesktopPanel title="Alerts & notifications" action="View all">
+              {[
+                {
+                  icon: AlertTriangle,
+                  title: "High risk alert",
+                  body: "Maria Gonzalez's BP reading is critical",
+                  color: "#EF4444",
+                  time: "15m ago",
+                },
+                {
+                  icon: ClipboardList,
+                  title: "Lab results",
+                  body: "2 new lab reports available",
+                  color: "#F59E0B",
+                  time: "1h ago",
+                },
+                {
+                  icon: Bell,
+                  title: "Appointment reminder",
+                  body: "3 follow-ups due tomorrow",
+                  color: "#8B5CF6",
+                  time: "2h ago",
+                },
+              ].map((alert) => (
+                <DesktopAlertRow key={alert.title} alert={alert} />
+              ))}
+            </DesktopPanel>
+
+            <DesktopPanel title="Quick actions">
+              <View style={desktopDoc.quickGrid}>
+                <DesktopQuickAction icon={UserPlus} label="Add new patient" color="#22C55E" />
+                <DesktopQuickAction icon={MessageSquare} label="Send message" color="#8B5CF6" />
+                <DesktopQuickAction icon={ClipboardList} label="Create care plan" color="#F59E0B" />
+                <DesktopQuickAction icon={FileText} label="Generate report" color="#3B82F6" />
+              </View>
+            </DesktopPanel>
+          </View>
+        </ScrollView>
+      </View>
+    </SafeAreaView>
+  );
+}
+
+function DesktopNavItem({ label, icon: Icon, active, badge }: any) {
+  return (
+    <View style={[desktopDoc.navItem, active && desktopDoc.navItemActive]}>
+      <Icon size={22} color={active ? "#8B5CF6" : "#CBD5E1"} />
+      <Text style={[desktopDoc.navText, active && desktopDoc.navTextActive]}>{label}</Text>
+      {badge ? <Text style={desktopDoc.navBadge}>{badge}</Text> : null}
+    </View>
+  );
+}
+
+function DesktopStatCard({ value, label, caption, color, icon: Icon }: any) {
+  return (
+    <View style={[desktopDoc.statCard, { borderColor: `${color}55` }]}>
+      <View>
+        <Text style={[desktopDoc.statValue, { color }]}>{value}</Text>
+        <Text style={desktopDoc.statLabel}>{label}</Text>
+        <Text style={desktopDoc.statCaption}>{caption}</Text>
+      </View>
+      <Icon size={26} color={`${color}AA`} />
+    </View>
+  );
+}
+
+function DesktopPatientRow({ patient }: any) {
+  const isStable = patient.status === "Stable";
+  const color = isStable ? "#22C55E" : patient.name.includes("Maria") ? "#F43F5E" : "#F59E0B";
+  return (
+    <View style={[desktopDoc.desktopPatientRow, { borderLeftColor: color }]}>
+      <View style={[desktopDoc.desktopAvatar, { borderColor: color }]}>
+        <Text style={[desktopDoc.desktopAvatarText, { color }]}>
+          {patient.name.split(" ").map((part: string) => part[0]).join("")}
+        </Text>
+      </View>
+      <View style={{ flex: 1 }}>
+        <Text style={desktopDoc.desktopPatientName}>{patient.name}</Text>
+        <Text style={desktopDoc.desktopPatientMeta}>{patient.detail}</Text>
+      </View>
+      <Text style={[desktopDoc.desktopPatientStatus, { color }]}>{patient.status}</Text>
+      <ChevronRight size={22} color="#CBD5E1" />
+    </View>
+  );
+}
+
+function DesktopReportRow({ report }: any) {
+  return (
+    <View style={desktopDoc.desktopReportRow}>
+      <View style={desktopDoc.reportIcon}>
+        <FileText size={22} color="#22C55E" />
+      </View>
+      <View style={{ flex: 1 }}>
+        <View style={desktopDoc.reportTopLine}>
+          <View>
+            <Text style={desktopDoc.desktopReportName}>{report.name}</Text>
+            <Text style={desktopDoc.desktopReportMeta}>{report.meta}</Text>
+          </View>
+          <Text style={desktopDoc.sampleBadge}>SAMPLE</Text>
+        </View>
+        <Pressable style={desktopDoc.desktopReportButton}>
+          <FileText size={14} color="#8B5CF6" />
+          <Text style={desktopDoc.desktopReportButtonText}>Open PDF summary</Text>
+        </Pressable>
+      </View>
+    </View>
+  );
+}
+
+function DesktopPanel({ title, action, children }: any) {
+  return (
+    <View style={desktopDoc.panel}>
+      <View style={desktopDoc.panelHeader}>
+        <Text style={desktopDoc.panelTitle}>{title}</Text>
+        {action ? <Text style={desktopDoc.panelAction}>{action}</Text> : null}
+      </View>
+      {children}
+    </View>
+  );
+}
+
+function DesktopAlertRow({ alert }: any) {
+  const Icon = alert.icon;
+  return (
+    <View style={desktopDoc.alertRow}>
+      <View style={[desktopDoc.alertIcon, { backgroundColor: `${alert.color}22` }]}>
+        <Icon size={20} color={alert.color} />
+      </View>
+      <View style={{ flex: 1 }}>
+        <Text style={desktopDoc.alertTitle}>{alert.title}</Text>
+        <Text style={desktopDoc.alertBody}>{alert.body}</Text>
+      </View>
+      <Text style={desktopDoc.alertTime}>{alert.time}</Text>
+      <ChevronRight size={18} color="#64748B" />
+    </View>
+  );
+}
+
+function DesktopQuickAction({ icon: Icon, label, color }: any) {
+  return (
+    <Pressable style={desktopDoc.quickAction}>
+      <Icon size={31} color={color} />
+      <Text style={desktopDoc.quickActionLabel}>{label}</Text>
+    </Pressable>
   );
 }
 
@@ -899,6 +1265,324 @@ function InfoLine({ icon: Icon, label, value, c }: any) {
     </View>
   );
 }
+
+const desktopDoc = StyleSheet.create({
+  safe: { flex: 1, backgroundColor: "#02070D" },
+  shell: { flex: 1, flexDirection: "row", backgroundColor: "#02070D" },
+  sidebar: {
+    width: 280,
+    borderRightWidth: 1,
+    borderRightColor: "#1F2937",
+    paddingHorizontal: 18,
+    paddingVertical: 26,
+    backgroundColor: "#050A12",
+  },
+  brandWrap: { flexDirection: "row", alignItems: "center", gap: 16, marginBottom: 34 },
+  brandMark: {
+    width: 66,
+    height: 66,
+    borderRadius: 33,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#17B66A",
+  },
+  brandTitle: { color: "#F8FAFC", fontSize: 26, fontWeight: "900", letterSpacing: 0 },
+  brandSubtitle: { color: "#CBD5E1", fontSize: 12, lineHeight: 18, marginTop: 8 },
+  navList: { gap: 8, flex: 1 },
+  navItem: {
+    minHeight: 52,
+    borderRadius: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 14,
+    paddingHorizontal: 16,
+  },
+  navItemActive: { backgroundColor: "#19163A" },
+  navText: { color: "#CBD5E1", fontSize: 16, fontWeight: "600", flex: 1 },
+  navTextActive: { color: "#F8FAFC" },
+  navBadge: {
+    minWidth: 20,
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: "#F43F5E",
+    color: "#FFFFFF",
+    fontSize: 12,
+    fontWeight: "900",
+    textAlign: "center",
+    overflow: "hidden",
+  },
+  sidebarBottom: { gap: 8 },
+  doctorCard: {
+    borderWidth: 1,
+    borderColor: "#1F2937",
+    borderRadius: 8,
+    padding: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 13,
+    backgroundColor: "#071019",
+  },
+  doctorPhoto: {
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#E2E8F0",
+  },
+  doctorPhotoText: { color: "#0F172A", fontSize: 15, fontWeight: "900" },
+  doctorName: { color: "#F8FAFC", fontSize: 15, fontWeight: "900" },
+  doctorRole: { color: "#94A3B8", fontSize: 12, marginTop: 4 },
+  logoutButton: {
+    height: 42,
+    borderWidth: 1,
+    borderColor: "#1F2937",
+    borderRadius: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 10,
+  },
+  logoutText: { color: "#CBD5E1", fontSize: 13, fontWeight: "700" },
+  mainScroll: { flex: 1 },
+  mainContent: {
+    flexGrow: 1,
+    flexDirection: "row",
+    gap: 34,
+    paddingHorizontal: 34,
+    paddingTop: 28,
+    paddingBottom: 32,
+  },
+  mainColumn: { flex: 1, maxWidth: 790 },
+  greeting: { color: "#FFFFFF", fontSize: 23, fontWeight: "900", marginBottom: 8 },
+  subGreeting: { color: "#CBD5E1", fontSize: 14, marginBottom: 32 },
+  sectionTitle: { color: "#FFFFFF", fontSize: 20, fontWeight: "900", marginBottom: 6 },
+  sectionSubtitle: { color: "#CBD5E1", fontSize: 13, marginBottom: 18 },
+  statsGrid: { flexDirection: "row", gap: 16, marginBottom: 20 },
+  statCard: {
+    flex: 1,
+    minHeight: 112,
+    borderWidth: 1,
+    borderRadius: 8,
+    padding: 16,
+    backgroundColor: "#071019",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  statValue: { fontSize: 32, fontWeight: "900", lineHeight: 36 },
+  statLabel: { color: "#F8FAFC", fontSize: 14, fontWeight: "800", marginTop: 8 },
+  statCaption: { color: "#94A3B8", fontSize: 12, marginTop: 9 },
+  highRiskCard: {
+    minHeight: 88,
+    borderWidth: 1,
+    borderColor: "#E11D48",
+    borderRadius: 8,
+    backgroundColor: "#2A0810",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 16,
+    paddingHorizontal: 20,
+    marginBottom: 10,
+  },
+  highRiskIcon: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#57101B",
+  },
+  highRiskLabel: { color: "#FB7185", fontSize: 10, fontWeight: "900", marginBottom: 6 },
+  highRiskName: { color: "#FFFFFF", fontSize: 17, fontWeight: "900" },
+  highRiskMeta: { color: "#FECACA", fontSize: 13, marginTop: 4 },
+  criticalPill: {
+    color: "#FB7185",
+    fontSize: 12,
+    fontWeight: "900",
+    paddingHorizontal: 14,
+    paddingVertical: 7,
+    borderRadius: 16,
+    backgroundColor: "#4C0B15",
+    overflow: "hidden",
+  },
+  sectionHeaderRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: 18,
+    marginBottom: 10,
+  },
+  viewAll: { color: "#A78BFA", fontSize: 14, fontWeight: "800" },
+  patientList: { borderRadius: 8, overflow: "hidden" },
+  desktopPatientRow: {
+    minHeight: 70,
+    borderWidth: 1,
+    borderLeftWidth: 2,
+    borderColor: "#1F2937",
+    backgroundColor: "#071019",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 14,
+    paddingHorizontal: 18,
+    marginBottom: 1,
+  },
+  desktopAvatar: {
+    width: 42,
+    height: 42,
+    borderRadius: 21,
+    borderWidth: 1.5,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  desktopAvatarText: { fontSize: 13, fontWeight: "900" },
+  desktopPatientName: { color: "#F8FAFC", fontSize: 15, fontWeight: "900" },
+  desktopPatientMeta: { color: "#CBD5E1", fontSize: 12, marginTop: 4 },
+  desktopPatientStatus: { fontSize: 13, fontWeight: "900" },
+  reportList: { gap: 8 },
+  desktopReportRow: {
+    borderWidth: 1,
+    borderColor: "#1F2937",
+    borderRadius: 8,
+    backgroundColor: "#071019",
+    flexDirection: "row",
+    gap: 14,
+    padding: 14,
+  },
+  reportIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#052E1B",
+  },
+  reportTopLine: { flexDirection: "row", justifyContent: "space-between", gap: 12 },
+  desktopReportName: { color: "#F8FAFC", fontSize: 15, fontWeight: "900" },
+  desktopReportMeta: { color: "#94A3B8", fontSize: 12, marginTop: 4 },
+  sampleBadge: {
+    color: "#F59E0B",
+    fontSize: 11,
+    fontWeight: "900",
+    paddingHorizontal: 9,
+    paddingVertical: 5,
+    borderRadius: 12,
+    backgroundColor: "#3A2604",
+    overflow: "hidden",
+    alignSelf: "flex-start",
+  },
+  desktopReportButton: {
+    height: 34,
+    borderWidth: 1,
+    borderColor: "#7C3AED",
+    borderRadius: 6,
+    marginTop: 12,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+  },
+  desktopReportButtonText: { color: "#A78BFA", fontSize: 12, fontWeight: "800" },
+  rightRail: { width: 420, gap: 18 },
+  topTools: { flexDirection: "row", justifyContent: "flex-end", gap: 16, marginBottom: 6 },
+  dateCard: {
+    height: 50,
+    borderWidth: 1,
+    borderColor: "#1F2937",
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    backgroundColor: "#071019",
+  },
+  dateText: { color: "#F8FAFC", fontSize: 13, fontWeight: "900" },
+  dateSubtext: { color: "#94A3B8", fontSize: 11, marginTop: 3 },
+  bellButton: {
+    width: 50,
+    height: 50,
+    borderWidth: 1,
+    borderColor: "#1F2937",
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#071019",
+  },
+  bellBadge: {
+    position: "absolute",
+    right: 6,
+    top: 5,
+    minWidth: 18,
+    height: 18,
+    borderRadius: 9,
+    backgroundColor: "#F43F5E",
+    color: "#FFFFFF",
+    fontSize: 10,
+    fontWeight: "900",
+    textAlign: "center",
+    overflow: "hidden",
+  },
+  panel: {
+    borderWidth: 1,
+    borderColor: "#1F2937",
+    borderRadius: 8,
+    backgroundColor: "#071019",
+    padding: 20,
+  },
+  panelHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 16,
+  },
+  panelTitle: { color: "#FFFFFF", fontSize: 17, fontWeight: "900" },
+  panelAction: { color: "#A78BFA", fontSize: 13, fontWeight: "800" },
+  scheduleRow: { flexDirection: "row", alignItems: "center", minHeight: 56 },
+  scheduleTime: { width: 78, color: "#CBD5E1", fontSize: 13 },
+  scheduleInfo: {
+    flex: 1,
+    minHeight: 56,
+    borderBottomWidth: 1,
+    borderBottomColor: "#1F2937",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
+  scheduleDot: { width: 9, height: 9, borderRadius: 5, backgroundColor: "#3B82F6" },
+  scheduleName: { color: "#F8FAFC", fontSize: 13, fontWeight: "900" },
+  scheduleType: { color: "#94A3B8", fontSize: 11, marginTop: 4 },
+  alertRow: {
+    minHeight: 66,
+    borderBottomWidth: 1,
+    borderBottomColor: "#1F2937",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
+  alertIcon: {
+    width: 38,
+    height: 38,
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  alertTitle: { color: "#F8FAFC", fontSize: 13, fontWeight: "900" },
+  alertBody: { color: "#94A3B8", fontSize: 11, marginTop: 4 },
+  alertTime: { color: "#94A3B8", fontSize: 11 },
+  quickGrid: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
+  quickAction: {
+    width: "48.5%",
+    height: 90,
+    borderWidth: 1,
+    borderColor: "#263244",
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 10,
+    backgroundColor: "#0B111C",
+  },
+  quickActionLabel: { color: "#CBD5E1", fontSize: 12, fontWeight: "700" },
+});
 
 const colors = {
   dark: {
