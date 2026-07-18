@@ -98,5 +98,5 @@ export const scenarios = {
   Red: redScenario,
 };
 
-// Default export - change "Green" to "Yellow" or "Red" to demo other states
+// Default export - change "Green" to "Yellow" or "Red" to preview other states
 export const sampleSensorData = greenScenario;

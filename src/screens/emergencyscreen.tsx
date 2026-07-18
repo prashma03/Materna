@@ -361,7 +361,7 @@ export default function EmergencyScreen({ theme, onClose }: Props) {
                     </Text>
                   </View>
 
-                  {/* Demo map placeholder */}
+                  {/* Map placeholder */}
                   <View style={[styles.mapPlaceholder, { backgroundColor: dark ? "#0a0f1a" : "#e8f0fe" }]}>
                     <Text style={styles.mapEmoji}>🗺️</Text>
                     <Text style={[styles.mapText, { color: c.textMuted }]}>

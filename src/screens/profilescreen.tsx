@@ -253,7 +253,7 @@ export default function ProfileScreen({ theme }: Props) {
           <View style={styles.consentText}>
             <Text style={[styles.consentTitle, { color: c.text }]}>Share with linked doctor</Text>
             <Text style={[styles.consentBody, { color: c.textMuted }]}>
-              Allows the doctor dashboard in this demo to view your saved profile.
+              Allows your care team dashboard to view your saved profile.
             </Text>
           </View>
           <Switch
@@ -395,7 +395,7 @@ function DesktopProfileScreen({
               <HeartPulse size={26} color="#8B5CF6" />
             </View>
             <Text style={desktopProfile.helpTitle}>Need help?</Text>
-            <Text style={desktopProfile.helpSubtitle}>AI symptom chat</Text>
+            <Text style={desktopProfile.helpSubtitle}>Materna care chat</Text>
             <Text style={desktopProfile.helpBody}>Get quick guidance anytime.</Text>
             <Pressable style={desktopProfile.helpButton}>
               <Text style={desktopProfile.helpButtonText}>Start chat</Text>

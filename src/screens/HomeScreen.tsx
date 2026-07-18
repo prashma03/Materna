@@ -210,7 +210,7 @@ export default function HomeScreen({
           <View style={styles.toolGrid}>
             <ToolCard
               icon={MessageCircle}
-              title="AI symptom chat"
+              title="Materna care chat"
               body="Describe symptoms and get safe escalation guidance."
               onPress={onAskMaterna}
               c={colors}
@@ -303,7 +303,7 @@ function DesktopHome({
 
   const toolCards = [
     {
-      title: "AI symptom chat",
+      title: "Materna care chat",
       body: "Describe symptoms and get safe escalation guidance.",
       icon: MessageCircle,
       onPress: onAskMaterna,
@@ -387,11 +387,11 @@ function DesktopHome({
           <View style={desktopStyles.helpCard}>
             <Text style={desktopStyles.helpTitle}>Need help?</Text>
             <Text style={desktopStyles.helpBody}>
-              Our AI assistant is here 24/7 to support you.
+              Materna is here 24/7 to support you.
             </Text>
             <Pressable style={desktopStyles.helpButton} onPress={onAskMaterna}>
               <MessageCircle size={16} color="#FFFFFF" />
-              <Text style={desktopStyles.helpButtonText}>Chat with Materna AI</Text>
+              <Text style={desktopStyles.helpButtonText}>Chat with Materna</Text>
             </Pressable>
             <View style={desktopStyles.helpIllustration}>
               <Leaf size={42} color="#A7D9BC" />
@@ -485,7 +485,7 @@ function DesktopHome({
                 <View style={{ flex: 1 }}>
                   <Text style={desktopStyles.askTitle}>Ask Materna about symptoms</Text>
                   <Text style={desktopStyles.askBody}>
-                    Get guidance and answers from your AI assistant
+                    Get guidance and answers from Materna
                   </Text>
                 </View>
                 <ChevronRight size={28} color="#FFFFFF" />
@@ -601,7 +601,7 @@ function DesktopHome({
               </View>
 
               <View style={desktopStyles.scenarioCard}>
-                <Text style={desktopStyles.scenarioTitle}>Demo state</Text>
+                <Text style={desktopStyles.scenarioTitle}>Care priority</Text>
                 <View style={desktopStyles.scenarioRow}>
                   {(["Green", "Yellow", "Red"] as RiskLevel[]).map((level) => (
                     <Pressable

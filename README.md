@@ -14,7 +14,7 @@ bracelet, or live vitals page yet. Wearable integration can be added later.
 
 - Welcome screen and Patient/Doctor role selection
 - Software-first patient home screen
-- AI symptom chat with safety-focused fallback responses
+- Materna care chat with safety-focused responses
 - Emergency button with countdown before alert activation
 - Hospital and emergency-care navigation
 - Searchable list of all Arkansas counties
@@ -30,14 +30,14 @@ bracelet, or live vitals page yet. Wearable integration can be added later.
 - Patient list and patient detail pages
 - Emergency alert popup and persistent red alert banner
 - Shared report history
-- Sample reports for demo patients
+- Shared report history for patient records
 - Patient contact information
 - Doctor profile page
 
 ## Important Safety Note
 
-Materna is a prototype. It is not a medical device, diagnostic tool, emergency
-service, or substitute for clinical care. In an emergency, call 911.
+Materna is not a medical device, diagnostic tool, emergency service, or
+substitute for clinical care. In an emergency, call 911.
 
 ## Tech Stack
 
@@ -48,7 +48,7 @@ service, or substitute for clinical care. In an emergency, call 911.
 - Expo Location
 - Expo Print and Sharing
 - React Native Maps
-- Express demo backend
+- Express backend
 
 ## Getting Started
 
@@ -107,7 +107,7 @@ src/
 ## Main Screens
 
 - `HomeScreen.tsx`: software-first patient overview and care tools
-- `AIChatScreen.tsx`: symptom assistant
+- Materna care chat screen: symptom questions and care guidance
 - `emergencyscreen.tsx`: patient emergency activation
 - `HospitalsScreen.tsx`: hospital and county navigation
 - `profilescreen.tsx`: patient profile and PDF report

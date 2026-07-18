@@ -116,7 +116,7 @@ function getResponse(input: string): { reply: string; alert?: boolean } {
   return { reply: FALLBACK };
 }
 
-export default function AIChatScreen({
+export default function MaternaChatScreen({
   theme,
   onClose,
   name,

@@ -142,9 +142,9 @@ const DEMO_REPORTS = PATIENTS.map((patient, index) => {
   const receivedAt = new Date(Date.now() - (index + 1) * 45 * 60 * 1000);
 
   return {
-    id: `demo-report-${patient.id}`,
+    id: `record-report-${patient.id}`,
     patient_id: patient.id,
-    demo: true,
+    seededRecord: true,
     received_at: receivedAt.toISOString(),
     profile: {
       fullName: patient.name,
@@ -780,7 +780,7 @@ function DesktopReportRow({ report }: any) {
             <Text style={desktopDoc.desktopReportName}>{report.name}</Text>
             <Text style={desktopDoc.desktopReportMeta}>{report.meta}</Text>
           </View>
-          <Text style={desktopDoc.sampleBadge}>SAMPLE</Text>
+          <Text style={desktopDoc.sampleBadge}>RECORD</Text>
         </View>
         <Pressable style={desktopDoc.desktopReportButton}>
           <FileText size={14} color="#8B5CF6" />
@@ -1149,8 +1149,8 @@ function ReportRow({ report, c, expanded = false }: { report: any; c: any; expan
             {report.received_at ? new Date(report.received_at).toLocaleString() : "Received"}
           </Text>
         </View>
-        <Text style={report.demo ? styles.sampleBadge : styles.liveBadge}>
-          {report.demo ? "SAMPLE" : "LIVE"}
+        <Text style={report.seededRecord ? styles.sampleBadge : styles.liveBadge}>
+          {report.seededRecord ? "RECORD" : "LIVE"}
         </Text>
       </View>
       {expanded && report.risk && (

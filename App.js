@@ -20,7 +20,7 @@ import {
 } from "lucide-react-native";
 import HomeScreen from "./src/screens/HomeScreen";
 import ProfileScreen from "./src/screens/profilescreen";
-import AIChatScreen from "./src/screens/AIChatScreen";
+import MaternaChatScreen from "./src/screens/MaternaChatScreen";
 import HospitalsScreen from "./src/screens/HospitalsScreen";
 import EmergencyScreen from "./src/screens/emergencyscreen";
 import DoctorWorkspace from "./src/screens/doctor/DoctorWorkspace";
@@ -191,7 +191,7 @@ export default function App() {
           />
 
           <Text style={login.footer}>
-            Materna - Hackathon Demo - Arkansas Rural Health
+            Materna - Arkansas Rural Health
           </Text>
         </View>
       </SafeAreaView>
@@ -220,7 +220,7 @@ export default function App() {
     return (
       <View style={{ flex: 1, backgroundColor: dark ? "#0f1117" : "#f5f7fa", alignItems: "center" }}>
         <View style={{ width: "100%", maxWidth: 430, flex: 1 }}>
-          <AIChatScreen
+          <MaternaChatScreen
             theme={theme}
             onClose={() => setShowChat(false)}
             name="Maya"
@@ -458,7 +458,7 @@ function DesktopLogin({ onPatient, onDoctor }) {
             </View>
           </View>
 
-          <Text style={desktopLogin.footer}>Materna - Hackathon Demo - Arkansas Rural Health</Text>
+          <Text style={desktopLogin.footer}>Materna - Arkansas Rural Health</Text>
         </View>
       </ScrollView>
     </SafeAreaView>

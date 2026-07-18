@@ -335,10 +335,10 @@ export default function DoctorDashboardScreen({ theme, doctor, navigate, onLogou
           })}
         </ScrollView>
 
-        {/* ── AI Priority Queue ── */}
+        {/* ── Priority Queue ── */}
         <View style={s.queueHeader}>
           <Text style={[s.queueTitle, { color: c.text }]}>
-            AI Priority Queue
+            Priority Queue
           </Text>
           <Text style={[s.queueSub, { color: c.muted }]}>
             {filtered.length} patient{filtered.length !== 1 ? "s" : ""}

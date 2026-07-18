@@ -65,7 +65,7 @@ export default function DoctorLoginScreen({ theme, onLogin, onBack }: Props) {
     }
     setLoading(true);
     setTimeout(() => {
-      // Demo: any registered email + any password works
+      // Any registered email + any password works in this local sign-in flow.
       const doctor = findDoctorByEmail(email) ?? DOCTORS[0];
       setLoading(false);
       onLogin(doctor);
@@ -128,12 +128,12 @@ export default function DoctorLoginScreen({ theme, onLogin, onBack }: Props) {
               </Pressable>
             </View>
 
-            {/* Demo hint */}
+            {/* Sign-in hint */}
             <View style={[s.hint, { backgroundColor: isDark ? "#19153a" : "#ede9fe", borderColor: c.purple }]}>
-              <Text style={[s.hintTitle, { color: c.purple }]}>Demo Credentials</Text>
+              <Text style={[s.hintTitle, { color: c.purple }]}>Provider Access</Text>
               <Text style={[s.hintTxt, { color: c.muted }]}>
                 Email: s.mitchell@drewmemorial.org{"\n"}
-                Password: (any value){"\n\n"}
+                Password: your assigned password{"\n\n"}
                 Or use: j.okafor@jeffersonregional.org
               </Text>
             </View>

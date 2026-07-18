@@ -24,7 +24,7 @@ import { ArrowLeft, Map } from "lucide-react-native";
 // import { WebView } from "react-native-webview";
 
 // STEP 2: On Expo Web, this file uses iframe. On native, WebView loads the HTML.
-// For demo purposes the component works in ALL environments.
+// The component works in all environments.
 
 const DASHBOARD_HTML_PATH =
   Platform.OS === "web"
@@ -63,7 +63,7 @@ export default function HospitalDashboardScreen({ theme, navigate }) {
             border: "none",
             minHeight: "calc(100vh - 70px)",
           }}
-          title="MaternaAI Command Dashboard"
+          title="Materna Command Dashboard"
           allow="geolocation"
         />
       </SafeAreaView>

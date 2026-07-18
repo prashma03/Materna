@@ -22,7 +22,7 @@ export default function LoginScreen({ theme, onLogin }) {
   };
 
   function handleLogin() {
-    // Frontend-only: accept any non-empty input for demo
+    // Frontend-only: accept any non-empty input for local sign-in
     if (!email.trim() || !password.trim()) {
       setError("Please enter your email and password.");
       return;
@@ -42,7 +42,7 @@ export default function LoginScreen({ theme, onLogin }) {
           </View>
           <Text style={[s.appName, { color: c.text }]}>MATERNA</Text>
           <Text style={[s.tagline, { color: c.muted }]}>
-            Rural maternal safety — powered by AI
+            Rural maternal safety for connected care
           </Text>
         </View>
 
@@ -78,7 +78,7 @@ export default function LoginScreen({ theme, onLogin }) {
           </Pressable>
 
           <Text style={[s.hint, { color: c.muted }]}>
-            Demo: enter anything to proceed
+            Enter your details to continue
           </Text>
         </View>
 
