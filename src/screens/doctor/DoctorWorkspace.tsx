@@ -46,6 +46,16 @@ import {
 import { createAndShareProfileReport } from "../../utils/profileReport";
 
 type DoctorView = "home" | "patients" | "reports" | "profile";
+type DesktopDoctorView =
+  | "dashboard"
+  | "patients"
+  | "reports"
+  | "alerts"
+  | "appointments"
+  | "carePlans"
+  | "messages"
+  | "analytics"
+  | "settings";
 type RiskLevel = "Critical" | "High" | "Moderate" | "Stable";
 
 interface Props {
@@ -489,6 +499,7 @@ function MobileDoctorWorkspace({ theme, onLogout }: Props) {
 }
 
 function DesktopDoctorDashboard({ onLogout }: { onLogout: () => void }) {
+  const [view, setView] = useState<DesktopDoctorView>("dashboard");
   const priorityPatients = [
     { ...PATIENTS[0], status: "Stable", detail: "24 weeks - Due in 16 weeks" },
     { ...PATIENTS[1], status: "High Risk", detail: "32 weeks - Hypertension" },
@@ -508,6 +519,47 @@ function DesktopDoctorDashboard({ onLogout }: { onLogout: () => void }) {
     { name: "Maya Johnson", meta: "May 27, 2025 - Ultra Sound" },
     { name: "Maria Gonzalez", meta: "May 26, 2025 - Lab Report" },
   ];
+  const schedule = [
+    ["09:00 AM", "Maya Johnson", "Routine Check-up"],
+    ["10:30 AM", "Maria Gonzalez", "High Risk Follow-up"],
+    ["12:00 PM", "Tanya Williams", "Prenatal Consultation"],
+    ["02:30 PM", "Sarah Davis", "Routine Check-up"],
+    ["04:00 PM", "Follow-up Reviews", "3 patients"],
+  ];
+  const alerts = [
+    {
+      icon: AlertTriangle,
+      title: "High risk alert",
+      body: "Maria Gonzalez's BP reading is critical",
+      color: "#EF4444",
+      time: "15m ago",
+    },
+    {
+      icon: ClipboardList,
+      title: "Lab results",
+      body: "2 new lab reports available",
+      color: "#F59E0B",
+      time: "1h ago",
+    },
+    {
+      icon: Bell,
+      title: "Appointment reminder",
+      body: "3 follow-ups due tomorrow",
+      color: "#8B5CF6",
+      time: "2h ago",
+    },
+  ];
+  const navItems = [
+    { key: "dashboard" as const, label: "Dashboard", icon: Home },
+    { key: "patients" as const, label: "Patients", icon: Users },
+    { key: "reports" as const, label: "Reports", icon: FileText },
+    { key: "alerts" as const, label: "Alerts", icon: Bell, badge: "6" },
+    { key: "appointments" as const, label: "Appointments", icon: CalendarDays },
+    { key: "carePlans" as const, label: "Care Plans", icon: ClipboardList },
+    { key: "messages" as const, label: "Messages", icon: MessageSquare },
+    { key: "analytics" as const, label: "Analytics", icon: BarChart3 },
+    { key: "settings" as const, label: "Settings", icon: Settings },
+  ];
 
   return (
     <SafeAreaView style={desktopDoc.safe}>
@@ -526,18 +578,13 @@ function DesktopDoctorDashboard({ onLogout }: { onLogout: () => void }) {
           </View>
 
           <View style={desktopDoc.navList}>
-            {[
-              { label: "Dashboard", icon: Home, active: true },
-              { label: "Patients", icon: Users },
-              { label: "Reports", icon: FileText },
-              { label: "Alerts", icon: Bell, badge: "6" },
-              { label: "Appointments", icon: CalendarDays },
-              { label: "Care Plans", icon: ClipboardList },
-              { label: "Messages", icon: MessageSquare },
-              { label: "Analytics", icon: BarChart3 },
-              { label: "Settings", icon: Settings },
-            ].map((item) => (
-              <DesktopNavItem key={item.label} {...item} />
+            {navItems.map((item) => (
+              <DesktopNavItem
+                key={item.key}
+                {...item}
+                active={view === item.key}
+                onPress={() => setView(item.key)}
+              />
             ))}
           </View>
 
@@ -563,175 +610,139 @@ function DesktopDoctorDashboard({ onLogout }: { onLogout: () => void }) {
           contentContainerStyle={desktopDoc.mainContent}
           showsVerticalScrollIndicator={false}
         >
-          <View style={desktopDoc.mainColumn}>
-            <Text style={desktopDoc.greeting}>Good morning, Dr. Aisha</Text>
-            <Text style={desktopDoc.subGreeting}>
-              Here's what's happening with your patients today.
-            </Text>
+          {view === "dashboard" ? (
+            <>
+              <View style={desktopDoc.mainColumn}>
+                <Text style={desktopDoc.greeting}>Good morning, Dr. Aisha</Text>
+                <Text style={desktopDoc.subGreeting}>
+                  Here's what's happening with your patients today.
+                </Text>
 
-            <Text style={desktopDoc.sectionTitle}>Clinical overview</Text>
-            <Text style={desktopDoc.sectionSubtitle}>
-              Live updates and key clinical information
-            </Text>
+                <Text style={desktopDoc.sectionTitle}>Clinical overview</Text>
+                <Text style={desktopDoc.sectionSubtitle}>
+                  Live updates and key clinical information
+                </Text>
 
-            <View style={desktopDoc.statsGrid}>
-              <DesktopStatCard
-                value="3"
-                label="Patients"
-                caption="New today"
-                color="#3B82F6"
-                icon={Activity}
-              />
-              <DesktopStatCard
-                value="2"
-                label="Critical"
-                caption="Requires attention"
-                color="#F43F5E"
-                icon={Activity}
-              />
-              <DesktopStatCard
-                value="3"
-                label="Improving"
-                caption="On track"
-                color="#22C55E"
-                icon={TrendingUp}
-              />
-              <DesktopStatCard
-                value="16"
-                label="Total active"
-                caption="Under your care"
-                color="#8B5CF6"
-                icon={Users}
-              />
-            </View>
-
-            {highRiskCards.map(({ patient, meta }) => (
-              <View key={patient.id} style={desktopDoc.highRiskCard}>
-                <View style={desktopDoc.highRiskIcon}>
-                  <AlertTriangle size={25} color="#FB7185" />
+                <View style={desktopDoc.statsGrid}>
+                  <DesktopStatCard value="3" label="Patients" caption="New today" color="#3B82F6" icon={Activity} />
+                  <DesktopStatCard value="2" label="Critical" caption="Requires attention" color="#F43F5E" icon={Activity} />
+                  <DesktopStatCard value="3" label="Improving" caption="On track" color="#22C55E" icon={TrendingUp} />
+                  <DesktopStatCard value="16" label="Total active" caption="Under your care" color="#8B5CF6" icon={Users} />
                 </View>
-                <View style={{ flex: 1 }}>
-                  <Text style={desktopDoc.highRiskLabel}>HIGH RISK REVIEW</Text>
-                  <Text style={desktopDoc.highRiskName}>{patient.name}</Text>
-                  <Text style={desktopDoc.highRiskMeta}>{meta}</Text>
+
+                {highRiskCards.map(({ patient, meta }) => (
+                  <View key={patient.id} style={desktopDoc.highRiskCard}>
+                    <View style={desktopDoc.highRiskIcon}>
+                      <AlertTriangle size={25} color="#FB7185" />
+                    </View>
+                    <View style={{ flex: 1 }}>
+                      <Text style={desktopDoc.highRiskLabel}>HIGH RISK REVIEW</Text>
+                      <Text style={desktopDoc.highRiskName}>{patient.name}</Text>
+                      <Text style={desktopDoc.highRiskMeta}>{meta}</Text>
+                    </View>
+                    <Text style={desktopDoc.criticalPill}>CRITICAL</Text>
+                    <ChevronRight size={22} color="#CBD5E1" />
+                  </View>
+                ))}
+
+                <View style={desktopDoc.sectionHeaderRow}>
+                  <Text style={desktopDoc.sectionTitle}>Priority patients</Text>
+                  <Pressable onPress={() => setView("patients")}>
+                    <Text style={desktopDoc.viewAll}>View all</Text>
+                  </Pressable>
                 </View>
-                <Text style={desktopDoc.criticalPill}>CRITICAL</Text>
-                <ChevronRight size={22} color="#CBD5E1" />
-              </View>
-            ))}
+                <View style={desktopDoc.patientList}>
+                  {priorityPatients.map((patient) => (
+                    <DesktopPatientRow key={patient.id} patient={patient} />
+                  ))}
+                </View>
 
-            <View style={desktopDoc.sectionHeaderRow}>
-              <Text style={desktopDoc.sectionTitle}>Priority patients</Text>
-              <Text style={desktopDoc.viewAll}>View all</Text>
-            </View>
-            <View style={desktopDoc.patientList}>
-              {priorityPatients.map((patient) => (
-                <DesktopPatientRow key={patient.id} patient={patient} />
-              ))}
-            </View>
-
-            <View style={desktopDoc.sectionHeaderRow}>
-              <Text style={desktopDoc.sectionTitle}>Recent reports</Text>
-              <Text style={desktopDoc.viewAll}>View all</Text>
-            </View>
-            <View style={desktopDoc.reportList}>
-              {reports.map((report) => (
-                <DesktopReportRow key={report.name} report={report} />
-              ))}
-            </View>
-          </View>
-
-          <View style={desktopDoc.rightRail}>
-            <View style={desktopDoc.topTools}>
-              <View style={desktopDoc.dateCard}>
-                <CalendarDays size={21} color="#CBD5E1" />
-                <View>
-                  <Text style={desktopDoc.dateText}>May 28, 2025</Text>
-                  <Text style={desktopDoc.dateSubtext}>Wednesday</Text>
+                <View style={desktopDoc.sectionHeaderRow}>
+                  <Text style={desktopDoc.sectionTitle}>Recent reports</Text>
+                  <Pressable onPress={() => setView("reports")}>
+                    <Text style={desktopDoc.viewAll}>View all</Text>
+                  </Pressable>
+                </View>
+                <View style={desktopDoc.reportList}>
+                  {reports.map((report) => (
+                    <DesktopReportRow key={report.name} report={report} />
+                  ))}
                 </View>
               </View>
-              <View style={desktopDoc.bellButton}>
-                <Bell size={22} color="#CBD5E1" />
-                <Text style={desktopDoc.bellBadge}>6</Text>
-              </View>
-            </View>
 
-            <DesktopPanel title="Today's schedule" action="View calendar">
-              {[
-                ["09:00 AM", "Maya Johnson", "Routine Check-up"],
-                ["10:30 AM", "Maria Gonzalez", "High Risk Follow-up"],
-                ["12:00 PM", "Tanya Williams", "Prenatal Consultation"],
-                ["02:30 PM", "Sarah Davis", "Routine Check-up"],
-                ["04:00 PM", "Follow-up Reviews", "3 patients"],
-              ].map(([time, name, type], index) => (
-                <View key={`${time}-${name}`} style={desktopDoc.scheduleRow}>
-                  <Text style={desktopDoc.scheduleTime}>{time}</Text>
-                  <View style={desktopDoc.scheduleInfo}>
-                    <View
-                      style={[
-                        desktopDoc.scheduleDot,
-                        index === 1 && { backgroundColor: "#F43F5E" },
-                      ]}
-                    />
+              <View style={desktopDoc.rightRail}>
+                <View style={desktopDoc.topTools}>
+                  <View style={desktopDoc.dateCard}>
+                    <CalendarDays size={21} color="#CBD5E1" />
                     <View>
-                      <Text style={desktopDoc.scheduleName}>{name}</Text>
-                      <Text style={desktopDoc.scheduleType}>{type}</Text>
+                      <Text style={desktopDoc.dateText}>May 28, 2025</Text>
+                      <Text style={desktopDoc.dateSubtext}>Wednesday</Text>
                     </View>
                   </View>
+                  <Pressable style={desktopDoc.bellButton} onPress={() => setView("alerts")}>
+                    <Bell size={22} color="#CBD5E1" />
+                    <Text style={desktopDoc.bellBadge}>6</Text>
+                  </Pressable>
                 </View>
-              ))}
-            </DesktopPanel>
 
-            <DesktopPanel title="Alerts & notifications" action="View all">
-              {[
-                {
-                  icon: AlertTriangle,
-                  title: "High risk alert",
-                  body: "Maria Gonzalez's BP reading is critical",
-                  color: "#EF4444",
-                  time: "15m ago",
-                },
-                {
-                  icon: ClipboardList,
-                  title: "Lab results",
-                  body: "2 new lab reports available",
-                  color: "#F59E0B",
-                  time: "1h ago",
-                },
-                {
-                  icon: Bell,
-                  title: "Appointment reminder",
-                  body: "3 follow-ups due tomorrow",
-                  color: "#8B5CF6",
-                  time: "2h ago",
-                },
-              ].map((alert) => (
-                <DesktopAlertRow key={alert.title} alert={alert} />
-              ))}
-            </DesktopPanel>
+                <DesktopPanel title="Today's schedule" action="View calendar" onAction={() => setView("appointments")}>
+                  {schedule.map(([time, name, type], index) => (
+                    <View key={`${time}-${name}`} style={desktopDoc.scheduleRow}>
+                      <Text style={desktopDoc.scheduleTime}>{time}</Text>
+                      <View style={desktopDoc.scheduleInfo}>
+                        <View
+                          style={[
+                            desktopDoc.scheduleDot,
+                            index === 1 && { backgroundColor: "#F43F5E" },
+                          ]}
+                        />
+                        <View>
+                          <Text style={desktopDoc.scheduleName}>{name}</Text>
+                          <Text style={desktopDoc.scheduleType}>{type}</Text>
+                        </View>
+                      </View>
+                    </View>
+                  ))}
+                </DesktopPanel>
 
-            <DesktopPanel title="Quick actions">
-              <View style={desktopDoc.quickGrid}>
-                <DesktopQuickAction icon={UserPlus} label="Add new patient" color="#22C55E" />
-                <DesktopQuickAction icon={MessageSquare} label="Send message" color="#8B5CF6" />
-                <DesktopQuickAction icon={ClipboardList} label="Create care plan" color="#F59E0B" />
-                <DesktopQuickAction icon={FileText} label="Generate report" color="#3B82F6" />
+                <DesktopPanel title="Alerts & notifications" action="View all" onAction={() => setView("alerts")}>
+                  {alerts.map((alert) => (
+                    <DesktopAlertRow key={alert.title} alert={alert} />
+                  ))}
+                </DesktopPanel>
+
+                <DesktopPanel title="Quick actions">
+                  <View style={desktopDoc.quickGrid}>
+                    <DesktopQuickAction icon={UserPlus} label="Add new patient" color="#22C55E" onPress={() => setView("patients")} />
+                    <DesktopQuickAction icon={MessageSquare} label="Send message" color="#8B5CF6" onPress={() => setView("messages")} />
+                    <DesktopQuickAction icon={ClipboardList} label="Create care plan" color="#F59E0B" onPress={() => setView("carePlans")} />
+                    <DesktopQuickAction icon={FileText} label="Generate report" color="#3B82F6" onPress={() => setView("reports")} />
+                  </View>
+                </DesktopPanel>
               </View>
-            </DesktopPanel>
-          </View>
+            </>
+          ) : (
+            <DesktopDoctorSection
+              view={view}
+              patients={priorityPatients}
+              reports={reports}
+              alerts={alerts}
+              schedule={schedule}
+            />
+          )}
         </ScrollView>
       </View>
     </SafeAreaView>
   );
 }
 
-function DesktopNavItem({ label, icon: Icon, active, badge }: any) {
+function DesktopNavItem({ label, icon: Icon, active, badge, onPress }: any) {
   return (
-    <View style={[desktopDoc.navItem, active && desktopDoc.navItemActive]}>
+    <Pressable style={[desktopDoc.navItem, active && desktopDoc.navItemActive]} onPress={onPress}>
       <Icon size={22} color={active ? "#8B5CF6" : "#CBD5E1"} />
       <Text style={[desktopDoc.navText, active && desktopDoc.navTextActive]}>{label}</Text>
       {badge ? <Text style={desktopDoc.navBadge}>{badge}</Text> : null}
-    </View>
+    </Pressable>
   );
 }
 
@@ -791,12 +802,16 @@ function DesktopReportRow({ report }: any) {
   );
 }
 
-function DesktopPanel({ title, action, children }: any) {
+function DesktopPanel({ title, action, onAction, children }: any) {
   return (
     <View style={desktopDoc.panel}>
       <View style={desktopDoc.panelHeader}>
         <Text style={desktopDoc.panelTitle}>{title}</Text>
-        {action ? <Text style={desktopDoc.panelAction}>{action}</Text> : null}
+        {action ? (
+          <Pressable onPress={onAction}>
+            <Text style={desktopDoc.panelAction}>{action}</Text>
+          </Pressable>
+        ) : null}
       </View>
       {children}
     </View>
@@ -820,12 +835,210 @@ function DesktopAlertRow({ alert }: any) {
   );
 }
 
-function DesktopQuickAction({ icon: Icon, label, color }: any) {
+function DesktopQuickAction({ icon: Icon, label, color, onPress }: any) {
   return (
-    <Pressable style={desktopDoc.quickAction}>
+    <Pressable style={desktopDoc.quickAction} onPress={onPress}>
       <Icon size={31} color={color} />
       <Text style={desktopDoc.quickActionLabel}>{label}</Text>
     </Pressable>
+  );
+}
+
+function DesktopDoctorSection({ view, patients, reports, alerts, schedule }: any) {
+  const config = {
+    patients: {
+      title: "Patients",
+      subtitle: "Contact details, pregnancy status, and active risk flags.",
+      icon: Users,
+      color: "#22C55E",
+    },
+    reports: {
+      title: "Reports",
+      subtitle: "Shared profile reports, labs, and visit summaries.",
+      icon: FileText,
+      color: "#3B82F6",
+    },
+    alerts: {
+      title: "Alerts",
+      subtitle: "Clinical notifications that need timely review.",
+      icon: Bell,
+      color: "#F43F5E",
+    },
+    appointments: {
+      title: "Appointments",
+      subtitle: "Today's clinic schedule and follow-up queue.",
+      icon: CalendarDays,
+      color: "#8B5CF6",
+    },
+    carePlans: {
+      title: "Care Plans",
+      subtitle: "Active patient plans and follow-up tasks.",
+      icon: ClipboardList,
+      color: "#F59E0B",
+    },
+    messages: {
+      title: "Messages",
+      subtitle: "Patient and care-team conversations.",
+      icon: MessageSquare,
+      color: "#8B5CF6",
+    },
+    analytics: {
+      title: "Analytics",
+      subtitle: "Panel trends and outcome signals across your patients.",
+      icon: BarChart3,
+      color: "#22C55E",
+    },
+    settings: {
+      title: "Settings",
+      subtitle: "Clinic profile, notifications, and access preferences.",
+      icon: Settings,
+      color: "#CBD5E1",
+    },
+  }[view as Exclude<DesktopDoctorView, "dashboard">];
+  const Icon = config.icon;
+
+  return (
+    <View style={desktopDoc.contentPage}>
+      <View style={desktopDoc.pageHero}>
+        <View style={[desktopDoc.pageHeroIcon, { borderColor: `${config.color}66` }]}>
+          <Icon size={30} color={config.color} />
+        </View>
+        <View style={{ flex: 1 }}>
+          <Text style={desktopDoc.pageTitle}>{config.title}</Text>
+          <Text style={desktopDoc.pageSubtitle}>{config.subtitle}</Text>
+        </View>
+      </View>
+
+      {view === "patients" && (
+        <>
+          <View style={desktopDoc.pageGrid}>
+            <DesktopStatCard value="16" label="Total active" caption="Under your care" color="#8B5CF6" icon={Users} />
+            <DesktopStatCard value="2" label="High risk" caption="Needs attention" color="#F43F5E" icon={AlertTriangle} />
+            <DesktopStatCard value="3" label="Improving" caption="On track" color="#22C55E" icon={TrendingUp} />
+          </View>
+          <View style={desktopDoc.pagePanel}>
+            {patients.map((patient: any) => (
+              <DesktopPatientRow key={patient.id} patient={patient} />
+            ))}
+          </View>
+        </>
+      )}
+
+      {view === "reports" && (
+        <View style={desktopDoc.pagePanel}>
+          {reports.map((report: any) => (
+            <DesktopReportRow key={report.name} report={report} />
+          ))}
+        </View>
+      )}
+
+      {view === "alerts" && (
+        <View style={desktopDoc.pagePanel}>
+          <View style={desktopDoc.reviewBanner}>
+            <AlertTriangle size={24} color="#FB7185" />
+            <View style={{ flex: 1 }}>
+              <Text style={desktopDoc.reviewTitle}>2 critical reviews open</Text>
+              <Text style={desktopDoc.reviewBody}>Maria Gonzalez and Tanya Williams need same-day clinical follow-up.</Text>
+            </View>
+          </View>
+          {alerts.map((alert: any) => (
+            <DesktopAlertRow key={alert.title} alert={alert} />
+          ))}
+        </View>
+      )}
+
+      {view === "appointments" && (
+        <View style={desktopDoc.pagePanel}>
+          {schedule.map(([time, name, type]: string[], index: number) => (
+            <View key={`${time}-${name}`} style={desktopDoc.scheduleRow}>
+              <Text style={desktopDoc.scheduleTime}>{time}</Text>
+              <View style={desktopDoc.scheduleInfo}>
+                <View style={[desktopDoc.scheduleDot, index === 1 && { backgroundColor: "#F43F5E" }]} />
+                <View>
+                  <Text style={desktopDoc.scheduleName}>{name}</Text>
+                  <Text style={desktopDoc.scheduleType}>{type}</Text>
+                </View>
+              </View>
+            </View>
+          ))}
+        </View>
+      )}
+
+      {view === "carePlans" && (
+        <View style={desktopDoc.pageGrid}>
+          {[
+            ["Review BP plan", "Maria Gonzalez needs a hypertension follow-up before end of day.", "#F43F5E"],
+            ["Update glucose checks", "Tanya Williams has a diabetes care-plan review due this week.", "#F59E0B"],
+            ["Confirm routine plan", "Maya Johnson remains stable with standard prenatal guidance.", "#22C55E"],
+          ].map(([title, body, color]) => (
+            <View key={title} style={[desktopDoc.pageCard, { borderColor: `${color}66` }]}>
+              <ClipboardList size={24} color={color} />
+              <Text style={desktopDoc.pageCardTitle}>{title}</Text>
+              <Text style={desktopDoc.pageCardBody}>{body}</Text>
+            </View>
+          ))}
+        </View>
+      )}
+
+      {view === "messages" && (
+        <View style={desktopDoc.pagePanel}>
+          {[
+            ["Maya Johnson", "Question about prenatal vitamins", "8m ago"],
+            ["Care coordinator", "Transportation follow-up for Friday", "42m ago"],
+            ["Maria Gonzalez", "Home BP reading uploaded", "1h ago"],
+          ].map(([name, body, time]) => (
+            <View key={name} style={desktopDoc.messageRow}>
+              <View style={desktopDoc.messageAvatar}><Mail size={19} color="#A78BFA" /></View>
+              <View style={{ flex: 1 }}>
+                <Text style={desktopDoc.messageName}>{name}</Text>
+                <Text style={desktopDoc.messageBody}>{body}</Text>
+              </View>
+              <Text style={desktopDoc.alertTime}>{time}</Text>
+              <ChevronRight size={18} color="#64748B" />
+            </View>
+          ))}
+        </View>
+      )}
+
+      {view === "analytics" && (
+        <View style={desktopDoc.pageGrid}>
+          {[
+            ["On-track patients", "87%", "#22C55E", "Most patients are following their care plan."],
+            ["High-risk follow-ups", "2", "#F43F5E", "Same-day reviews currently open."],
+            ["Reports this week", "5", "#3B82F6", "Shared summaries received from patients."],
+          ].map(([title, value, color, body]) => (
+            <View key={title} style={desktopDoc.pageCard}>
+              <Text style={[desktopDoc.analyticsValue, { color }]}>{value}</Text>
+              <Text style={desktopDoc.pageCardTitle}>{title}</Text>
+              <Text style={desktopDoc.pageCardBody}>{body}</Text>
+              <View style={desktopDoc.chartBar}>
+                <View style={[desktopDoc.chartFill, { backgroundColor: color, width: value === "87%" ? "87%" : value === "5" ? "55%" : "35%" }]} />
+              </View>
+            </View>
+          ))}
+        </View>
+      )}
+
+      {view === "settings" && (
+        <View style={desktopDoc.pagePanel}>
+          {[
+            ["Notification preferences", "Manage alert severity and reminder timing"],
+            ["Clinic profile", "Delta Memorial Hospital, OB-GYN care team"],
+            ["Team access", "Invite nurses and care coordinators"],
+            ["Report sharing", "Control patient report and PDF permissions"],
+          ].map(([title, body]) => (
+            <View key={title} style={desktopDoc.settingsRow}>
+              <Settings size={21} color="#CBD5E1" />
+              <View style={{ flex: 1 }}>
+                <Text style={desktopDoc.messageName}>{title}</Text>
+                <Text style={desktopDoc.messageBody}>{body}</Text>
+              </View>
+              <ChevronRight size={18} color="#64748B" />
+            </View>
+          ))}
+        </View>
+      )}
+    </View>
   );
 }
 
@@ -1582,6 +1795,99 @@ const desktopDoc = StyleSheet.create({
     backgroundColor: "#0B111C",
   },
   quickActionLabel: { color: "#CBD5E1", fontSize: 12, fontWeight: "700" },
+  contentPage: { flex: 1, maxWidth: 1040 },
+  pageHero: {
+    borderWidth: 1,
+    borderColor: "#1F2937",
+    borderRadius: 8,
+    backgroundColor: "#071019",
+    padding: 22,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 16,
+    marginBottom: 18,
+  },
+  pageHeroIcon: {
+    width: 58,
+    height: 58,
+    borderRadius: 8,
+    borderWidth: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#0B111C",
+  },
+  pageTitle: { color: "#FFFFFF", fontSize: 27, fontWeight: "900" },
+  pageSubtitle: { color: "#CBD5E1", fontSize: 14, marginTop: 6 },
+  pageGrid: { flexDirection: "row", flexWrap: "wrap", gap: 14, marginBottom: 16 },
+  pagePanel: {
+    borderWidth: 1,
+    borderColor: "#1F2937",
+    borderRadius: 8,
+    backgroundColor: "#071019",
+    padding: 16,
+    gap: 8,
+  },
+  pageCard: {
+    flex: 1,
+    minWidth: 250,
+    minHeight: 148,
+    borderWidth: 1,
+    borderColor: "#1F2937",
+    borderRadius: 8,
+    backgroundColor: "#071019",
+    padding: 18,
+  },
+  pageCardTitle: { color: "#F8FAFC", fontSize: 16, fontWeight: "900", marginTop: 14 },
+  pageCardBody: { color: "#CBD5E1", fontSize: 13, lineHeight: 19, marginTop: 8 },
+  reviewBanner: {
+    minHeight: 76,
+    borderWidth: 1,
+    borderColor: "#E11D48",
+    borderRadius: 8,
+    backgroundColor: "#2A0810",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 14,
+    padding: 16,
+    marginBottom: 8,
+  },
+  reviewTitle: { color: "#FFFFFF", fontSize: 16, fontWeight: "900" },
+  reviewBody: { color: "#FECACA", fontSize: 13, marginTop: 4 },
+  messageRow: {
+    minHeight: 70,
+    borderBottomWidth: 1,
+    borderBottomColor: "#1F2937",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
+  messageAvatar: {
+    width: 42,
+    height: 42,
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#1E153B",
+  },
+  messageName: { color: "#F8FAFC", fontSize: 14, fontWeight: "900" },
+  messageBody: { color: "#94A3B8", fontSize: 12, marginTop: 4 },
+  analyticsValue: { fontSize: 38, fontWeight: "900", lineHeight: 42 },
+  chartBar: {
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: "#111827",
+    overflow: "hidden",
+    marginTop: 18,
+  },
+  chartFill: { height: 8, borderRadius: 4 },
+  settingsRow: {
+    minHeight: 68,
+    borderBottomWidth: 1,
+    borderBottomColor: "#1F2937",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 13,
+  },
 });
 
 const colors = {
