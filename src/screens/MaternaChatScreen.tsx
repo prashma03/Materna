@@ -131,16 +131,19 @@ export default function MaternaChatScreen({
   theme,
   onClose,
   name,
-  patientId = "patient_maya",
+  patientId = "patient_001",
   currentSensors = null,
   riskLevel = "stable",
 }: Props) {
   const c = theme === "dark" ? colors.dark : colors.light;
+  const greeting = name.trim()
+    ? `Hi ${name.trim()}! I'm Materna. Tell me how you're feeling or ask me anything about your pregnancy.`
+    : "Hi, I'm Materna. Tell me how you're feeling or ask me anything about your pregnancy.";
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "0",
       from: "materna",
-      text: `Hi ${name}! I'm Materna. Tell me how you're feeling or ask me anything about your pregnancy.`,
+      text: greeting,
     },
   ]);
   const [input, setInput] = useState("");

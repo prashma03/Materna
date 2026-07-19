@@ -24,6 +24,7 @@ import MaternaChatScreen from "./src/screens/MaternaChatScreen";
 import HospitalsScreen from "./src/screens/HospitalsScreen";
 import EmergencyScreen from "./src/screens/emergencyscreen";
 import DoctorWorkspace from "./src/screens/doctor/DoctorWorkspace";
+import { loadProfile } from "./src/storage/profileStorage";
 
 export default function App() {
   const { width } = useWindowDimensions();
@@ -34,6 +35,7 @@ export default function App() {
   const [showEmergency, setShowEmergency] = useState(false);
   const [userType, setUserType] = useState(null); // null = login screen
   const [activeScenario, setActiveScenario] = useState("Green");
+  const [patientProfile, setPatientProfile] = useState(null);
   const welcomeOpacity = useRef(new Animated.Value(0)).current;
   const welcomeScale = useRef(new Animated.Value(0.9)).current;
   const welcomeLift = useRef(new Animated.Value(18)).current;
@@ -104,6 +106,12 @@ export default function App() {
 
   function toggleTheme() {
     setTheme(theme === "dark" ? "light" : "dark");
+  }
+
+  async function openChat() {
+    const profile = await loadProfile();
+    setPatientProfile(profile);
+    setShowChat(true);
   }
 
   const dark = theme === "dark";
@@ -223,7 +231,7 @@ export default function App() {
           <MaternaChatScreen
             theme={theme}
             onClose={() => setShowChat(false)}
-            name="Maya"
+            name={patientProfile?.fullName || ""}
             patientId="patient_001"
           />
         </View>
@@ -251,7 +259,7 @@ export default function App() {
             <HomeScreen
               theme={theme}
               toggleTheme={toggleTheme}
-              onAskMaterna={() => setShowChat(true)}
+              onAskMaterna={openChat}
               onOpenHospitals={() => setActiveTab("Hospitals")}
               onOpenProfile={() => setActiveTab("Profile")}
               onEmergency={() => setShowEmergency(true)}
