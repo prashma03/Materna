@@ -71,20 +71,50 @@ Wi-Fi, then manually open the Expo address shown in the terminal.
 
 ## Backend
 
-The project includes a simple local backend:
+The project includes an Express API for report sharing, emergency alerts,
+doctor sessions, patient history, care-chat responses, and sensor ingest.
 
 ```powershell
-node backend/server.js
+npm run server
 ```
 
-The app API URL is configured in:
+Local backend data is saved under `backend/data/`, which is ignored by Git.
+Create a local `.env` file from `.env.example` before testing protected doctor
+routes:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+Set a real value for:
 
 ```text
-src/config/config.js
+MATERNA_DOCTOR_PASSWORD
 ```
 
-For phone testing with a local backend, use the computer's LAN IP address
-instead of `localhost`.
+The web app uses `/api` automatically after Vercel deployment. For local Expo
+testing, set `EXPO_PUBLIC_MATERNA_API_URL` to your backend URL. For phone
+testing with a local backend, use the computer's LAN IP address instead of
+`localhost`.
+
+## Deployment
+
+The repository is configured for Vercel:
+
+- Static Expo web app exports to `dist/`
+- Express API is exposed through Vercel serverless functions under `/api`
+- All non-API routes fall back to `index.html`
+
+Before using the deployed doctor dashboard, set these Vercel environment
+variables:
+
+```text
+MATERNA_DOCTOR_USER=doctor
+MATERNA_DOCTOR_PASSWORD=<strong password>
+MATERNA_ALLOWED_ORIGIN=https://your-vercel-domain.vercel.app
+```
+
+Do not commit real passwords or patient data.
 
 ## Project Structure
 

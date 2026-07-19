@@ -1,8 +1,9 @@
 import {
   BASE_HEADERS,
-  DOCTOR_HEADERS,
+  DOCTOR_SESSION_KEY,
   MATERNA_URL,
 } from '../config/config';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const reportedApiIssues = new Set();
 
@@ -13,6 +14,57 @@ function logApiIssueOnce(key, message) {
   // intrusive Expo error overlay on the patient's phone.
   console.log(`[Materna API] ${message}`);
 }
+
+export const getDoctorSession = async () => {
+  const raw = await AsyncStorage.getItem(DOCTOR_SESSION_KEY);
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw);
+  } catch {
+    await AsyncStorage.removeItem(DOCTOR_SESSION_KEY);
+    return null;
+  }
+};
+
+async function getDoctorHeaders() {
+  const session = await getDoctorSession();
+  return {
+    ...BASE_HEADERS,
+    ...(session?.token ? { Authorization: `Bearer ${session.token}` } : {}),
+  };
+}
+
+export const signInDoctor = async (username, password) => {
+  const response = await fetch(`${MATERNA_URL}/doctor/session`, {
+    method: 'POST',
+    headers: BASE_HEADERS,
+    body: JSON.stringify({ username, password })
+  });
+
+  if (!response.ok) return null;
+  const result = await response.json();
+  if (result.session?.token) {
+    await AsyncStorage.setItem(
+      DOCTOR_SESSION_KEY,
+      JSON.stringify(result.session)
+    );
+    return result.session;
+  }
+  return null;
+};
+
+export const signOutDoctor = async () => {
+  try {
+    await fetch(`${MATERNA_URL}/doctor/session`, {
+      method: 'DELETE',
+      headers: await getDoctorHeaders()
+    });
+  } catch {
+    // Local sign-out should still succeed if the network is unavailable.
+  } finally {
+    await AsyncStorage.removeItem(DOCTOR_SESSION_KEY);
+  }
+};
 
 export const sendSensorData = async (patientId, patientName, weeks, sensors) => {
   try {
@@ -89,7 +141,7 @@ export const getAllPatients = async () => {
   try {
     const response = await fetch(`${MATERNA_URL}/patients`, {
       method:  'GET',
-      headers: DOCTOR_HEADERS
+      headers: await getDoctorHeaders()
     });
     const result = await response.json();
     return result.patients;
@@ -104,7 +156,7 @@ export const getPatientHistory = async (patientId, hours = 24) => {
     const response = await fetch(
       `${MATERNA_URL}/history/${patientId}?hours=${hours}`, {
       method:  'GET',
-      headers: DOCTOR_HEADERS
+      headers: await getDoctorHeaders()
     });
     const result = await response.json();
     return result.readings;
@@ -119,7 +171,7 @@ export const getPatientConversations = async (patientId) => {
     const response = await fetch(
       `${MATERNA_URL}/conversations/${patientId}`, {
       method:  'GET',
-      headers: DOCTOR_HEADERS
+      headers: await getDoctorHeaders()
     });
     const result = await response.json();
     return result.conversations;
@@ -152,7 +204,7 @@ export const getSharedReports = async () => {
   try {
     const response = await fetch(`${MATERNA_URL}/reports`, {
       method: 'GET',
-      headers: DOCTOR_HEADERS
+      headers: await getDoctorHeaders()
     });
 
     if (!response.ok) {
@@ -207,7 +259,7 @@ export const getEmergencyAlerts = async () => {
   try {
     const response = await fetch(`${MATERNA_URL}/emergency-alerts`, {
       method: 'GET',
-      headers: DOCTOR_HEADERS
+      headers: await getDoctorHeaders()
     });
     if (response.ok) {
       const result = await response.json();
@@ -219,7 +271,7 @@ export const getEmergencyAlerts = async () => {
         `${MATERNA_URL}/conversations/patient_001`,
         {
           method: 'GET',
-          headers: DOCTOR_HEADERS
+          headers: await getDoctorHeaders()
         }
       );
       if (!fallbackResponse.ok) return null;
@@ -266,7 +318,7 @@ export const acknowledgeEmergencyAlert = async (alertId) => {
       `${MATERNA_URL}/emergency-alerts/${alertId}/acknowledge`,
       {
         method: 'POST',
-        headers: DOCTOR_HEADERS
+        headers: await getDoctorHeaders()
       }
     );
     return response.ok;

@@ -1,18 +1,9 @@
 node_modules/
-.expo/
-.expo-shared/
 dist/
-web-build/
-.expo-export-*/
-.expo-*-test/
-.expo-*-test-*/
-.expo-diagnostic-export/
-.expo-*-output.log
-.expo-*-error.log
+.expo/
+.env
+.env.local
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-.DS_Store
-Thumbs.db
+backend/data/
+output/
+tmp/

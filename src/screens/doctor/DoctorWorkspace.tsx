@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import {
+  ActivityIndicator,
   Alert,
   BackHandler,
   Linking,
@@ -41,7 +42,10 @@ import {
 import {
   acknowledgeEmergencyAlert,
   getEmergencyAlerts,
+  getDoctorSession,
   getSharedReports,
+  signInDoctor,
+  signOutDoctor,
 } from "../../api/maternaAPI";
 import { createAndShareProfileReport } from "../../utils/profileReport";
 
@@ -298,12 +302,168 @@ function mergeReports(liveReports: any[]) {
 export default function DoctorWorkspace(props: Props) {
   const { width } = useWindowDimensions();
   const isDesktop = Platform.OS === "web" && width >= 1000;
+  const [session, setSession] = useState<any>(null);
+  const [checkingSession, setCheckingSession] = useState(true);
 
-  if (isDesktop) {
-    return <DesktopDoctorDashboard onLogout={props.onLogout} />;
+  useEffect(() => {
+    getDoctorSession()
+      .then(setSession)
+      .finally(() => setCheckingSession(false));
+  }, []);
+
+  async function handleLogout() {
+    await signOutDoctor();
+    setSession(null);
+    props.onLogout();
   }
 
-  return <MobileDoctorWorkspace {...props} />;
+  if (checkingSession) {
+    return (
+      <SafeAreaView style={doctorLogin.safe}>
+        <View style={doctorLogin.card}>
+          <ActivityIndicator color="#22C55E" />
+          <Text style={doctorLogin.loadingText}>Checking secure session...</Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  if (!session) {
+    return (
+      <DoctorSignIn
+        theme={props.theme}
+        onCancel={props.onLogout}
+        onSuccess={setSession}
+      />
+    );
+  }
+
+  if (isDesktop) {
+    return <DesktopDoctorDashboard onLogout={handleLogout} />;
+  }
+
+  return <MobileDoctorWorkspace {...props} onLogout={handleLogout} />;
+}
+
+function DoctorSignIn({
+  theme,
+  onCancel,
+  onSuccess,
+}: {
+  theme: "dark" | "light";
+  onCancel: () => void;
+  onSuccess: (session: any) => void;
+}) {
+  const isDark = theme === "dark";
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit() {
+    if (!username.trim() || !password.trim()) {
+      setError("Enter your doctor username and password.");
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+    try {
+      const nextSession = await signInDoctor(username.trim(), password);
+      if (!nextSession) {
+        setError("Those credentials did not work.");
+        return;
+      }
+      onSuccess(nextSession);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <SafeAreaView
+      style={[
+        doctorLogin.safe,
+        { backgroundColor: isDark ? "#02070D" : "#F8FAFC" },
+      ]}
+    >
+      <View
+        style={[
+          doctorLogin.card,
+          {
+            backgroundColor: isDark ? "#071019" : "#FFFFFF",
+            borderColor: isDark ? "#1F2937" : "#E2E8F0",
+          },
+        ]}
+      >
+        <View style={doctorLogin.icon}>
+          <Stethoscope size={32} color="#22C55E" />
+        </View>
+        <Text style={[doctorLogin.title, { color: isDark ? "#F8FAFC" : "#0F172A" }]}>
+          Doctor Sign In
+        </Text>
+        <Text style={[doctorLogin.subtitle, { color: isDark ? "#94A3B8" : "#64748B" }]}>
+          Access the clinical dashboard with your care-team credentials.
+        </Text>
+
+        <Text style={[doctorLogin.label, { color: isDark ? "#CBD5E1" : "#475569" }]}>
+          Username
+        </Text>
+        <TextInput
+          value={username}
+          onChangeText={setUsername}
+          autoCapitalize="none"
+          placeholder="doctor"
+          placeholderTextColor="#64748B"
+          style={[
+            doctorLogin.input,
+            {
+              color: isDark ? "#F8FAFC" : "#0F172A",
+              backgroundColor: isDark ? "#02070D" : "#F8FAFC",
+              borderColor: isDark ? "#1F2937" : "#CBD5E1",
+            },
+          ]}
+        />
+
+        <Text style={[doctorLogin.label, { color: isDark ? "#CBD5E1" : "#475569" }]}>
+          Password
+        </Text>
+        <TextInput
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+          placeholder="Password"
+          placeholderTextColor="#64748B"
+          style={[
+            doctorLogin.input,
+            {
+              color: isDark ? "#F8FAFC" : "#0F172A",
+              backgroundColor: isDark ? "#02070D" : "#F8FAFC",
+              borderColor: isDark ? "#1F2937" : "#CBD5E1",
+            },
+          ]}
+        />
+
+        {error ? <Text style={doctorLogin.error}>{error}</Text> : null}
+
+        <Pressable
+          style={[doctorLogin.button, loading && { opacity: 0.7 }]}
+          onPress={handleSubmit}
+          disabled={loading}
+        >
+          {loading ? (
+            <ActivityIndicator color="#FFFFFF" />
+          ) : (
+            <Text style={doctorLogin.buttonText}>Continue</Text>
+          )}
+        </Pressable>
+
+        <Pressable style={doctorLogin.cancelButton} onPress={onCancel}>
+          <Text style={doctorLogin.cancelText}>Back to role selection</Text>
+        </Pressable>
+      </View>
+    </SafeAreaView>
+  );
 }
 
 function MobileDoctorWorkspace({ theme, onLogout }: Props) {
@@ -1478,6 +1638,64 @@ function InfoLine({ icon: Icon, label, value, c }: any) {
     </View>
   );
 }
+
+const doctorLogin = StyleSheet.create({
+  safe: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 24,
+    backgroundColor: "#02070D",
+  },
+  card: {
+    width: "100%",
+    maxWidth: 420,
+    borderWidth: 1,
+    borderColor: "#1F2937",
+    borderRadius: 8,
+    backgroundColor: "#071019",
+    padding: 24,
+    alignItems: "stretch",
+  },
+  icon: {
+    width: 58,
+    height: 58,
+    borderRadius: 29,
+    backgroundColor: "#052E1B",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 18,
+  },
+  title: { fontSize: 24, fontWeight: "900", marginBottom: 8 },
+  subtitle: { fontSize: 14, lineHeight: 20, marginBottom: 22 },
+  label: {
+    fontSize: 12,
+    fontWeight: "800",
+    textTransform: "uppercase",
+    marginBottom: 7,
+    marginTop: 12,
+  },
+  input: {
+    minHeight: 44,
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    fontSize: 14,
+  },
+  error: { color: "#FB7185", fontSize: 13, marginTop: 12 },
+  button: {
+    minHeight: 46,
+    borderRadius: 8,
+    backgroundColor: "#22C55E",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
+  },
+  buttonText: { color: "#FFFFFF", fontSize: 15, fontWeight: "900" },
+  cancelButton: { alignItems: "center", paddingTop: 16 },
+  cancelText: { color: "#94A3B8", fontSize: 13, fontWeight: "700" },
+  loadingText: { color: "#CBD5E1", fontSize: 14, textAlign: "center", marginTop: 14 },
+});
 
 const desktopDoc = StyleSheet.create({
   safe: { flex: 1, backgroundColor: "#02070D" },
