@@ -219,7 +219,7 @@ export default function App() {
   if (showChat) {
     return (
       <View style={{ flex: 1, backgroundColor: dark ? "#0f1117" : "#f5f7fa", alignItems: "center" }}>
-        <View style={{ width: "100%", maxWidth: 430, flex: 1 }}>
+        <View style={{ width: "100%", maxWidth: isDesktopPatient ? 760 : 430, flex: 1 }}>
           <MaternaChatScreen
             theme={theme}
             onClose={() => setShowChat(false)}
