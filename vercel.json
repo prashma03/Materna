@@ -1,14 +1,11 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
+  "framework": "nextjs",
+  "installCommand": "npm --prefix apps/web install",
+  "buildCommand": "npm --prefix apps/web run build",
   "rewrites": [
     {
       "source": "/api/(.*)",
       "destination": "/api/$1"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
     }
   ]
 }
