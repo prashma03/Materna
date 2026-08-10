@@ -4,139 +4,59 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Materna — Maternal care, wherever you are</title>
-    <meta
-      name="description"
-      content="Materna is a maternal health monitoring platform for rural communities with patient and provider demo workflows."
-    />
-    <style>
-      :root {
-        color-scheme: light;
-        --ink: #10211b;
-        --muted: #66756f;
-        --green: #1f8a5b;
-        --mint: #e9f7ef;
-        --cream: #fffaf3;
-        --card: #ffffff;
-        --line: #dfe9e3;
-      }
-      * { box-sizing: border-box; }
-      body {
-        margin: 0;
-        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        background: linear-gradient(135deg, var(--cream), #f1fbf6 55%, #ffffff);
-        color: var(--ink);
-      }
-      main {
-        min-height: 100vh;
-        display: grid;
-        place-items: center;
-        padding: 40px 18px;
-      }
-      .shell {
-        width: min(1080px, 100%);
-        display: grid;
-        gap: 28px;
-      }
-      .hero {
-        border: 1px solid var(--line);
-        border-radius: 32px;
-        background: rgba(255,255,255,.86);
-        box-shadow: 0 24px 80px rgba(31, 138, 91, .13);
-        padding: clamp(28px, 6vw, 72px);
-      }
-      .eyebrow {
-        color: var(--green);
-        font-weight: 800;
-        letter-spacing: .2em;
-        font-size: 13px;
-      }
-      h1 {
-        margin: 18px 0 14px;
-        font-size: clamp(42px, 8vw, 84px);
-        line-height: .92;
-        letter-spacing: -.07em;
-      }
-      p {
-        margin: 0;
-        color: var(--muted);
-        font-size: clamp(17px, 2vw, 22px);
-        max-width: 760px;
-        line-height: 1.6;
-      }
-      .actions {
-        display: flex;
-        gap: 14px;
-        flex-wrap: wrap;
-        margin-top: 32px;
-      }
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-      .button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 999px;
-        min-height: 48px;
-        padding: 0 22px;
-        font-weight: 800;
-      }
-      .primary {
-        background: var(--green);
-        color: white;
-        box-shadow: 0 16px 36px rgba(31, 138, 91, .22);
-      }
-      .secondary {
-        border: 1px solid var(--line);
-        background: white;
-      }
-      .steps {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 14px;
-      }
-      .step {
-        border: 1px solid var(--line);
-        background: var(--card);
-        border-radius: 22px;
-        padding: 20px;
-      }
-      .step strong {
-        display: block;
-        margin-bottom: 8px;
-      }
-      .step span {
-        color: var(--muted);
-        line-height: 1.5;
-      }
-      @media (max-width: 720px) {
-        .steps { grid-template-columns: 1fr; }
-      }
-    </style>
+    <meta name="description" content="Materna is a maternal health monitoring platform for rural communities." />
+    <link rel="stylesheet" href="/demo-style.css" />
   </head>
   <body>
-    <main>
-      <div class="shell">
-        <section class="hero">
-          <div class="eyebrow">MATERNA</div>
-          <h1>Maternal care, wherever you are.</h1>
-          <p>
-            Supporting safer pregnancies in rural communities through symptom monitoring,
-            vitals tracking, early-risk detection, and provider alert workflows.
+    <main class="page">
+      <nav class="topbar">
+        <a class="brand" href="/">
+          <span class="brand-mark"></span>
+          <span>
+            <span class="brand-name">MATERNA</span>
+            <span class="brand-sub">Maternal health monitoring for rural care</span>
+          </span>
+        </a>
+        <span class="pill"><span class="dot"></span> Live portfolio demo</span>
+      </nav>
+
+      <section class="hero">
+        <div class="hero-card hero-copy">
+          <div class="eyebrow">TWO HEARTS, ONE WRIST</div>
+          <h1>Welcome to Materna</h1>
+          <p class="lead">
+            Smart maternal health monitoring and support, built for rural communities.
+            Log symptoms, track vitals, screen warning signs, and help providers respond early.
           </p>
           <div class="actions">
-            <a class="button primary" href="/demo">Try live demo</a>
-            <a class="button secondary" href="/demo/patient">Patient view</a>
-            <a class="button secondary" href="/demo/doctor">Doctor view</a>
+            <a class="button primary" href="/demo">Try live demo →</a>
+            <a class="button secondary" href="/demo/patient">Patient dashboard</a>
+            <a class="button secondary" href="/demo/doctor">Doctor dashboard</a>
           </div>
-        </section>
-        <section class="steps" aria-label="How Materna works">
-          <div class="step"><strong>Log symptoms</strong><span>Patients record warning signs, vitals, and weekly screening information.</span></div>
-          <div class="step"><strong>Assess risk</strong><span>Materna highlights patterns that may need urgent attention.</span></div>
-          <div class="step"><strong>Alert care team</strong><span>Providers see active alerts and follow-up priorities in one dashboard.</span></div>
-        </section>
-      </div>
+        </div>
+
+        <div class="dark-card phone-wrap" aria-label="Materna app preview">
+          <div class="phone">
+            <div class="phone-screen">
+              <div class="phone-header">
+                <div class="phone-title">Hi Maya, you are doing well</div>
+                <div class="phone-meta">28 weeks · Rural Arkansas</div>
+              </div>
+              <div class="status">
+                <span class="status-pill"><span class="dot"></span> Low risk</span>
+                <div class="status-title">No urgent warning signs detected.</div>
+                <p>Continue hydration, weekly blood pressure checks, and Materna Watch screening.</p>
+              </div>
+              <div class="mini-grid">
+                <div class="mini-card"><span class="mini-label">Blood pressure</span><span class="mini-value">118/76</span></div>
+                <div class="mini-card"><span class="mini-label">Heart rate</span><span class="mini-value">82 bpm</span></div>
+                <div class="mini-card"><span class="mini-label">Baby movement</span><span class="mini-value">Active</span></div>
+                <div class="mini-card"><span class="mini-label">Next visit</span><span class="mini-value">Friday</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   </body>
 </html>

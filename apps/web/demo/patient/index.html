@@ -4,35 +4,97 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Materna Patient Demo</title>
-    <style>
-      body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; background: #fffaf3; color: #10211b; }
-      main { padding: 28px; max-width: 1120px; margin: auto; }
-      a { color: #1f8a5b; font-weight: 800; text-decoration: none; }
-      h1 { font-size: clamp(34px, 6vw, 64px); margin: 18px 0 8px; letter-spacing: -.05em; }
-      p { color: #66756f; line-height: 1.6; }
-      .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin: 26px 0; }
-      .card { background: white; border: 1px solid #eadfd2; border-radius: 24px; padding: 20px; box-shadow: 0 14px 42px rgba(80,54,21,.08); }
-      .value { display: block; font-size: 28px; font-weight: 900; margin-top: 8px; }
-      .wide { grid-column: span 2; }
-      ul { color: #66756f; line-height: 1.8; padding-left: 20px; }
-      @media (max-width: 860px) { .grid { grid-template-columns: 1fr 1fr; } .wide { grid-column: span 2; } }
-      @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } .wide { grid-column: span 1; } }
-    </style>
+    <link rel="stylesheet" href="/demo-style.css" />
   </head>
   <body>
-    <main>
-      <a href="/demo">← Switch demo view</a>
-      <h1>Patient demo</h1>
-      <p>Maya Gurung · 28 weeks pregnant · Rural maternal care monitoring.</p>
-      <section class="grid">
-        <div class="card"><strong>Blood pressure</strong><span class="value">118/76</span><p>Normal range</p></div>
-        <div class="card"><strong>Heart rate</strong><span class="value">82 bpm</span><p>Steady today</p></div>
-        <div class="card"><strong>Baby movement</strong><span class="value">Active</span><p>Reported this morning</p></div>
-        <div class="card"><strong>Risk status</strong><span class="value">Low</span><p>No urgent warning signs</p></div>
-        <div class="card wide"><strong>Materna Watch screening</strong><ul><li>No severe headache today</li><li>No blurred vision</li><li>No heavy bleeding</li><li>Mild swelling monitored</li></ul></div>
-        <div class="card wide"><strong>Care plan</strong><ul><li>Hydration reminder</li><li>Weekly BP check</li><li>Next clinic visit: Friday</li><li>Nearest hospital: 14 miles</li></ul></div>
+    <main class="page">
+      <section class="demo-shell">
+        <aside class="sidebar">
+          <a class="brand" href="/demo">
+            <span class="brand-mark"></span>
+            <span>
+              <span class="brand-name">MATERNA</span>
+              <span class="brand-sub">Patient demo</span>
+            </span>
+          </a>
+          <div class="nav">
+            <span class="active">Today</span>
+            <span>Materna Watch</span>
+            <span>Hospitals</span>
+            <span>Profile</span>
+          </div>
+          <div class="help">
+            <strong>Need help?</strong>
+            <p>Ask Materna for symptom guidance and next steps.</p>
+          </div>
+        </aside>
+
+        <section class="workspace">
+          <div class="workspace-top">
+            <div>
+              <a class="pill" href="/demo">← Switch demo view</a>
+              <h2 style="margin-top:18px">Good afternoon, Maya</h2>
+              <p>28 weeks pregnant · Rural Arkansas · fictional demo patient</p>
+            </div>
+            <div class="profile-pill"><span class="avatar"></span><span><strong>Maya Gurung</strong><p>Patient · 3rd trimester</p></span></div>
+          </div>
+
+          <div class="dashboard-grid">
+            <div>
+              <section class="card status-card">
+                <div class="status-row">
+                  <span class="status-pill"><span class="dot"></span> Green priority</span>
+                  <p>Confidence 94%</p>
+                </div>
+                <div class="big-title">You are stable today. Keep tracking symptoms and hydration.</div>
+                <p style="margin-top:12px">Materna Watch has not detected urgent warning signs. Mild swelling is being monitored.</p>
+              </section>
+
+              <section class="ask-banner">
+                <span class="ask-icon">💬</span>
+                <span><strong>Ask Materna</strong><p style="color:#e7fff0">“Is this symptom normal?” “When should I call my doctor?”</p></span>
+              </section>
+
+              <section class="tool-grid">
+                <div class="tool"><strong>Log symptoms</strong><p>Headache, bleeding, swelling, contractions, or dizziness.</p></div>
+                <div class="tool"><strong>Find hospitals</strong><p>Nearest labor and delivery support: 14 miles away.</p></div>
+                <div class="tool"><strong>Care plan</strong><p>Weekly BP check, hydration, rest, and Friday clinic visit.</p></div>
+                <div class="tool"><strong>Emergency alert</strong><p>Send a simulated urgent alert to the provider dashboard.</p></div>
+              </section>
+            </div>
+
+            <aside class="rail">
+              <div class="card">
+                <strong>Pregnancy progress</strong>
+                <div class="progress-ring"><span>28</span></div>
+                <p style="text-align:center">3rd trimester · 12 weeks to go</p>
+              </div>
+              <div class="card">
+                <strong>Vitals</strong>
+                <div class="metric-grid">
+                  <div><span class="value">118/76</span><p>Blood pressure</p></div>
+                  <div><span class="value">82</span><p>Heart rate</p></div>
+                  <div><span class="value">98%</span><p>Oxygen</p></div>
+                  <div><span class="value">Active</span><p>Baby movement</p></div>
+                </div>
+              </div>
+              <div class="card">
+                <strong>Materna Watch screening</strong>
+                <ul class="list">
+                  <li>No severe headache</li>
+                  <li>No blurred vision</li>
+                  <li>No heavy bleeding</li>
+                  <li>Mild swelling monitored</li>
+                </ul>
+              </div>
+              <div class="card emergency">
+                <strong>Emergency alert</strong>
+                <p>In an emergency, alert your linked doctor immediately.</p>
+              </div>
+            </aside>
+          </div>
+        </section>
       </section>
-      <p><a href="/demo/doctor">View matching doctor alert dashboard →</a></p>
     </main>
   </body>
 </html>
