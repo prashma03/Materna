@@ -1,11 +1,5 @@
 {
   "framework": "nextjs",
-  "installCommand": "npm --prefix apps/web install",
-  "buildCommand": "npm --prefix apps/web run build",
-  "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/api/$1"
-    }
-  ]
+  "installCommand": "npm install",
+  "buildCommand": "npm run build"
 }

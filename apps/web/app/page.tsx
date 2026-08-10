@@ -60,7 +60,7 @@ export default function HomePage() {
             </div>
 
             <p className="mt-4 text-xs font-semibold text-[var(--muted)]">
-              No account needed for demo mode. Demo data only.
+              No account needed for demo mode. Fictional demo data only.
             </p>
           </section>
 
