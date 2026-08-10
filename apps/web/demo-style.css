@@ -61,6 +61,12 @@ a { color: inherit; text-decoration: none; }
   object-fit: cover;
 }
 
+.brand-logo-img.small {
+  width: 68px;
+  height: 68px;
+  border-radius: 34px;
+}
+
 .hack-brand-title {
   color: #f8fafc;
   font-size: 38px;
@@ -385,6 +391,96 @@ a { color: inherit; text-decoration: none; }
   text-align: center;
   font-size: 14px;
   margin-top: 16px;
+}
+
+.auth-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+.auth-card {
+  width: min(520px, 100%);
+  border: 1px solid #1f2937;
+  border-radius: 28px;
+  background: #071019;
+  padding: 34px;
+  box-shadow: 0 30px 90px rgba(0,0,0,.35);
+}
+
+.auth-brand {
+  margin-bottom: 28px;
+}
+
+.auth-title {
+  color: #ffffff;
+  font-size: 42px;
+  line-height: 1;
+  letter-spacing: -.04em;
+  margin: 0 0 12px;
+}
+
+.auth-copy {
+  color: #cbd5e1;
+  font-size: 15px;
+  line-height: 23px;
+  margin-bottom: 24px;
+}
+
+.auth-form {
+  display: grid;
+  gap: 10px;
+}
+
+.auth-form label {
+  color: #94a3b8;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.auth-form input {
+  width: 100%;
+  height: 52px;
+  border: 1px solid #273142;
+  border-radius: 14px;
+  background: #02070d;
+  color: #f8fafc;
+  padding: 0 16px;
+  font: inherit;
+  margin-bottom: 8px;
+}
+
+.auth-form button {
+  height: 52px;
+  border: 0;
+  border-radius: 999px;
+  background: #22c55e;
+  color: #ffffff;
+  font-weight: 950;
+  font-size: 16px;
+  margin-top: 8px;
+}
+
+.auth-note {
+  margin-top: 20px;
+  border: 1px solid #1e7a3a;
+  border-radius: 16px;
+  background: #0b2718;
+  padding: 16px;
+  color: #cbd5e1;
+}
+
+.auth-note strong {
+  display: block;
+  color: #f8fafc;
+  margin-bottom: 8px;
+}
+
+.auth-note a {
+  color: #4ade80;
+  font-weight: 900;
 }
 
 .topbar {
