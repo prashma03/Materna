@@ -3,73 +3,79 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Materna Doctor Demo</title>
+    <title>Materna Doctor Dashboard</title>
     <link rel="stylesheet" href="/demo-style.css" />
   </head>
   <body>
     <main class="page">
-      <section class="demo-shell">
-        <aside class="sidebar">
-          <a class="brand" href="/demo">
-            <span class="brand-mark"></span>
-            <span>
-              <span class="brand-name">MATERNA</span>
-              <span class="brand-sub">Doctor demo</span>
-            </span>
-          </a>
-          <div class="nav">
-            <span class="active">Dashboard</span>
-            <span>Patients</span>
-            <span>Alerts</span>
-            <span>Appointments</span>
-          </div>
-          <div class="help">
-            <strong>Rural care queue</strong>
-            <p>Monitor patients and respond before risk escalates.</p>
-          </div>
-        </aside>
-
-        <section class="workspace">
-          <div class="workspace-top">
+      <section class="hack-login dashboard-dark">
+        <div class="hack-hero-row">
+          <div class="identity-block">
+            <img class="brand-logo-img" src="/materna-app-icon.png" alt="Materna logo" />
             <div>
-              <a class="pill" href="/demo">← Switch demo view</a>
-              <h2 style="margin-top:18px">Provider dashboard</h2>
-              <p>Remote maternal monitoring · fictional demo data</p>
+              <div class="hack-brand-title">MATERNA</div>
+              <div class="hack-brand-subtitle">Provider dashboard<br />Dr. Carter</div>
             </div>
-            <div class="profile-pill"><span class="avatar"></span><span><strong>Dr. Carter</strong><p>Rural maternal care</p></span></div>
           </div>
-
-          <section class="doctor-stat-grid">
-            <div class="card"><strong>Total patients</strong><span class="value">12</span><p>Active rural care panel</p></div>
-            <div class="card emergency"><strong>Active alerts</strong><span class="value">3</span><p>Need follow-up today</p></div>
-            <div class="card"><strong>Visits today</strong><span class="value">5</span><p>Clinic + telehealth</p></div>
-          </section>
-
-          <section class="card">
-            <strong>Priority patient queue</strong>
-            <div class="patient-row priority">
-              <div><strong>Maya Gurung</strong><p>28 weeks · mild swelling · BP stable · Materna Watch completed</p></div>
-              <span class="tag yellow">Monitor</span>
+          <div class="hero-divider"></div>
+          <div class="welcome-block">
+            <div class="welcome-title">Care team <span>dashboard</span> ♡</div>
+            <div class="welcome-body">Monitor rural patients, active alerts, and follow-up priorities from one provider view.</div>
+          </div>
+          <div class="hero-art">
+            <div class="hero-glow purple-glow"></div>
+            <div class="leaf leaf-left"></div>
+            <div class="mother-figure doctor-figure">
+              <div class="doctor-screen"></div>
+              <div class="doctor-base"></div>
             </div>
-            <div class="patient-row">
-              <div><strong>Asha Rai</strong><p>31 weeks · missed weekly check-in · needs phone outreach</p></div>
-              <span class="tag red">Alert</span>
-            </div>
-            <div class="patient-row">
-              <div><strong>Lina Tamang</strong><p>24 weeks · transportation support requested before appointment</p></div>
-              <span class="tag green">Stable</span>
-            </div>
-          </section>
+            <div class="leaf leaf-right"></div>
+            <div class="star star-one"></div>
+            <div class="star star-two"></div>
+            <div class="star star-three"></div>
+          </div>
+        </div>
 
-          <section class="tool-grid">
-            <div class="tool"><strong>Alert workflow</strong><p>Review warning signs, triage urgency, and document next action.</p></div>
-            <div class="tool"><strong>Patient timeline</strong><p>See symptom logs, vitals, screening, and appointment history.</p></div>
-            <div class="tool"><strong>Care coordination</strong><p>Flag transport, hospital distance, and rural access barriers.</p></div>
-            <div class="tool"><strong>Provider note</strong><p>“Call patient today, repeat BP reading, advise rest and hydration.”</p></div>
-          </section>
+        <div class="section-header">
+          <div class="header-icon">🩺</div>
+          <div class="section-title">PROVIDER OVERVIEW</div>
+          <div class="header-line"></div>
+        </div>
 
-          <p style="margin-top:20px"><a class="button secondary" href="/demo/patient">Back to patient view →</a></p>
+        <section class="clean-dashboard-grid">
+          <a class="hack-role-card patient dashboard-card" href="/demo/patient">
+            <div class="role-icon">12</div>
+            <div class="role-copy">
+              <div class="role-title">Active Patients</div>
+              <div class="role-body">Rural care panel with pregnancy status, vitals, and latest check-ins.</div>
+            </div>
+            <div class="role-art">👥</div>
+            <div class="role-arrow">›</div>
+          </a>
+
+          <a class="hack-role-card doctor dashboard-card" href="/demo/patient">
+            <div class="role-icon">3</div>
+            <div class="role-copy">
+              <div class="role-title">Active Alerts</div>
+              <div class="role-body">Maya needs symptom follow-up; Asha missed check-in; Lina needs transport support.</div>
+            </div>
+            <div class="role-art">🔔</div>
+            <div class="role-arrow">›</div>
+          </a>
         </section>
+
+        <div class="feature-strip dashboard-strip">
+          <div class="feature-item"><div class="feature-icon">🤰</div><div><strong>Maya</strong><p>Monitor swelling</p></div></div>
+          <div class="feature-item"><div class="feature-icon">📞</div><div><strong>Asha</strong><p>Call today</p></div></div>
+          <div class="feature-item"><div class="feature-icon">🚗</div><div><strong>Lina</strong><p>Transport flag</p></div></div>
+          <div class="feature-item"><div class="feature-icon">📅</div><div><strong>5 visits</strong><p>Clinic + telehealth</p></div></div>
+          <div class="rural-line">⌂</div>
+        </div>
+
+        <div class="dashboard-actions">
+          <a class="button secondary" href="/demo">Back to entry</a>
+          <a class="button primary" href="/demo/patient">View patient dashboard</a>
+        </div>
       </section>
     </main>
   </body>
