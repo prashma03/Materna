@@ -1,8 +1,15 @@
 node_modules/
 dist/
 .expo/
+.expo-export-test/
+.expo-export-test-*/
+.next/
+apps/web/.next/
+apps/web/node_modules/
+apps/web/tsconfig.tsbuildinfo
 .env
 .env.local
+apps/web/.env.local
 
 backend/data/
 output/

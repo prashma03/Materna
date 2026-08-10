@@ -3,15 +3,38 @@
     "name": "Materna",
     "slug": "materna",
     "version": "1.0.0",
+    "scheme": "materna",
     "orientation": "portrait",
     "icon": "./assets/materna-app-icon.png",
     "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/materna-app-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#05070A"
+    },
     "ios": {
+      "bundleIdentifier": "com.materna.ruralhealth",
       "icon": "./assets/materna-app-icon.png",
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Materna uses your location to show nearby hospitals and emergency-care options."
+      }
     },
     "android": {
-      "icon": "./assets/materna-app-icon.png"
+      "package": "com.materna.ruralhealth",
+      "icon": "./assets/materna-app-icon.png",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/materna-app-icon.png",
+        "backgroundColor": "#05070A"
+      },
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/materna-app-icon.png",
+      "bundler": "metro"
     },
     "plugins": [
       "expo-asset"

@@ -8,7 +8,14 @@
         "server": "node backend/server.js",
         "build": "expo export --platform web --output-dir dist",
         "android": "expo start --android",
-        "ios": "expo start --ios"
+        "ios": "expo start --ios",
+        "typecheck": "tsc --noEmit --pretty false",
+        "export:web": "expo export --platform web --output-dir dist --clear",
+        "export:android": "expo export --platform android --output-dir .expo-export-test --clear",
+        "webapp:dev": "npm --prefix apps/web run dev",
+        "webapp:build": "npm --prefix apps/web run build",
+        "webapp:lint": "npm --prefix apps/web run lint",
+        "webapp:typecheck": "npm --prefix apps/web run typecheck"
     },
     "dependencies": {
         "@expo/metro-runtime": "~6.1.2",

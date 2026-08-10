@@ -1,9 +1,24 @@
 # Materna
 
-Materna is a software-only maternal health coordination app for rural care.
+Materna is a full-stack maternal health coordination platform for rural care.
 It helps pregnant patients report symptoms, build a pregnancy profile, find
 nearby care, activate emergency support, and share information with a linked
 doctor dashboard.
+
+## Production Migration
+
+The original Expo/React Native implementation remains at the repository root.
+
+A separate production Next.js foundation now lives in:
+
+```text
+apps/web/
+```
+
+This separation keeps the existing mobile experience available as the visual and
+functional reference while the recruiter-ready web app is migrated carefully.
+See `docs/production-migration.md` for the current architecture, Supabase
+schema, Row Level Security notes, and migration status.
 
 This repository intentionally does **not** include a patient-facing watch,
 bracelet, or live vitals page yet. Wearable integration can be added later.
@@ -29,7 +44,6 @@ bracelet, or live vitals page yet. Wearable integration can be added later.
 - Doctor dashboard with clinical overview
 - Patient list and patient detail pages
 - Emergency alert popup and persistent red alert banner
-- Shared report history
 - Shared report history for patient records
 - Patient contact information
 - Doctor profile page
@@ -99,11 +113,37 @@ testing with a local backend, use the computer's LAN IP address instead of
 
 ## Deployment
 
-The repository is configured for Vercel:
+The repository is configured for two release paths:
+
+### Expo mobile/web export
 
 - Static Expo web app exports to `dist/`
 - Express API is exposed through Vercel serverless functions under `/api`
 - All non-API routes fall back to `index.html`
+
+### Next.js production web app
+
+The recruiter-ready full-stack foundation lives in `apps/web/` and uses
+Next.js, Supabase Auth, Supabase Postgres, protected patient/provider routes,
+and database migrations.
+
+The public web app intentionally opens to a recruiter-friendly landing page
+instead of a login wall. Visitors can choose:
+
+- `Try live demo`: no account required, seeded fictional patient/provider data.
+- `Sign in`: real Supabase authentication for patient and provider accounts.
+
+Demo routes:
+
+```text
+/
+/demo
+/demo/patient
+/demo/doctor
+```
+
+The demo flow shows the core product loop: patient logs a symptom, Materna
+changes the risk state, and the doctor view displays the corresponding alert.
 
 Before using the deployed doctor dashboard, set these Vercel environment
 variables:
@@ -115,6 +155,21 @@ MATERNA_ALLOWED_ORIGIN=https://your-vercel-domain.vercel.app
 ```
 
 Do not commit real passwords or patient data.
+
+## Release Checks
+
+Run these before sharing the app:
+
+```powershell
+npm run typecheck
+npm run export:android
+npm run webapp:typecheck
+npm run webapp:lint
+npm run webapp:build
+```
+
+The Expo dashboard now reads the saved patient profile where available, so the
+main health dashboard changes after a patient creates or updates their profile.
 
 ## Project Structure
 

@@ -1,5 +1,9 @@
 import { Platform } from "react-native";
 
+function trimTrailingSlash(value) {
+  return typeof value === "string" ? value.replace(/\/+$/, "") : "";
+}
+
 function getDefaultApiUrl() {
   if (Platform.OS === "web") {
     const origin =
@@ -18,7 +22,7 @@ function getDefaultApiUrl() {
 }
 
 export const MATERNA_URL =
-  process.env.EXPO_PUBLIC_MATERNA_API_URL || getDefaultApiUrl();
+  trimTrailingSlash(process.env.EXPO_PUBLIC_MATERNA_API_URL || getDefaultApiUrl());
 
 export const DOCTOR_SESSION_KEY = "materna_doctor_session";
 

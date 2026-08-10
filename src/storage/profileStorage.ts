@@ -61,7 +61,9 @@ export const saveProfile = async (profile: ProfileData) => {
       JSON.stringify(profile)
     );
   } catch (error) {
-    console.log("Error saving profile:", error);
+    if (typeof __DEV__ !== "undefined" && __DEV__) {
+      console.log("Error saving profile:", error);
+    }
   }
 };
 
@@ -107,7 +109,9 @@ export const loadProfile = async (): Promise<ProfileData | null> => {
     // No profile found
     return null;
   } catch (error) {
-    console.log("Error loading profile:", error);
+    if (typeof __DEV__ !== "undefined" && __DEV__) {
+      console.log("Error loading profile:", error);
+    }
     return null;
   }
 };
@@ -118,6 +122,8 @@ export const clearProfile = async () => {
     // Remove the saved data
     await AsyncStorage.removeItem(PROFILE_KEY);
   } catch (error) {
-    console.log("Error clearing profile:", error);
+    if (typeof __DEV__ !== "undefined" && __DEV__) {
+      console.log("Error clearing profile:", error);
+    }
   }
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   SafeAreaView,
   ScrollView,
@@ -41,6 +41,8 @@ import {
 } from "lucide-react-native";
 import { scenarios } from "../data/sampleSensorData";
 import type { RiskLevel } from "../data/sampleSensorData";
+import { loadProfile } from "../storage/profileStorage";
+import type { ProfileData } from "../storage/profileStorage";
 
 type HomeScreenProps = {
   theme: "dark" | "light";
@@ -52,6 +54,31 @@ type HomeScreenProps = {
   activeScenario: RiskLevel;
   onScenarioChange: (level: RiskLevel) => void;
 };
+
+type DashboardIdentity = {
+  displayName: string;
+  firstName: string;
+  pregnancyWeek: number;
+};
+
+function getDashboardIdentity(
+  profile: ProfileData | null,
+  fallbackName: string,
+  fallbackWeek: number
+): DashboardIdentity {
+  const displayName = profile?.fullName?.trim() || fallbackName;
+  const firstName = displayName.split(/\s+/)[0] || fallbackName;
+  const profileWeek = Number(profile?.pregnancyWeek);
+
+  return {
+    displayName,
+    firstName,
+    pregnancyWeek:
+      Number.isFinite(profileWeek) && profileWeek > 0
+        ? profileWeek
+        : fallbackWeek,
+  };
+}
 
 export default function HomeScreen({
   theme,
@@ -67,6 +94,22 @@ export default function HomeScreen({
   const isDesktop = Platform.OS === "web" && width >= 1000;
   const isDark = theme === "dark";
   const data = scenarios[activeScenario];
+  const [profile, setProfile] = useState<ProfileData | null>(null);
+  const identity = getDashboardIdentity(
+    profile,
+    data.mother.name,
+    data.mother.pregnancyWeek
+  );
+
+  useEffect(() => {
+    let mounted = true;
+    loadProfile().then((savedProfile) => {
+      if (mounted) setProfile(savedProfile);
+    });
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const colors = {
     background: isDark ? "#05070A" : "#F8FAFC",
@@ -96,6 +139,7 @@ export default function HomeScreen({
         onEmergency={onEmergency}
         activeScenario={activeScenario}
         onScenarioChange={onScenarioChange}
+        identity={identity}
       />
     );
   }
@@ -108,7 +152,7 @@ export default function HomeScreen({
             <View>
               <Text style={[styles.brand, { color: colors.text }]}>MATERNA</Text>
               <Text style={[styles.week, { color: colors.mutedText }]}>
-                Maya · Week {data.mother.pregnancyWeek}
+                {identity.firstName} · Week {identity.pregnancyWeek}
               </Text>
             </View>
             <Pressable
@@ -257,7 +301,8 @@ function DesktopHome({
   onEmergency,
   activeScenario,
   onScenarioChange,
-}: HomeScreenProps) {
+  identity,
+}: HomeScreenProps & { identity: DashboardIdentity }) {
   const data = scenarios[activeScenario];
   const riskColor = data.risk.color;
   const desktopColors = {
@@ -412,7 +457,9 @@ function DesktopHome({
         >
           <View style={desktopStyles.topBar}>
             <View>
-              <Text style={desktopStyles.greeting}>Good morning, Maya</Text>
+              <Text style={desktopStyles.greeting}>
+                Good morning, {identity.firstName}
+              </Text>
               <Text style={desktopStyles.subGreeting}>
                 You're doing great! Let's keep you and your baby healthy.
               </Text>
@@ -435,8 +482,10 @@ function DesktopHome({
                   resizeMode="cover"
                 />
                 <View>
-                  <Text style={desktopStyles.profileName}>Maya Sharma</Text>
-                  <Text style={desktopStyles.profileMeta}>28 weeks pregnant</Text>
+                  <Text style={desktopStyles.profileName}>{identity.displayName}</Text>
+                  <Text style={desktopStyles.profileMeta}>
+                    {identity.pregnancyWeek} weeks pregnant
+                  </Text>
                 </View>
                 <ChevronDown size={18} color="#0F172A" />
               </View>
@@ -539,7 +588,7 @@ function DesktopHome({
                 <View style={desktopStyles.progressRow}>
                   <View style={desktopStyles.progressRing}>
                     <Text style={desktopStyles.progressNumber}>
-                      {data.mother.pregnancyWeek}
+                      {identity.pregnancyWeek}
                     </Text>
                     <Text style={desktopStyles.progressUnit}>weeks</Text>
                   </View>

@@ -12,7 +12,9 @@ function logApiIssueOnce(key, message) {
   reportedApiIssues.add(key);
   // console.log appears in the development terminal without opening an
   // intrusive Expo error overlay on the patient's phone.
-  console.log(`[Materna API] ${message}`);
+  if (typeof __DEV__ !== 'undefined' && __DEV__) {
+    console.log(`[Materna API] ${message}`);
+  }
 }
 
 export const getDoctorSession = async () => {
