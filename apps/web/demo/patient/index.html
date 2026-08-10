@@ -6,77 +6,122 @@
     <title>Materna Patient Dashboard</title>
     <link rel="stylesheet" href="/demo-style.css" />
   </head>
-  <body>
-    <main class="page">
-      <section class="hack-login dashboard-dark">
-        <div class="hack-hero-row">
-          <div class="identity-block">
-            <img class="brand-logo-img" src="/materna-app-icon.png" alt="Materna logo" />
-            <div>
-              <div class="hack-brand-title">MATERNA</div>
-              <div class="hack-brand-subtitle">Patient dashboard<br />Maya Gurung</div>
-            </div>
-          </div>
-          <div class="hero-divider"></div>
-          <div class="welcome-block">
-            <div class="welcome-title">Today looks <span>stable</span> ♡</div>
-            <div class="welcome-body">28 weeks pregnant. Vitals are in range and Materna Watch shows no urgent warning signs.</div>
-          </div>
-          <div class="hero-art">
-            <div class="hero-glow"></div>
-            <div class="leaf leaf-left"></div>
-            <div class="mother-figure">
-              <div class="mother-hair"></div>
-              <div class="mother-face"></div>
-              <div class="mother-body"></div>
-              <div class="mother-bump"></div>
-            </div>
-            <div class="leaf leaf-right"></div>
-            <div class="star star-one"></div>
-            <div class="star star-two"></div>
-            <div class="star star-three"></div>
-          </div>
-        </div>
-
-        <div class="section-header">
-          <div class="header-icon">♡</div>
-          <div class="section-title">PATIENT OVERVIEW</div>
-          <div class="header-line"></div>
-        </div>
-
-        <section class="clean-dashboard-grid">
-          <a class="hack-role-card patient dashboard-card" href="/demo/explore">
-            <div class="role-icon">✓</div>
-            <div class="role-copy">
-              <div class="role-title">Green Priority</div>
-              <div class="role-body">No urgent warning signs detected. Continue hydration and weekly BP check.</div>
-            </div>
-            <div class="role-art">📋</div>
-            <div class="role-arrow">›</div>
-          </a>
-
-          <a class="hack-role-card doctor dashboard-card" href="/demo/doctor">
-            <div class="role-icon">⌚</div>
-            <div class="role-copy">
-              <div class="role-title">Materna Watch</div>
-              <div class="role-body">Screening complete: no headache, blurred vision, or heavy bleeding today.</div>
-            </div>
-            <div class="role-art">💬</div>
-            <div class="role-arrow">›</div>
-          </a>
+  <body class="exact-body">
+    <main class="exact-shell">
+      <aside class="exact-sidebar">
+        <a class="exact-brand" href="/demo/explore">
+          <img src="/materna-app-icon.png" alt="Materna" />
+          <span><strong>MATERNA</strong><small>Care for you. Care for two.</small></span>
+        </a>
+        <nav class="exact-nav">
+          <a class="active" href="/demo/patient">⌂ Dashboard</a>
+          <a>□ Today</a>
+          <a>♡ Symptoms</a>
+          <a>☑ Care Plan</a>
+          <a>▦ Tools ˅</a>
+          <a>⌖ Hospitals</a>
+          <a>◇ Reports</a>
+          <a>◌ Wearables <em>Coming soon</em></a>
+          <a>⚙ Settings</a>
+        </nav>
+        <section class="exact-help">
+          <strong>Need help?</strong>
+          <p>Materna is here 24/7 to support you.</p>
+          <a href="/demo">Chat with Materna</a>
+          <div class="help-art"><span></span><img src="/materna-app-icon.png" alt="" /><span></span></div>
         </section>
+      </aside>
 
-        <div class="feature-strip dashboard-strip">
-          <div class="feature-item"><div class="feature-icon">🩺</div><div><strong>118/76</strong><p>Blood pressure</p></div></div>
-          <div class="feature-item"><div class="feature-icon">♡</div><div><strong>82 bpm</strong><p>Heart rate</p></div></div>
-          <div class="feature-item"><div class="feature-icon">👶</div><div><strong>Active</strong><p>Baby movement</p></div></div>
-          <div class="feature-item"><div class="feature-icon">📍</div><div><strong>14 miles</strong><p>Nearest hospital</p></div></div>
-          <div class="rural-line">⌂</div>
-        </div>
+      <section class="exact-workspace">
+        <header class="exact-topbar">
+          <div>
+            <h1>Good morning, Maya</h1>
+            <p>You're doing great! Let's keep you and your baby healthy.</p>
+          </div>
+          <div class="exact-top-actions">
+            <button>☾ Dark</button>
+            <div class="bell">♡<b>2</b></div>
+            <div class="profile"><img src="/materna-app-icon.png" alt="" /><span><strong>Maya Gurung</strong><small>28 weeks pregnant</small></span>⌄</div>
+          </div>
+        </header>
 
-        <div class="dashboard-actions">
-          <a class="button secondary" href="/demo">Back to entry</a>
-          <a class="button primary" href="/demo/doctor">View doctor dashboard</a>
+        <div class="exact-grid">
+          <section class="exact-main">
+            <article class="exact-status-card">
+              <div class="exact-status-head">
+                <span class="exact-status-pill"><i></i> Green Priority</span>
+                <span class="priority-text">Care priority: <b>Green</b> ⓘ</span>
+              </div>
+              <div class="exact-status-body">
+                <div>
+                  <h2>You are stable today. Keep tracking symptoms and hydration.</h2>
+                  <p>Materna Watch has not detected urgent warning signs. Mild swelling is being monitored.</p>
+                  <hr />
+                  <small>NEXT STEP</small>
+                  <strong>Log any new symptoms before the end of the day</strong>
+                </div>
+                <div class="exact-check-art"><span></span><b>✓</b><span></span></div>
+              </div>
+            </article>
+
+            <a class="exact-ask" href="/demo">
+              <span>✦</span>
+              <div><strong>Ask Materna about symptoms</strong><p>Get guidance and answers from Materna</p></div>
+              <b>›</b>
+            </a>
+
+            <article class="exact-plan">
+              <div class="plan-copy">
+                <h3>▣ Today's care plan</h3>
+                <p>✓ Log any new symptoms before the end of the day</p>
+                <p>✓ Keep profile and pregnancy history updated</p>
+                <p>✓ Know your closest hospital before you need it</p>
+                <p>✓ Hydrate well and take your prenatal vitamins</p>
+              </div>
+              <div class="plan-art">
+                <span class="soft-leaf"></span>
+                <div class="mini-mom"><i></i><b></b><em></em><strong></strong></div>
+                <span class="heart">♡</span>
+                <span class="soft-leaf second"></span>
+              </div>
+            </article>
+
+            <h3 class="exact-section-title">Care tools</h3>
+            <section class="exact-tools">
+              <a><i>💬</i><span><strong>Materna care chat</strong><p>Describe symptoms and get safe escalation guidance.</p></span>›</a>
+              <a><i>⚠</i><span><strong>Emergency support</strong><p>Use the red button below to notify the linked doctor workflow.</p></span>›</a>
+              <a><i>⌖</i><span><strong>Hospital navigation</strong><p>Find nearby hospitals, emergency care, and county resources.</p></span>›</a>
+              <a><i>◇</i><span><strong>Profile report</strong><p>Create a patient-approved profile and PDF summary.</p></span>›</a>
+            </section>
+            <p class="exact-note">Wearable sensor support will be added later. This version focuses on software workflows: symptoms, care navigation, profile reports, emergency alerts, and doctor coordination.</p>
+          </section>
+
+          <aside class="exact-rail">
+            <article>
+              <h3>Pregnancy progress ⓘ</h3>
+              <div class="progress-row"><div class="progress-circle"><strong>28</strong><small>weeks</small></div><div><b>3rd trimester</b><p>12 weeks to go!</p><button>View timeline</button></div></div>
+            </article>
+            <article>
+              <h3>Quick actions</h3>
+              <a>⊕ Add symptom ›</a>
+              <a>♡ Log vitals ›</a>
+              <a>◍ Medication reminder ›</a>
+              <a>□ Appointment tracker ›</a>
+            </article>
+            <article>
+              <h3>Tips for you</h3>
+              <div class="tip-row"><div>"Rest when you can, eat what nourishes you, and trust your body."<small>Stay positive, stay strong.</small></div><span class="plant"></span></div>
+            </article>
+            <article class="exact-emergency">
+              <h3>Emergency alert</h3>
+              <p>In case of emergency, alert your linked doctor immediately.</p>
+              <button>⚠ Press and hold to alert</button>
+            </article>
+            <article>
+              <h3>Care priority</h3>
+              <div class="chips"><span>Green</span><span>Yellow</span><span>Red</span></div>
+            </article>
+          </aside>
         </div>
       </section>
     </main>

@@ -6,75 +6,107 @@
     <title>Materna Doctor Dashboard</title>
     <link rel="stylesheet" href="/demo-style.css" />
   </head>
-  <body>
-    <main class="page">
-      <section class="hack-login dashboard-dark">
-        <div class="hack-hero-row">
-          <div class="identity-block">
-            <img class="brand-logo-img" src="/materna-app-icon.png" alt="Materna logo" />
-            <div>
-              <div class="hack-brand-title">MATERNA</div>
-              <div class="hack-brand-subtitle">Provider dashboard<br />Dr. Carter</div>
-            </div>
-          </div>
-          <div class="hero-divider"></div>
-          <div class="welcome-block">
-            <div class="welcome-title">Care team <span>dashboard</span> ♡</div>
-            <div class="welcome-body">Monitor rural patients, active alerts, and follow-up priorities from one provider view.</div>
-          </div>
-          <div class="hero-art">
-            <div class="hero-glow purple-glow"></div>
-            <div class="leaf leaf-left"></div>
-            <div class="mother-figure doctor-figure">
-              <div class="doctor-screen"></div>
-              <div class="doctor-base"></div>
-            </div>
-            <div class="leaf leaf-right"></div>
-            <div class="star star-one"></div>
-            <div class="star star-two"></div>
-            <div class="star star-three"></div>
-          </div>
-        </div>
-
-        <div class="section-header">
-          <div class="header-icon">🩺</div>
-          <div class="section-title">PROVIDER OVERVIEW</div>
-          <div class="header-line"></div>
-        </div>
-
-        <section class="clean-dashboard-grid">
-          <a class="hack-role-card patient dashboard-card" href="/demo/patient">
-            <div class="role-icon">12</div>
-            <div class="role-copy">
-              <div class="role-title">Active Patients</div>
-              <div class="role-body">Rural care panel with pregnancy status, vitals, and latest check-ins.</div>
-            </div>
-            <div class="role-art">👥</div>
-            <div class="role-arrow">›</div>
-          </a>
-
-          <a class="hack-role-card doctor dashboard-card" href="/demo/patient">
-            <div class="role-icon">3</div>
-            <div class="role-copy">
-              <div class="role-title">Active Alerts</div>
-              <div class="role-body">Maya needs symptom follow-up; Asha missed check-in; Lina needs transport support.</div>
-            </div>
-            <div class="role-art">🔔</div>
-            <div class="role-arrow">›</div>
-          </a>
+  <body class="exact-body">
+    <main class="exact-shell">
+      <aside class="exact-sidebar">
+        <a class="exact-brand" href="/demo/explore">
+          <img src="/materna-app-icon.png" alt="Materna" />
+          <span><strong>MATERNA</strong><small>Provider care workspace</small></span>
+        </a>
+        <nav class="exact-nav">
+          <a class="active" href="/demo/doctor">⌂ Dashboard</a>
+          <a>👥 Patients</a>
+          <a>🔔 Alerts</a>
+          <a>□ Appointments</a>
+          <a>◇ Reports</a>
+          <a>⚙ Settings</a>
+        </nav>
+        <section class="exact-help">
+          <strong>Rural care queue</strong>
+          <p>Monitor symptoms and respond before risk escalates.</p>
+          <a href="/demo/patient">View patient</a>
+          <div class="help-art"><span></span><img src="/materna-app-icon.png" alt="" /><span></span></div>
         </section>
+      </aside>
 
-        <div class="feature-strip dashboard-strip">
-          <div class="feature-item"><div class="feature-icon">🤰</div><div><strong>Maya</strong><p>Monitor swelling</p></div></div>
-          <div class="feature-item"><div class="feature-icon">📞</div><div><strong>Asha</strong><p>Call today</p></div></div>
-          <div class="feature-item"><div class="feature-icon">🚗</div><div><strong>Lina</strong><p>Transport flag</p></div></div>
-          <div class="feature-item"><div class="feature-icon">📅</div><div><strong>5 visits</strong><p>Clinic + telehealth</p></div></div>
-          <div class="rural-line">⌂</div>
-        </div>
+      <section class="exact-workspace">
+        <header class="exact-topbar">
+          <div>
+            <h1>Good morning, Dr. Carter</h1>
+            <p>Your rural maternal care panel has 3 follow-ups today.</p>
+          </div>
+          <div class="exact-top-actions">
+            <button>☾ Dark</button>
+            <div class="bell">🔔<b>3</b></div>
+            <div class="profile"><img src="/materna-app-icon.png" alt="" /><span><strong>Dr. Carter</strong><small>Provider dashboard</small></span>⌄</div>
+          </div>
+        </header>
 
-        <div class="dashboard-actions">
-          <a class="button secondary" href="/demo">Back to entry</a>
-          <a class="button primary" href="/demo/patient">View patient dashboard</a>
+        <div class="exact-grid">
+          <section class="exact-main">
+            <article class="exact-status-card doctor-exact">
+              <div class="exact-status-head">
+                <span class="exact-status-pill purple-pill"><i></i> 3 Active Alerts</span>
+                <span class="priority-text">Care queue: <b>Moderate</b> ⓘ</span>
+              </div>
+              <div class="exact-status-body">
+                <div>
+                  <h2>Maya is stable, but needs symptom follow-up today.</h2>
+                  <p>Materna Watch flagged mild swelling. Blood pressure is stable, but the care team should repeat screening.</p>
+                  <hr />
+                  <small>NEXT STEP</small>
+                  <strong>Call Maya, repeat BP reading, and document the follow-up plan</strong>
+                </div>
+                <div class="exact-check-art doctor-check"><span></span><b>!</b><span></span></div>
+              </div>
+            </article>
+
+            <a class="exact-ask purple-ask" href="/demo/patient">
+              <span>✦</span>
+              <div><strong>Open patient record</strong><p>Review symptoms, vitals, screening, and appointment notes</p></div>
+              <b>›</b>
+            </a>
+
+            <article class="exact-plan">
+              <div class="plan-copy">
+                <h3>▣ Today's provider plan</h3>
+                <p>✓ Call patients with active or missed check-ins</p>
+                <p>✓ Review vitals and Materna Watch screenings</p>
+                <p>✓ Flag transport barriers before appointments</p>
+                <p>✓ Escalate red-priority symptoms immediately</p>
+              </div>
+              <div class="plan-art doctor-plan-art">
+                <div class="doctor-monitor"></div>
+              </div>
+            </article>
+
+            <h3 class="exact-section-title">Priority patients</h3>
+            <section class="exact-tools">
+              <a><i>🤰</i><span><strong>Maya Gurung</strong><p>28 weeks · mild swelling · monitor today.</p></span>›</a>
+              <a><i>📞</i><span><strong>Asha Rai</strong><p>31 weeks · missed weekly check-in.</p></span>›</a>
+              <a><i>🚗</i><span><strong>Lina Tamang</strong><p>24 weeks · transport support requested.</p></span>›</a>
+              <a><i>📅</i><span><strong>Clinic Visits</strong><p>5 visits scheduled across clinic + telehealth.</p></span>›</a>
+            </section>
+          </section>
+
+          <aside class="exact-rail">
+            <article>
+              <h3>Panel summary ⓘ</h3>
+              <div class="progress-row"><div class="progress-circle purple-circle"><strong>12</strong><small>patients</small></div><div><b>3 active alerts</b><p>5 visits today</p><button>View queue</button></div></div>
+            </article>
+            <article>
+              <h3>Quick actions</h3>
+              <a>⊕ Add note ›</a>
+              <a>♡ Review vitals ›</a>
+              <a>◍ Create follow-up ›</a>
+              <a>□ Appointment tracker ›</a>
+            </article>
+            <article class="exact-emergency">
+              <h3>Urgent escalation</h3>
+              <p>Contact the emergency workflow if red-priority symptoms are reported.</p>
+              <button>⚠ Escalate alert</button>
+            </article>
+          </aside>
         </div>
       </section>
     </main>
