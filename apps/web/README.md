@@ -1,8 +1,9 @@
 # Materna Web
 
-This is the production Next.js foundation for Materna. The original Expo
-prototype remains at the repository root and should be used as the visual
-reference while features are ported in phases.
+This is the production Next.js foundation for Materna. It includes the public
+landing page, recruiter-friendly no-account demo flow, and protected
+patient/provider routes. The original Expo implementation remains at the
+repository root as the mobile visual reference.
 
 ## Stack
 
