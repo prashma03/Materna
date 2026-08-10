@@ -7,6 +7,36 @@ import { StatusCard } from "@/components/shared/status-card";
 
 export default function PatientDemoPage() {
   const [symptomLogged, setSymptomLogged] = useState(false);
+  const vitals = symptomLogged
+    ? [
+        ["Blood pressure", "142/92", "Needs review", "text-red-600"],
+        ["Heart rate", "96 bpm", "Elevated", "text-amber-600"],
+        ["Oxygen SpO2", "97%", "Normal", "text-[var(--primary-strong)]"],
+        ["Skin temp", "99.2 F", "Slightly high", "text-amber-600"],
+        ["Respiration", "18/min", "Normal", "text-[var(--primary-strong)]"],
+        ["HRV", "38 ms", "Lower than baseline", "text-amber-600"],
+      ]
+    : [
+        ["Blood pressure", "118/76", "Normal", "text-[var(--primary-strong)]"],
+        ["Heart rate", "78 bpm", "Resting", "text-[var(--primary-strong)]"],
+        ["Oxygen SpO2", "99%", "Normal", "text-[var(--primary-strong)]"],
+        ["Skin temp", "98.4 F", "Normal", "text-[var(--primary-strong)]"],
+        ["Respiration", "15/min", "Normal", "text-[var(--primary-strong)]"],
+        ["HRV", "60 ms", "Baseline", "text-[var(--primary-strong)]"],
+      ];
+  const screeningItems = symptomLogged
+    ? [
+        ["Preeclampsia screen", "Review", "BP trend + headache with vision changes"],
+        ["Fetal movement", "Normal", "Kick count completed this morning"],
+        ["Bleeding screen", "Clear", "No bleeding or spotting reported"],
+        ["Care escalation", "Prepared", "Doctor alert ready for same-day review"],
+      ]
+    : [
+        ["Preeclampsia screen", "Clear", "No headache, vision change, or swelling reported"],
+        ["Fetal movement", "Normal", "Kick count completed this morning"],
+        ["Bleeding screen", "Clear", "No bleeding or spotting reported"],
+        ["Care escalation", "Routine", "No provider alert needed today"],
+      ];
   const risk = symptomLogged
     ? {
         label: "Needs review",
@@ -67,6 +97,83 @@ export default function PatientDemoPage() {
           </section>
 
           <section className="mt-6 rounded-[1.5rem] border border-[var(--border)] bg-white p-6">
+            <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+              <div>
+                <p className="text-sm font-black uppercase tracking-[0.2em] text-[var(--primary-strong)]">
+                  Current vitals
+                </p>
+                <h2 className="mt-2 text-2xl font-black">
+                  Watch screening snapshot
+                </h2>
+              </div>
+              <p className="text-sm font-semibold text-[var(--muted)]">
+                Synced 2 min ago
+              </p>
+            </div>
+            <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+              {vitals.map(([title, value, status, colorClass]) => (
+                <article
+                  className="rounded-2xl border border-[var(--border)] bg-[var(--panel-soft)] p-4"
+                  key={title}
+                >
+                  <p className="text-xs font-bold text-[var(--muted)]">
+                    {title}
+                  </p>
+                  <p className="mt-2 text-2xl font-black">{value}</p>
+                  <p className={`mt-1 text-xs font-black ${colorClass}`}>
+                    {status}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="mt-6 rounded-[1.5rem] border border-[var(--border)] bg-white p-6">
+            <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+              <div>
+                <p className="text-sm font-black uppercase tracking-[0.2em] text-[var(--primary-strong)]">
+                  Maternal screening
+                </p>
+                <h2 className="mt-2 text-2xl font-black">
+                  Early-risk checklist
+                </h2>
+              </div>
+              <span
+                className="rounded-full px-3 py-1 text-xs font-black text-white"
+                style={{ backgroundColor: risk.color }}
+              >
+                {risk.label}
+              </span>
+            </div>
+            <div className="mt-5 grid gap-3 md:grid-cols-2">
+              {screeningItems.map(([title, status, detail]) => (
+                <article
+                  className="rounded-2xl border border-[var(--border)] p-4"
+                  key={title}
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <h3 className="font-black">{title}</h3>
+                      <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
+                        {detail}
+                      </p>
+                    </div>
+                    <span
+                      className={`rounded-full px-3 py-1 text-xs font-black ${
+                        status === "Review" || status === "Prepared"
+                          ? "bg-red-50 text-red-600"
+                          : "bg-[var(--primary-soft)] text-[var(--primary-strong)]"
+                      }`}
+                    >
+                      {status}
+                    </span>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="mt-6 rounded-[1.5rem] border border-[var(--border)] bg-white p-6">
             <h2 className="text-2xl font-black">Today&apos;s care plan</h2>
             <div className="mt-5 grid gap-3">
               {[
@@ -111,6 +218,38 @@ export default function PatientDemoPage() {
 
         <aside className="space-y-6">
           <div className="rounded-[1.5rem] border border-[var(--border)] bg-white p-6">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-black">Materna Watch</h2>
+              <span className="rounded-full bg-[var(--primary-soft)] px-3 py-1 text-xs font-black text-[var(--primary-strong)]">
+                Connected
+              </span>
+            </div>
+            <div className="mt-5 rounded-[2rem] border border-[var(--border)] bg-[#0f172a] p-5 text-white">
+              <div className="mx-auto flex size-36 flex-col items-center justify-center rounded-[2rem] border-4 border-slate-700 bg-slate-950 text-center shadow-inner">
+                <p className="text-xs font-black uppercase tracking-[0.18em] text-emerald-300">
+                  Materna
+                </p>
+                <p className="mt-3 text-3xl font-black">
+                  {symptomLogged ? "Review" : "Stable"}
+                </p>
+                <p className="mt-2 text-xs text-slate-300">
+                  Battery 84%
+                </p>
+              </div>
+            </div>
+            <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
+              <div className="rounded-xl bg-[var(--panel-soft)] p-3">
+                <p className="font-black">Fall screen</p>
+                <p className="mt-1 text-xs text-[var(--muted)]">No fall detected</p>
+              </div>
+              <div className="rounded-xl bg-[var(--panel-soft)] p-3">
+                <p className="font-black">Motion</p>
+                <p className="mt-1 text-xs text-[var(--muted)]">Normal activity</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-[1.5rem] border border-[var(--border)] bg-white p-6">
             <h2 className="text-xl font-black">Pregnancy progress</h2>
             <div className="mt-5 flex items-center gap-5">
               <div className="flex size-28 items-center justify-center rounded-full border-[10px] border-[var(--primary)]">
@@ -125,6 +264,25 @@ export default function PatientDemoPage() {
                   12 weeks to go
                 </p>
               </div>
+            </div>
+          </div>
+
+          <div className="rounded-[1.5rem] border border-[var(--border)] bg-white p-6">
+            <h2 className="text-xl font-black">Recent screening</h2>
+            <div className="mt-4 space-y-4">
+              {[
+                ["8:12 AM", "Watch synced vitals"],
+                ["8:15 AM", symptomLogged ? "Symptom logged: headache + vision changes" : "Kick count completed"],
+                ["8:16 AM", symptomLogged ? "Provider alert prepared" : "Daily screen marked routine"],
+              ].map(([time, event]) => (
+                <div className="flex gap-3" key={`${time}-${event}`}>
+                  <div className="mt-1 size-2 rounded-full bg-[var(--primary)]" />
+                  <div>
+                    <p className="text-xs font-black text-[var(--muted)]">{time}</p>
+                    <p className="text-sm font-semibold">{event}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
