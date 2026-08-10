@@ -5,6 +5,8 @@ landing page, recruiter-friendly no-account demo flow, and protected
 patient/provider routes. The original Expo implementation remains at the
 repository root as the mobile visual reference.
 
+Vercel production root directory: `apps/web`.
+
 ## Stack
 
 - Next.js App Router
