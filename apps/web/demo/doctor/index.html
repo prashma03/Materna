@@ -14,12 +14,12 @@
           <span><strong>MATERNA</strong><small>Provider care workspace</small></span>
         </a>
         <nav class="exact-nav">
-          <a class="active" href="/demo/doctor">⌂ Dashboard</a>
-          <a>👥 Patients</a>
-          <a>🔔 Alerts</a>
-          <a>□ Appointments</a>
-          <a>◇ Reports</a>
-          <a>⚙ Settings</a>
+          <a class="active" href="/demo/doctor"><span class="nav-ico">H</span> Dashboard</a>
+          <a><span class="nav-ico">P</span> Patients</a>
+          <a><span class="nav-ico">A</span> Alerts</a>
+          <a><span class="nav-ico">V</span> Vitals Review</a>
+          <a><span class="nav-ico">R</span> Reports</a>
+          <a><span class="nav-ico">S</span> Settings</a>
         </nav>
         <section class="exact-help">
           <strong>Rural care queue</strong>
@@ -36,9 +36,9 @@
             <p>Your rural maternal care panel has 3 follow-ups today.</p>
           </div>
           <div class="exact-top-actions">
-            <button>☾ Dark</button>
-            <div class="bell">🔔<b>3</b></div>
-            <div class="profile"><img src="/materna-app-icon.png" alt="" /><span><strong>Dr. Carter</strong><small>Provider dashboard</small></span>⌄</div>
+            <button>Dark</button>
+            <div class="bell">3<b>!</b></div>
+            <div class="profile"><img src="/materna-app-icon.png" alt="" /><span><strong>Dr. Carter</strong><small>Provider dashboard</small></span></div>
           </div>
         </header>
 
@@ -47,7 +47,7 @@
             <article class="exact-status-card doctor-exact">
               <div class="exact-status-head">
                 <span class="exact-status-pill purple-pill"><i></i> 3 Active Alerts</span>
-                <span class="priority-text">Care queue: <b>Moderate</b> ⓘ</span>
+                <span class="priority-text">Care queue: <b>Moderate</b></span>
               </div>
               <div class="exact-status-body">
                 <div>
@@ -59,52 +59,87 @@
                 </div>
                 <div class="exact-check-art doctor-check"><span></span><b>!</b><span></span></div>
               </div>
+
+              <section class="vitals-strip doctor-vitals">
+                <div class="vital-tile">
+                  <small>Panel alerts</small>
+                  <strong>3</strong>
+                  <span>active</span>
+                </div>
+                <div class="ecg-card">
+                  <div><small>Alert trend</small><b>One patient needs follow-up</b></div>
+                  <svg viewBox="0 0 320 86" aria-label="alert trend line">
+                    <polyline points="0,54 28,54 44,38 60,58 78,50 102,50 120,24 139,66 158,49 178,49 196,44 214,52 236,52 252,31 270,61 292,49 320,49" />
+                  </svg>
+                </div>
+                <div class="vital-tile">
+                  <small>Avg BP</small>
+                  <strong>121/78</strong>
+                  <span>panel</span>
+                </div>
+              </section>
             </article>
 
             <a class="exact-ask purple-ask" href="/demo/patient">
-              <span>✦</span>
+              <span>*</span>
               <div><strong>Open patient record</strong><p>Review symptoms, vitals, screening, and appointment notes</p></div>
-              <b>›</b>
+              <b>&rsaquo;</b>
             </a>
 
             <article class="exact-plan">
               <div class="plan-copy">
-                <h3>▣ Today's provider plan</h3>
-                <p>✓ Call patients with active or missed check-ins</p>
-                <p>✓ Review vitals and Materna Watch screenings</p>
-                <p>✓ Flag transport barriers before appointments</p>
-                <p>✓ Escalate red-priority symptoms immediately</p>
+                <h3>Today's provider plan</h3>
+                <p>&#10003; Call patients with active or missed check-ins</p>
+                <p>&#10003; Review vitals and Materna Watch screenings</p>
+                <p>&#10003; Flag transport barriers before appointments</p>
+                <p>&#10003; Escalate red-priority symptoms immediately</p>
               </div>
               <div class="plan-art doctor-plan-art">
                 <div class="doctor-monitor"></div>
               </div>
             </article>
 
+            <article class="watch-panel doctor-watch-panel">
+              <div class="watch-panel-head">
+                <span class="watch-face purple-watch"><i></i></span>
+                <div>
+                  <h3>Incoming patient screening</h3>
+                  <p>Maya's latest Materna Watch check-in is ready for review.</p>
+                </div>
+              </div>
+              <div class="watch-results">
+                <span><b></b>Heart rate normal</span>
+                <span><b></b>Blood pressure stable</span>
+                <span class="watch-caution"><b></b>Mild swelling reported</span>
+                <span class="watch-alert"><b></b>Repeat screening today</span>
+              </div>
+            </article>
+
             <h3 class="exact-section-title">Priority patients</h3>
             <section class="exact-tools">
-              <a><i>🤰</i><span><strong>Maya Gurung</strong><p>28 weeks · mild swelling · monitor today.</p></span>›</a>
-              <a><i>📞</i><span><strong>Asha Rai</strong><p>31 weeks · missed weekly check-in.</p></span>›</a>
-              <a><i>🚗</i><span><strong>Lina Tamang</strong><p>24 weeks · transport support requested.</p></span>›</a>
-              <a><i>📅</i><span><strong>Clinic Visits</strong><p>5 visits scheduled across clinic + telehealth.</p></span>›</a>
+              <a><i>MAYA</i><span><strong>Maya Gurung</strong><p>28 weeks - mild swelling - monitor today.</p></span>&rsaquo;</a>
+              <a><i>CALL</i><span><strong>Asha Rai</strong><p>31 weeks - missed weekly check-in.</p></span>&rsaquo;</a>
+              <a><i>RIDE</i><span><strong>Lina Tamang</strong><p>24 weeks - transport support requested.</p></span>&rsaquo;</a>
+              <a><i>VISIT</i><span><strong>Clinic Visits</strong><p>5 visits scheduled across clinic and telehealth.</p></span>&rsaquo;</a>
             </section>
           </section>
 
           <aside class="exact-rail">
             <article>
-              <h3>Panel summary ⓘ</h3>
+              <h3>Panel summary</h3>
               <div class="progress-row"><div class="progress-circle purple-circle"><strong>12</strong><small>patients</small></div><div><b>3 active alerts</b><p>5 visits today</p><button>View queue</button></div></div>
             </article>
             <article>
               <h3>Quick actions</h3>
-              <a>⊕ Add note ›</a>
-              <a>♡ Review vitals ›</a>
-              <a>◍ Create follow-up ›</a>
-              <a>□ Appointment tracker ›</a>
+              <a>Add note &rsaquo;</a>
+              <a>Review vitals &rsaquo;</a>
+              <a>Create follow-up &rsaquo;</a>
+              <a>Appointment tracker &rsaquo;</a>
             </article>
             <article class="exact-emergency">
               <h3>Urgent escalation</h3>
               <p>Contact the emergency workflow if red-priority symptoms are reported.</p>
-              <button>⚠ Escalate alert</button>
+              <button class="big-emergency-button"><span class="alert-mark">!</span> Escalate alert</button>
             </article>
           </aside>
         </div>
