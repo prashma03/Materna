@@ -6,13 +6,13 @@
     <title>Materna Patient Dashboard</title>
     <link rel="stylesheet" href="/demo-style.css" />
   </head>
-  <body class="exact-body">
+  <body class="exact-body wellness-body">
     <main class="mobile-health-app">
       <section class="mobile-health-screen">
         <header class="mobile-health-top">
-          <div class="bracelet-row"><span></span> Bracelet connected · 2 min ago</div>
+          <div class="bracelet-row"><span></span> Bracelet connected &middot; 2 min ago</div>
           <div class="mobile-brand-row">
-            <div><span class="brand-dot"></span><strong>MATERNA</strong><small>Maya · Week 28</small></div>
+            <div><span class="brand-dot"></span><strong>MATERNA</strong><small>Maya &middot; Week 28</small></div>
             <button>Light</button>
           </div>
           <div class="mobile-risk-dots"><b></b><i></i><i></i></div>
@@ -24,7 +24,7 @@
             <small>AI confidence 97%</small>
           </div>
           <h1>Everything looks healthy.</h1>
-          <p>Materna sees stable vitals in your normal range. Nothing for you to do — keep living your day.</p>
+          <p>Materna sees stable vitals in your normal range. Nothing for you to do &mdash; keep living your day.</p>
           <hr />
           <small>WHAT HAPPENS</small>
           <strong>No action needed</strong>
@@ -36,42 +36,12 @@
         </div>
 
         <section class="mobile-vital-grid">
-          <article>
-            <span></span>
-            <small>Heart rate</small>
-            <strong>77 <em>bpm</em></strong>
-            <div class="mini-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-          </article>
-          <article>
-            <span></span>
-            <small>HRV</small>
-            <strong>60 <em>ms</em></strong>
-            <div class="mini-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-          </article>
-          <article>
-            <span></span>
-            <small>Blood pressure</small>
-            <strong>115/74 <em>mmHg</em></strong>
-            <div class="mini-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-          </article>
-          <article>
-            <span></span>
-            <small>Oxygen SpO2</small>
-            <strong>99 <em>%</em></strong>
-            <div class="mini-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-          </article>
-          <article>
-            <span></span>
-            <small>Skin temp</small>
-            <strong>98.4 <em>°F</em></strong>
-            <div class="mini-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-          </article>
-          <article>
-            <span></span>
-            <small>Respiration</small>
-            <strong>15 <em>/min</em></strong>
-            <div class="mini-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-          </article>
+          <article><span></span><small>Heart rate</small><strong>77 <em>bpm</em></strong><div class="mini-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
+          <article><span></span><small>HRV</small><strong>60 <em>ms</em></strong><div class="mini-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
+          <article><span></span><small>Blood pressure</small><strong>115/74 <em>mmHg</em></strong><div class="mini-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
+          <article><span></span><small>Oxygen SpO2</small><strong>99 <em>%</em></strong><div class="mini-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
+          <article><span></span><small>Skin temp</small><strong>98.4 <em>&#176;F</em></strong><div class="mini-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
+          <article><span></span><small>Respiration</small><strong>15 <em>/min</em></strong><div class="mini-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
         </section>
       </section>
 
@@ -84,173 +54,130 @@
       </nav>
     </main>
 
-    <main class="exact-shell">
-      <aside class="exact-sidebar">
-        <a class="exact-brand" href="/demo/explore">
-          <img src="/materna-app-icon.png" alt="Materna" />
-          <span><strong>MATERNA</strong><small>Care for you. Care for two.</small></span>
-        </a>
-        <nav class="exact-nav">
-          <a class="active" href="/demo/patient"><span class="nav-ico">H</span> Dashboard</a>
-          <a><span class="nav-ico">T</span> Today</a>
-          <a><span class="nav-ico">V</span> Vitals</a>
-          <a><span class="nav-ico">S</span> Symptoms</a>
-          <a><span class="nav-ico">P</span> Care Plan</a>
-          <a><span class="nav-ico">E</span> Emergency</a>
-          <a><span class="nav-ico">W</span> Watch Screening <em>Demo</em></a>
-          <a><span class="nav-ico">R</span> Reports</a>
+    <main class="desktop-wellness-app">
+      <aside class="wellness-sidebar">
+        <a class="wellness-logo" href="/demo/explore"><span class="logo-heart"></span><strong>MATERNA</strong></a>
+        <nav class="wellness-nav">
+          <a class="active"><i class="ico-home"></i>Today</a>
+          <a><i class="ico-heart"></i>Vitals</a>
+          <a href="/demo"><i class="ico-spark"></i>Ask Materna</a>
+          <a><i class="ico-bag"></i>Hospitals</a>
+          <a><i class="ico-calendar"></i>Appointments</a>
+          <a><i class="ico-message"></i>Messages</a>
+          <a><i class="ico-book"></i>Resources</a>
+          <a><i class="ico-user"></i>Profile</a>
         </nav>
-        <section class="exact-help">
-          <strong>Need help?</strong>
-          <p>Materna is here 24/7 to support you.</p>
-          <a href="/demo">Chat with Materna</a>
-          <div class="help-art"><span></span><img src="/materna-app-icon.png" alt="" /><span></span></div>
-        </section>
+        <div class="wellness-sidebar-bottom">
+          <a class="wellness-settings"><i class="ico-gear"></i>Settings</a>
+          <section class="support-card">
+            <span class="support-heart"></span>
+            <strong>You're doing great, Maya.</strong>
+            <p>One day at a time.</p>
+          </section>
+          <section class="bracelet-card">
+            <span></span>
+            <div><strong>Bracelet connected</strong><p>2 min ago</p></div>
+          </section>
+        </div>
       </aside>
 
-      <section class="exact-workspace">
-        <header class="exact-topbar">
+      <section class="wellness-main">
+        <header class="wellness-header">
           <div>
-            <h1>Good morning, Maya</h1>
-            <p>You're doing great! Let's keep you and your baby healthy.</p>
+            <h1>Hello, Maya <span>&#128075;</span></h1>
+            <p>Here's your health overview for today.</p>
           </div>
-          <div class="exact-top-actions">
-            <button>Dark</button>
-            <div class="bell">2<b>!</b></div>
-            <div class="profile"><img src="/materna-app-icon.png" alt="" /><span><strong>Maya Gurung</strong><small>28 weeks pregnant</small></span></div>
+          <div class="wellness-actions">
+            <button class="notify-btn"><span></span></button>
+            <button class="theme-pill"><i></i>Light</button>
+            <button class="profile-pill"><b>M</b><span><strong>Maya</strong><small>Week 28</small></span><i></i></button>
           </div>
         </header>
 
-        <div class="exact-grid">
-          <section class="exact-main">
-            <article class="exact-status-card">
-              <div class="exact-status-head">
-                <span class="exact-status-pill"><i></i> Green Priority</span>
-                <span class="priority-text">Care priority: <b>Green</b></span>
+        <section class="wellness-hero-row">
+          <article class="health-summary-card">
+            <div class="summary-copy">
+              <div class="summary-meta">
+                <span class="clear-badge"><i></i>All clear</span>
+                <small>AI confidence 97%</small>
               </div>
-              <div class="exact-status-body">
-                <div>
-                  <h2>You are stable today. Keep tracking symptoms and hydration.</h2>
-                  <p>Materna Watch has not detected urgent warning signs. Mild swelling is being monitored.</p>
-                  <hr />
-                  <small>NEXT STEP</small>
-                  <strong>Log any new symptoms before the end of the day</strong>
-                </div>
-                <div class="exact-check-art"><span></span><b>&#10003;</b><span></span></div>
-              </div>
+              <h2>Everything looks healthy.</h2>
+              <p>Materna sees stable vitals in your normal range.<br />Nothing for you to do &mdash; keep living your day.</p>
+              <hr />
+              <small class="label">WHAT HAPPENS</small>
+              <strong>No action needed</strong>
+            </div>
+            <div class="shield-art" aria-hidden="true"><span></span><b></b><i></i><em></em></div>
+          </article>
 
-              <section class="vitals-strip">
-                <div class="vital-tile">
-                  <small>Heart rate</small>
-                  <strong>82</strong>
-                  <span>bpm</span>
-                </div>
-                <div class="ecg-card">
-                  <div><small>Live pulse</small><b>Normal rhythm</b></div>
-                  <svg viewBox="0 0 320 86" aria-label="heart rate line">
-                    <polyline points="0,48 32,48 45,47 58,50 73,48 88,48 101,20 116,70 131,48 154,48 169,47 184,50 198,48 213,48 226,22 240,68 255,48 284,48 320,48" />
-                  </svg>
-                </div>
-                <div class="vital-tile">
-                  <small>Blood pressure</small>
-                  <strong>118/76</strong>
-                  <span>stable</span>
-                </div>
-              </section>
-            </article>
+          <article class="pregnancy-card">
+            <div class="pregnancy-top">
+              <span class="mini-mother"></span>
+              <small>Your pregnancy</small>
+            </div>
+            <h3>Week 28</h3>
+            <p>Third Trimester</p>
+            <div class="pregnancy-progress"><span></span></div>
+            <div class="pregnancy-stats"><strong>72%</strong><small>Due date: Nov 12, 2026</small></div>
+          </article>
+        </section>
 
-            <section class="sensor-grid">
-              <article>
-                <span class="sensor-icon watch-icon"></span>
-                <div><strong>Materna Watch</strong><p>Last screening: 9:42 AM</p></div>
-                <b class="sensor-ok">Clear</b>
-              </article>
-              <article>
-                <span class="sensor-icon baby-icon"></span>
-                <div><strong>Baby movement</strong><p>8 kicks logged today</p></div>
-                <b class="sensor-ok">Good</b>
-              </article>
-              <article>
-                <span class="sensor-icon oxygen-icon"></span>
-                <div><strong>Oxygen</strong><p>SpO2 at 98 percent</p></div>
-                <b class="sensor-ok">Normal</b>
-              </article>
+        <section class="wellness-content-grid">
+          <div class="wellness-vitals-area">
+            <div class="section-heading">
+              <h2>What the band is sensing</h2>
+              <a href="/demo">Ask Materna</a>
+            </div>
+            <section class="wellness-vital-grid">
+              <article><span class="dot"></span><small>Heart rate</small><strong>77 <em>bpm</em></strong><div class="wellness-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>Normal <b>60 - 100 bpm</b></p></article>
+              <article><span class="dot"></span><small>HRV</small><strong>60 <em>ms</em></strong><div class="wellness-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>Normal <b>20 - 100 ms</b></p></article>
+              <article><span class="dot"></span><small>Blood pressure</small><strong>115/74 <em>mmHg</em></strong><div class="wellness-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>Normal <b>90/60 - 120/80</b></p></article>
+              <article><span class="dot"></span><small>Oxygen SpO2</small><strong>99 <em>%</em></strong><div class="wellness-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>Normal <b>95 - 100%</b></p></article>
+              <article><span class="dot"></span><small>Skin temp</small><strong>98.4 <em>&#176;F</em></strong><div class="wellness-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>Normal <b>97 - 99.5 &#176;F</b></p></article>
+              <article><span class="dot"></span><small>Respiration</small><strong>15 <em>/min</em></strong><div class="wellness-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>Normal <b>12 - 20 /min</b></p></article>
             </section>
 
-            <a class="exact-ask" href="/demo">
-              <span>*</span>
-              <div><strong>Ask Materna about symptoms</strong><p>Get guidance and answers from Materna</p></div>
-              <b>&rsaquo;</b>
-            </a>
-
-            <article class="exact-plan">
-              <div class="plan-copy">
-                <h3>Today's care plan</h3>
-                <p>&#10003; Log any new symptoms before the end of the day</p>
-                <p>&#10003; Keep profile and pregnancy history updated</p>
-                <p>&#10003; Know your closest hospital before you need it</p>
-                <p>&#10003; Hydrate well and take your prenatal vitamins</p>
+            <section class="quick-check">
+              <h2>Quick check</h2>
+              <div>
+                <a><span></span><strong>Movement</strong><small>Tracked</small></a>
+                <a><span></span><strong>Water intake</strong><small>Good</small></a>
+                <a><span></span><strong>Sleep</strong><small>7h 12m</small></a>
+                <a><span></span><strong>Medications</strong><small>Up to date</small></a>
               </div>
-              <div class="plan-art">
-                <span class="soft-leaf"></span>
-                <div class="mini-mom"><i></i><b></b><em></em><strong></strong></div>
-                <span class="heart">&#9825;</span>
-                <span class="soft-leaf second"></span>
-              </div>
-            </article>
-
-            <article class="watch-panel">
-              <div class="watch-panel-head">
-                <span class="watch-face"><i></i></span>
-                <div>
-                  <h3>Materna Watch screening</h3>
-                  <p>Demo wearable check for common warning signs.</p>
-                </div>
-              </div>
-              <div class="watch-results">
-                <span><b></b>No severe headache</span>
-                <span><b></b>No blurred vision</span>
-                <span><b></b>No heavy bleeding</span>
-                <span class="watch-caution"><b></b>Mild swelling monitored</span>
-              </div>
-            </article>
-
-            <h3 class="exact-section-title">Care tools</h3>
-            <section class="exact-tools">
-              <a><i>CHAT</i><span><strong>Materna care chat</strong><p>Describe symptoms and get safe escalation guidance.</p></span>&rsaquo;</a>
-              <a><i>SOS</i><span><strong>Emergency support</strong><p>Use the red button to notify the linked doctor workflow.</p></span>&rsaquo;</a>
-              <a><i>MAP</i><span><strong>Hospital navigation</strong><p>Find nearby hospitals, emergency care, and county resources.</p></span>&rsaquo;</a>
-              <a><i>PDF</i><span><strong>Profile report</strong><p>Create a patient-approved profile and PDF summary.</p></span>&rsaquo;</a>
             </section>
-          </section>
+          </div>
 
-          <aside class="exact-rail">
-            <article>
-              <h3>Pregnancy progress</h3>
-              <div class="progress-row"><div class="progress-circle"><strong>28</strong><small>weeks</small></div><div><b>3rd trimester</b><p>12 weeks to go!</p><button>View timeline</button></div></div>
+          <aside class="wellness-side-panel">
+            <article class="trends-card">
+              <div class="side-card-head"><div><h2>Trends</h2><p>Last 7 days</p></div><button>All vitals</button></div>
+              <svg viewBox="0 0 360 190" aria-label="vitals trend chart">
+                <path class="grid-line" d="M20 45 H340 M20 95 H340 M20 145 H340" />
+                <path class="trend trend-green" d="M22 126 C58 112 78 128 112 104 S168 88 205 96 S266 124 338 72" />
+                <path class="trend trend-purple" d="M22 94 C62 86 85 101 118 84 S170 65 216 76 S286 91 338 58" />
+                <path class="trend trend-blue" d="M22 142 C72 137 96 126 132 132 S198 154 232 133 S290 106 338 112" />
+                <g class="chart-dots"><circle cx="338" cy="72" r="4"/><circle cx="338" cy="58" r="4"/><circle cx="338" cy="112" r="4"/></g>
+              </svg>
+              <div class="chart-labels"><span>Aug 6</span><span>Today</span></div>
+              <a>View full history &rarr;</a>
             </article>
-            <article>
-              <h3>Quick actions</h3>
-              <a>Add symptom &rsaquo;</a>
-              <a>Log vitals &rsaquo;</a>
-              <a>Medication reminder &rsaquo;</a>
-              <a>Appointment tracker &rsaquo;</a>
+
+            <article class="tip-card">
+              <h2>Today's tip</h2>
+              <p>Stay hydrated, eat balanced, and take short walks. Small steps matter.</p>
+              <a>Learn more</a>
             </article>
-            <article>
-              <h3>Tips for you</h3>
-              <div class="tip-row"><div>"Rest when you can, eat what nourishes you, and trust your body."<small>Stay positive, stay strong.</small></div><span class="plant"></span></div>
-            </article>
-            <article class="exact-emergency">
-              <h3>Emergency alert</h3>
-              <p>In case of emergency, alert your linked doctor immediately.</p>
-              <button class="big-emergency-button"><span class="alert-mark">!</span> Press and hold to alert</button>
-            </article>
-            <article>
-              <h3>Care priority</h3>
-              <div class="chips"><span>Green</span><span>Yellow</span><span>Red</span></div>
+
+            <article class="help-now-card">
+              <h2>Need help now?</h2>
+              <p>If you feel unwell or something feels off, don't wait.</p>
+              <button>Emergency</button>
+              <a>Call local help</a>
             </article>
           </aside>
-        </div>
+        </section>
+
+        <footer class="wellness-disclaimer"><span></span>Materna is for wellness tracking only and not a medical device. <a>Learn more</a></footer>
       </section>
     </main>
   </body>
