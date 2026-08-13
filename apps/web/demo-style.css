@@ -3699,13 +3699,13 @@ p {
 /* Fit the uploaded desktop composition into one viewport */
 @media (min-width: 1280px) {
   .wellness-sidebar {
-    width: 220px;
-    padding: 30px 16px 20px;
+    width: 190px;
+    padding: 24px 13px 16px;
   }
 
   .wellness-logo {
-    font-size: 20px;
-    margin: 0 8px 26px;
+    font-size: 18px;
+    margin: 0 7px 20px;
   }
 
   .logo-heart {
@@ -3719,15 +3719,16 @@ p {
 
   .wellness-nav a,
   .wellness-settings {
-    min-height: 43px;
-    font-size: 13px;
-    gap: 12px;
+    min-height: 37px;
+    font-size: 12px;
+    gap: 10px;
+    border-radius: 10px;
   }
 
   .wellness-nav i,
   .wellness-settings i {
-    width: 18px;
-    height: 18px;
+    width: 15px;
+    height: 15px;
   }
 
   .wellness-sidebar-bottom {
@@ -3735,143 +3736,144 @@ p {
   }
 
   .support-card {
-    min-height: 132px;
-    padding: 15px 13px;
+    min-height: 112px;
+    padding: 12px 11px;
   }
 
   .support-card strong {
-    font-size: 12.5px;
+    font-size: 11px;
   }
 
   .support-card p {
-    font-size: 11px;
-    max-width: 128px;
+    font-size: 9.5px;
+    max-width: 112px;
   }
 
   .support-card a {
-    height: 34px;
-    font-size: 12px;
-    left: 13px;
-    right: 13px;
-    bottom: 13px;
+    height: 29px;
+    font-size: 10.5px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
   }
 
   .support-heart {
-    width: 52px;
-    height: 64px;
-    bottom: 48px;
-    right: 10px;
+    width: 42px;
+    height: 52px;
+    bottom: 40px;
+    right: 8px;
   }
 
   .bracelet-card {
-    padding: 13px;
+    padding: 10px;
   }
 
   .bracelet-card > span {
-    width: 33px;
-    height: 33px;
+    width: 28px;
+    height: 28px;
   }
 
   .bracelet-card strong {
-    font-size: 12.5px;
-  }
-
-  .bracelet-card p {
     font-size: 11px;
   }
 
+  .bracelet-card p {
+    font-size: 9.5px;
+  }
+
   .wellness-main {
-    padding: 30px 38px 18px;
+    padding: 24px 30px 14px;
   }
 
   .wellness-header {
-    margin-bottom: 18px;
+    margin-bottom: 14px;
   }
 
   .wellness-header h1 {
-    font-size: 25px;
+    font-size: 22px;
   }
 
   .wellness-header p {
-    font-size: 14px;
-    margin-top: 8px;
+    font-size: 12.5px;
+    margin-top: 6px;
   }
 
   .notify-btn,
   .theme-pill,
   .profile-pill {
-    min-height: 40px;
-    font-size: 12.5px;
+    min-height: 34px;
+    font-size: 11px;
+    padding: 0 13px;
   }
 
   .profile-pill b {
-    width: 31px;
-    height: 31px;
-    font-size: 16px;
+    width: 27px;
+    height: 27px;
+    font-size: 14px;
   }
 
   .wellness-hero-row {
-    margin-bottom: 18px;
+    margin-bottom: 14px;
   }
 
   .health-summary-card {
-    min-height: 238px;
-    grid-template-columns: minmax(0, 1fr) 225px;
-    padding: 17px 34px 20px 27px;
+    min-height: 190px;
+    grid-template-columns: minmax(0, 1fr) 185px;
+    padding: 14px 28px 16px 24px;
   }
 
   .clear-badge {
-    height: 34px;
-    font-size: 12.5px;
-    padding: 0 14px;
+    height: 29px;
+    font-size: 11px;
+    padding: 0 12px;
   }
 
   .summary-meta small {
-    font-size: 12px;
+    font-size: 11px;
   }
 
   .health-summary-card h2 {
-    font-size: 36px;
-    margin: 28px 0 14px;
+    font-size: 30px;
+    margin: 22px 0 10px;
   }
 
   .health-summary-card p {
-    font-size: 15px;
-    line-height: 1.55;
+    font-size: 12.5px;
+    line-height: 1.5;
   }
 
   .health-summary-card hr {
-    margin: 18px 0 14px;
+    margin: 13px 0 10px;
   }
 
   .health-summary-card .label {
-    font-size: 10px;
-    margin-bottom: 9px;
+    font-size: 8.5px;
+    margin-bottom: 6px;
   }
 
   .health-summary-card strong {
-    font-size: 15px;
+    font-size: 12.5px;
   }
 
   .shield-art span {
-    width: 88px;
-    height: 100px;
+    width: 70px;
+    height: 80px;
   }
 
   .shield-art b {
-    width: 43px;
-    height: 22px;
-    top: 98px;
-    border-width: 7px;
+    width: 34px;
+    height: 18px;
+    top: 82px;
+    border-width: 6px;
   }
 
   .wellness-content-grid {
-    grid-template-columns: minmax(0, 1fr) 320px;
-    gap: 22px;
+    grid-template-columns: minmax(0, 1fr) 285px;
+    gap: 18px;
   }
 
   .section-heading {
-    margin-bottom: 12px;
+    margin-bottom: 9px;
   }
 
   .section-heading h2,
@@ -3879,146 +3881,148 @@ p {
   .trends-card h2,
   .tip-card h2,
   .help-now-card h2 {
-    font-size: 19px;
+    font-size: 16px;
   }
 
   .section-heading a {
-    height: 38px;
-    font-size: 12.5px;
-    padding: 0 18px;
+    height: 32px;
+    font-size: 11px;
+    padding: 0 14px;
   }
 
   .wellness-vital-grid {
-    gap: 14px 18px;
+    gap: 10px 14px;
   }
 
   .wellness-vital-grid article {
-    min-height: 126px;
-    padding: 17px 24px 16px;
+    min-height: 104px;
+    padding: 13px 19px 12px;
   }
 
   .wellness-vital-grid .dot {
-    right: 25px;
-    top: 22px;
-    width: 9px;
-    height: 9px;
+    right: 20px;
+    top: 17px;
+    width: 8px;
+    height: 8px;
   }
 
   .wellness-vital-grid small {
-    font-size: 13px;
+    font-size: 11.5px;
   }
 
   .wellness-vital-grid strong {
-    font-size: 37px;
-    margin-top: 12px;
+    font-size: 30px;
+    margin-top: 8px;
   }
 
   .wellness-vital-grid em {
-    font-size: 13px;
+    font-size: 11px;
   }
 
   .wellness-bars {
-    height: 24px;
-    margin-top: 16px;
-    gap: 7px;
+    height: 18px;
+    margin-top: 12px;
+    gap: 6px;
   }
 
   .wellness-bars i {
-    width: 4px;
+    width: 3.5px;
   }
 
   .wellness-vital-grid p {
-    margin-top: 11px;
-    font-size: 13px;
+    margin-top: 8px;
+    font-size: 11px;
   }
 
   .wellness-vital-grid p b {
-    font-size: 12.5px;
+    font-size: 10.5px;
   }
 
   .trends-card {
-    min-height: 255px;
-    padding: 20px 22px;
+    min-height: 205px;
+    padding: 16px 18px;
   }
 
   .side-card-head p {
-    font-size: 14px;
-    margin-top: 6px;
+    font-size: 12px;
+    margin-top: 4px;
   }
 
   .side-card-head button {
-    font-size: 12px;
-    padding: 8px 11px;
+    font-size: 10px;
+    padding: 6px 9px;
   }
 
   .trends-card svg {
-    width: 342px;
-    margin: 9px 0 0;
+    width: 300px;
+    margin: 4px 0 0;
   }
 
   .chart-labels {
-    font-size: 11px;
-    margin-bottom: 10px;
+    font-size: 9.5px;
+    margin-bottom: 6px;
   }
 
   .trends-card > a {
-    font-size: 14px;
+    font-size: 12px;
   }
 
   .tip-card {
-    min-height: 118px;
-    padding: 18px 22px;
+    min-height: 95px;
+    padding: 14px 18px;
   }
 
   .tip-card p {
-    font-size: 15px;
-    line-height: 1.45;
+    font-size: 12.5px;
+    line-height: 1.38;
+    margin: 6px 0 4px;
   }
 
   .help-now-card {
-    padding: 18px 22px;
+    padding: 14px 18px;
   }
 
   .help-now-card p {
-    font-size: 14px;
-    margin: 8px 0;
+    font-size: 12px;
+    margin: 6px 0;
   }
 
   .help-now-card button {
-    height: 42px;
-  }
-
-  .quick-check {
-    margin-top: 14px;
-    padding: 18px;
-  }
-
-  .quick-check > div {
-    margin-top: 12px;
-    gap: 10px;
-  }
-
-  .quick-check a {
-    padding: 12px;
-  }
-
-  .quick-check a span {
-    width: 15px;
-    height: 15px;
-    margin-bottom: 10px;
-  }
-
-  .quick-check strong {
-    font-size: 13px;
-  }
-
-  .quick-check small {
+    height: 34px;
     font-size: 11px;
   }
 
+  .quick-check {
+    margin-top: 10px;
+    padding: 14px;
+  }
+
+  .quick-check > div {
+    margin-top: 9px;
+    gap: 8px;
+  }
+
+  .quick-check a {
+    padding: 9px;
+  }
+
+  .quick-check a span {
+    width: 12px;
+    height: 12px;
+    margin-bottom: 7px;
+  }
+
+  .quick-check strong {
+    font-size: 11px;
+  }
+
+  .quick-check small {
+    font-size: 9.5px;
+  }
+
   .wellness-disclaimer {
-    margin-top: 12px;
-    font-size: 12.5px;
+    margin-top: 8px;
+    font-size: 10.5px;
   }
 }
 
