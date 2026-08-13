@@ -3349,3 +3349,349 @@ p {
     display: none;
   }
 }
+
+/* Screenshot-match refinements: tighter desktop scale + animated sensing lines */
+@media (min-width: 721px) {
+  .desktop-wellness-app {
+    background:
+      radial-gradient(circle at 78% 0%, rgba(35,83,70,.16), transparent 34%),
+      radial-gradient(circle at 40% 74%, rgba(22,163,74,.055), transparent 30%),
+      #050a0f;
+    font-size: 14px;
+  }
+
+  .wellness-sidebar {
+    width: 262px;
+    padding: 42px 19px 28px;
+  }
+
+  .wellness-logo {
+    font-size: 22px;
+    margin-bottom: 38px;
+  }
+
+  .wellness-nav {
+    gap: 8px;
+  }
+
+  .wellness-nav a,
+  .wellness-settings {
+    min-height: 51px;
+    font-size: 15px;
+    border-radius: 12px;
+    padding: 0 15px;
+  }
+
+  .support-card {
+    min-height: 180px;
+    padding: 20px 16px 16px;
+  }
+
+  .support-card strong {
+    font-size: 14px;
+    line-height: 1.25;
+    max-width: 150px;
+  }
+
+  .support-card p {
+    max-width: 150px;
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .support-card a {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 15px;
+    height: 40px;
+    border-radius: 8px;
+    border: 1px solid #22c55e;
+    color: #22c55e;
+    background: rgba(34,197,94,.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 950;
+  }
+
+  .support-heart {
+    width: 66px;
+    height: 86px;
+    right: 16px;
+    bottom: 56px;
+    border-radius: 22px;
+    opacity: .95;
+    background:
+      radial-gradient(circle at 52% 18%, #f7b87e 0 13%, transparent 14%),
+      radial-gradient(circle at 54% 59%, #22c55e 0 31%, transparent 32%),
+      linear-gradient(140deg, transparent 0 46%, rgba(255,255,255,.08) 47%),
+      #182130;
+  }
+
+  .bracelet-card {
+    padding: 20px 16px;
+  }
+
+  .wellness-main {
+    max-width: none;
+    padding: 44px 46px 28px;
+  }
+
+  .wellness-header {
+    margin-bottom: 24px;
+  }
+
+  .wellness-header h1 {
+    font-size: 28px;
+    letter-spacing: -.035em;
+  }
+
+  .wellness-header p {
+    font-size: 16px;
+    margin-top: 10px;
+  }
+
+  .notify-btn,
+  .theme-pill,
+  .profile-pill {
+    min-height: 46px;
+    font-size: 14px;
+  }
+
+  .wellness-hero-row {
+    display: block;
+    margin-bottom: 28px;
+  }
+
+  .pregnancy-card {
+    display: none;
+  }
+
+  .health-summary-card {
+    min-height: 326px;
+    border-radius: 15px;
+    border-color: #273647;
+    border-left: 3px solid #22c55e;
+    grid-template-columns: minmax(0, 1fr) 260px;
+    padding: 19px 40px 24px 31px;
+    background:
+      radial-gradient(circle at 78% 44%, rgba(34,197,94,.1), transparent 24%),
+      linear-gradient(145deg, rgba(17,24,33,.96), rgba(9,14,21,.98));
+  }
+
+  .clear-badge {
+    height: 39px;
+    padding: 0 17px;
+    font-size: 14px;
+  }
+
+  .summary-meta small {
+    font-size: 13px;
+  }
+
+  .health-summary-card h2 {
+    font-size: 39px;
+    line-height: 1.02;
+    margin: 30px 0 18px;
+  }
+
+  .health-summary-card p {
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  .health-summary-card hr {
+    margin: 25px 0 22px;
+  }
+
+  .health-summary-card .label {
+    font-size: 12px;
+    letter-spacing: .36em;
+  }
+
+  .health-summary-card strong {
+    font-size: 17px;
+  }
+
+  .shield-art span {
+    width: 108px;
+    height: 122px;
+  }
+
+  .shield-art b {
+    width: 54px;
+    height: 28px;
+    top: 128px;
+  }
+
+  .wellness-content-grid {
+    grid-template-columns: minmax(0, 1fr) 353px;
+    gap: 28px;
+  }
+
+  .section-heading {
+    margin-bottom: 20px;
+  }
+
+  .section-heading h2,
+  .quick-check h2,
+  .trends-card h2,
+  .tip-card h2,
+  .help-now-card h2 {
+    font-size: 21px;
+  }
+
+  .section-heading a {
+    height: 44px;
+    padding: 0 21px;
+    font-size: 14px;
+  }
+
+  .wellness-vital-grid {
+    gap: 24px;
+  }
+
+  .wellness-vital-grid article {
+    min-height: 166px;
+    border-radius: 14px;
+    padding: 20px 30px 20px;
+    background:
+      radial-gradient(circle at 86% 12%, rgba(34,197,94,.12), transparent 13%),
+      linear-gradient(145deg, rgba(17,24,33,.97), rgba(10,15,22,.99));
+  }
+
+  .wellness-vital-grid article:first-child {
+    border-color: rgba(34,197,94,.55);
+    box-shadow: 0 0 0 1px rgba(34,197,94,.04), 0 22px 54px rgba(34,197,94,.08);
+  }
+
+  .wellness-vital-grid .dot {
+    right: 35px;
+    top: 27px;
+    width: 11px;
+    height: 11px;
+    box-shadow: 0 0 22px rgba(34,197,94,.7);
+  }
+
+  .wellness-vital-grid small {
+    font-size: 16px;
+    color: #cbd5e1;
+  }
+
+  .wellness-vital-grid strong {
+    margin-top: 18px;
+    font-size: 46px;
+  }
+
+  .wellness-vital-grid em {
+    font-size: 16px;
+    color: #dbeafe;
+  }
+
+  .wellness-vital-grid p {
+    margin-top: 17px;
+    font-size: 16px;
+    align-items: center;
+  }
+
+  .wellness-vital-grid p b {
+    color: #dbeafe;
+    font-size: 15px;
+  }
+
+  .wellness-bars {
+    height: 31px;
+    margin-top: 26px;
+    gap: 9px;
+  }
+
+  .wellness-bars i,
+  .mini-bars i {
+    animation: maternaPulseBars 1.65s ease-in-out infinite;
+    transform-origin: bottom;
+  }
+
+  .wellness-bars i:nth-child(1), .mini-bars i:nth-child(1) { animation-delay: 0s; }
+  .wellness-bars i:nth-child(2), .mini-bars i:nth-child(2) { animation-delay: .12s; }
+  .wellness-bars i:nth-child(3), .mini-bars i:nth-child(3) { animation-delay: .24s; }
+  .wellness-bars i:nth-child(4), .mini-bars i:nth-child(4) { animation-delay: .36s; }
+  .wellness-bars i:nth-child(5), .mini-bars i:nth-child(5) { animation-delay: .48s; }
+  .wellness-bars i:nth-child(6), .mini-bars i:nth-child(6) { animation-delay: .6s; }
+  .wellness-bars i:nth-child(7), .mini-bars i:nth-child(7) { animation-delay: .72s; }
+  .wellness-bars i:nth-child(8) { animation-delay: .84s; }
+
+  .trends-card {
+    min-height: 326px;
+    padding: 26px 27px;
+    overflow: hidden;
+  }
+
+  .trends-card svg {
+    width: 390px;
+    max-width: none;
+    margin: 20px 0 5px;
+    transform: translateX(-3px);
+  }
+
+  .trend {
+    stroke-dasharray: 560;
+    stroke-dashoffset: 560;
+    animation: drawMaternaTrend 2.8s ease-in-out infinite alternate;
+  }
+
+  .trend-purple { animation-delay: .16s; }
+  .trend-blue { animation-delay: .32s; }
+
+  .chart-dots circle {
+    animation: maternaDotGlow 1.8s ease-in-out infinite;
+  }
+
+  .tip-card {
+    min-height: 156px;
+    padding: 29px 27px;
+  }
+
+  .tip-card p {
+    font-size: 19px;
+    line-height: 1.48;
+    margin: 8px 0 5px;
+  }
+
+  .quick-check {
+    margin-top: 28px;
+  }
+
+  .wellness-disclaimer {
+    margin-top: 28px;
+    font-size: 15px;
+  }
+}
+
+@keyframes maternaPulseBars {
+  0%, 100% { transform: scaleY(.58); opacity: .58; }
+  45% { transform: scaleY(1.08); opacity: 1; }
+  70% { transform: scaleY(.82); opacity: .82; }
+}
+
+@keyframes drawMaternaTrend {
+  0% { stroke-dashoffset: 560; }
+  68%, 100% { stroke-dashoffset: 0; }
+}
+
+@keyframes maternaDotGlow {
+  0%, 100% { opacity: .55; transform: scale(.88); }
+  50% { opacity: 1; transform: scale(1.18); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wellness-bars i,
+  .mini-bars i,
+  .trend,
+  .chart-dots circle {
+    animation: none !important;
+  }
+}
