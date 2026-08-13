@@ -3695,3 +3695,464 @@ p {
     animation: none !important;
   }
 }
+
+/* Fit the uploaded desktop composition into one viewport */
+@media (min-width: 1280px) {
+  .wellness-sidebar {
+    width: 220px;
+    padding: 30px 16px 20px;
+  }
+
+  .wellness-logo {
+    font-size: 20px;
+    margin: 0 8px 26px;
+  }
+
+  .logo-heart {
+    width: 28px;
+    height: 26px;
+  }
+
+  .wellness-nav {
+    gap: 5px;
+  }
+
+  .wellness-nav a,
+  .wellness-settings {
+    min-height: 43px;
+    font-size: 13px;
+    gap: 12px;
+  }
+
+  .wellness-nav i,
+  .wellness-settings i {
+    width: 18px;
+    height: 18px;
+  }
+
+  .wellness-sidebar-bottom {
+    gap: 12px;
+  }
+
+  .support-card {
+    min-height: 132px;
+    padding: 15px 13px;
+  }
+
+  .support-card strong {
+    font-size: 12.5px;
+  }
+
+  .support-card p {
+    font-size: 11px;
+    max-width: 128px;
+  }
+
+  .support-card a {
+    height: 34px;
+    font-size: 12px;
+    left: 13px;
+    right: 13px;
+    bottom: 13px;
+  }
+
+  .support-heart {
+    width: 52px;
+    height: 64px;
+    bottom: 48px;
+    right: 10px;
+  }
+
+  .bracelet-card {
+    padding: 13px;
+  }
+
+  .bracelet-card > span {
+    width: 33px;
+    height: 33px;
+  }
+
+  .bracelet-card strong {
+    font-size: 12.5px;
+  }
+
+  .bracelet-card p {
+    font-size: 11px;
+  }
+
+  .wellness-main {
+    padding: 30px 38px 18px;
+  }
+
+  .wellness-header {
+    margin-bottom: 18px;
+  }
+
+  .wellness-header h1 {
+    font-size: 25px;
+  }
+
+  .wellness-header p {
+    font-size: 14px;
+    margin-top: 8px;
+  }
+
+  .notify-btn,
+  .theme-pill,
+  .profile-pill {
+    min-height: 40px;
+    font-size: 12.5px;
+  }
+
+  .profile-pill b {
+    width: 31px;
+    height: 31px;
+    font-size: 16px;
+  }
+
+  .wellness-hero-row {
+    margin-bottom: 18px;
+  }
+
+  .health-summary-card {
+    min-height: 238px;
+    grid-template-columns: minmax(0, 1fr) 225px;
+    padding: 17px 34px 20px 27px;
+  }
+
+  .clear-badge {
+    height: 34px;
+    font-size: 12.5px;
+    padding: 0 14px;
+  }
+
+  .summary-meta small {
+    font-size: 12px;
+  }
+
+  .health-summary-card h2 {
+    font-size: 36px;
+    margin: 28px 0 14px;
+  }
+
+  .health-summary-card p {
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  .health-summary-card hr {
+    margin: 18px 0 14px;
+  }
+
+  .health-summary-card .label {
+    font-size: 10px;
+    margin-bottom: 9px;
+  }
+
+  .health-summary-card strong {
+    font-size: 15px;
+  }
+
+  .shield-art span {
+    width: 88px;
+    height: 100px;
+  }
+
+  .shield-art b {
+    width: 43px;
+    height: 22px;
+    top: 98px;
+    border-width: 7px;
+  }
+
+  .wellness-content-grid {
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 22px;
+  }
+
+  .section-heading {
+    margin-bottom: 12px;
+  }
+
+  .section-heading h2,
+  .quick-check h2,
+  .trends-card h2,
+  .tip-card h2,
+  .help-now-card h2 {
+    font-size: 19px;
+  }
+
+  .section-heading a {
+    height: 38px;
+    font-size: 12.5px;
+    padding: 0 18px;
+  }
+
+  .wellness-vital-grid {
+    gap: 14px 18px;
+  }
+
+  .wellness-vital-grid article {
+    min-height: 126px;
+    padding: 17px 24px 16px;
+  }
+
+  .wellness-vital-grid .dot {
+    right: 25px;
+    top: 22px;
+    width: 9px;
+    height: 9px;
+  }
+
+  .wellness-vital-grid small {
+    font-size: 13px;
+  }
+
+  .wellness-vital-grid strong {
+    font-size: 37px;
+    margin-top: 12px;
+  }
+
+  .wellness-vital-grid em {
+    font-size: 13px;
+  }
+
+  .wellness-bars {
+    height: 24px;
+    margin-top: 16px;
+    gap: 7px;
+  }
+
+  .wellness-bars i {
+    width: 4px;
+  }
+
+  .wellness-vital-grid p {
+    margin-top: 11px;
+    font-size: 13px;
+  }
+
+  .wellness-vital-grid p b {
+    font-size: 12.5px;
+  }
+
+  .trends-card {
+    min-height: 255px;
+    padding: 20px 22px;
+  }
+
+  .side-card-head p {
+    font-size: 14px;
+    margin-top: 6px;
+  }
+
+  .side-card-head button {
+    font-size: 12px;
+    padding: 8px 11px;
+  }
+
+  .trends-card svg {
+    width: 342px;
+    margin: 9px 0 0;
+  }
+
+  .chart-labels {
+    font-size: 11px;
+    margin-bottom: 10px;
+  }
+
+  .trends-card > a {
+    font-size: 14px;
+  }
+
+  .tip-card {
+    min-height: 118px;
+    padding: 18px 22px;
+  }
+
+  .tip-card p {
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  .help-now-card {
+    padding: 18px 22px;
+  }
+
+  .help-now-card p {
+    font-size: 14px;
+    margin: 8px 0;
+  }
+
+  .help-now-card button {
+    height: 42px;
+  }
+
+  .quick-check {
+    margin-top: 14px;
+    padding: 18px;
+  }
+
+  .quick-check > div {
+    margin-top: 12px;
+    gap: 10px;
+  }
+
+  .quick-check a {
+    padding: 12px;
+  }
+
+  .quick-check a span {
+    width: 15px;
+    height: 15px;
+    margin-bottom: 10px;
+  }
+
+  .quick-check strong {
+    font-size: 13px;
+  }
+
+  .quick-check small {
+    font-size: 11px;
+  }
+
+  .wellness-disclaimer {
+    margin-top: 12px;
+    font-size: 12.5px;
+  }
+}
+
+.chat-demo-body {
+  min-height: 100vh;
+  background: #050a0f;
+  color: #f8fafc;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.chat-demo-shell {
+  width: min(430px, calc(100vw - 28px));
+  min-height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 18px 0;
+}
+
+.chat-demo-header {
+  display: grid;
+  grid-template-columns: 38px 1fr 38px;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 0 16px;
+}
+
+.chat-demo-header a,
+.chat-demo-header span {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #111821;
+  border: 1px solid #263647;
+  color: #22c55e;
+  text-decoration: none;
+  font-weight: 950;
+}
+
+.chat-demo-header h1 {
+  margin: 0;
+  color: #22c55e;
+  font-size: 22px;
+}
+
+.chat-demo-header p {
+  margin: 4px 0 0;
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.chat-demo-card {
+  flex: 1;
+  border: 1px solid #263647;
+  background: #0f151d;
+  border-radius: 22px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.message {
+  max-width: 84%;
+  border-radius: 18px;
+  padding: 12px 14px;
+}
+
+.message small {
+  display: block;
+  font-size: 10px;
+  color: #94a3b8;
+  font-weight: 900;
+  margin-bottom: 5px;
+}
+
+.message p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.materna-message {
+  background: #151d27;
+  border: 1px solid #263647;
+}
+
+.user-message {
+  align-self: flex-end;
+  background: #0d3a22;
+  border: 1px solid rgba(34,197,94,.38);
+}
+
+.alert-message {
+  border-color: rgba(245,158,11,.35);
+}
+
+.chat-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 14px 0;
+}
+
+.chat-suggestions a {
+  border: 1px solid #263647;
+  background: #111821;
+  color: #cbd5e1;
+  border-radius: 999px;
+  padding: 8px 11px;
+  font-size: 12px;
+}
+
+.chat-input-demo {
+  display: grid;
+  grid-template-columns: 1fr 72px;
+  gap: 10px;
+}
+
+.chat-input-demo input {
+  min-height: 46px;
+  border-radius: 999px;
+  border: 1px solid #263647;
+  background: #111821;
+  color: #fff;
+  padding: 0 16px;
+}
+
+.chat-input-demo button {
+  border: 0;
+  border-radius: 999px;
+  background: #22c55e;
+  color: #04100a;
+  font-weight: 1000;
+}

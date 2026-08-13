@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ask Materna</title>
+    <link rel="stylesheet" href="/demo-style.css" />
+  </head>
+  <body class="chat-demo-body">
+    <main class="chat-demo-shell">
+      <header class="chat-demo-header">
+        <a href="/demo/patient">&larr;</a>
+        <div>
+          <h1>Ask Materna</h1>
+          <p>Trained maternal health assistant for Maya's demo profile</p>
+        </div>
+        <span>AI</span>
+      </header>
+
+      <section class="chat-demo-card">
+        <article class="message materna-message">
+          <small>Materna</small>
+          <p>Hi Maya! I'm Materna. Tell me how you're feeling or ask me anything about your pregnancy.</p>
+        </article>
+        <article class="message user-message">
+          <small>Maya</small>
+          <p>I have mild swelling in my feet today.</p>
+        </article>
+        <article class="message materna-message alert-message">
+          <small>Materna screening</small>
+          <p>Mild swelling can happen, but sudden swelling in your hands or face, severe headache, blurry vision, chest pain, bleeding, or trouble breathing should be treated as urgent. Your current vitals look stable, so keep monitoring and contact your provider if symptoms change.</p>
+        </article>
+      </section>
+
+      <section class="chat-suggestions">
+        <a>Headache</a>
+        <a>Blurry vision</a>
+        <a>Baby movement</a>
+        <a>Find hospital</a>
+      </section>
+
+      <form class="chat-input-demo">
+        <input placeholder="Describe a symptom or ask a question..." />
+        <button type="button">Send</button>
+      </form>
+    </main>
+  </body>
+</html>
