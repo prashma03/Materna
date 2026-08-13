@@ -32,7 +32,7 @@
 
         <div class="mobile-section-row">
           <h2>What the band is sensing</h2>
-          <a href="/demo">Ask Materna</a>
+          <a href="/demo/chat">Ask Materna</a>
         </div>
 
         <section class="mobile-vital-grid">
@@ -46,11 +46,11 @@
       </section>
 
       <nav class="mobile-bottom-nav">
-        <a class="active"><span></span>Today</a>
-        <a><span></span>Vitals</a>
-        <a class="sos"><span></span></a>
-        <a><span></span>Hospitals</a>
-        <a><span></span>Profile</a>
+        <a class="active" href="/demo/patient"><span></span>Today</a>
+        <a href="/demo/vitals"><span></span>Vitals</a>
+        <a class="sos" href="/demo/emergency"><span></span></a>
+        <a href="/demo/hospitals"><span></span>Hospitals</a>
+        <a href="/demo/profile"><span></span>Profile</a>
       </nav>
     </main>
 
@@ -58,17 +58,17 @@
       <aside class="wellness-sidebar">
         <a class="wellness-logo" href="/demo/explore"><span class="logo-heart"></span><strong>MATERNA</strong></a>
         <nav class="wellness-nav">
-          <a class="active"><i class="ico-home"></i>Today</a>
-          <a><i class="ico-heart"></i>Vitals</a>
+          <a class="active" href="/demo/patient"><i class="ico-home"></i>Today</a>
+          <a href="/demo/vitals"><i class="ico-heart"></i>Vitals</a>
           <a href="/demo/chat"><i class="ico-spark"></i>Ask Materna</a>
-          <a><i class="ico-bag"></i>Hospitals</a>
-          <a><i class="ico-calendar"></i>Appointments</a>
-          <a><i class="ico-message"></i>Messages</a>
-          <a><i class="ico-book"></i>Resources</a>
-          <a><i class="ico-user"></i>Profile</a>
+          <a href="/demo/hospitals"><i class="ico-bag"></i>Hospitals</a>
+          <a href="/demo/appointments"><i class="ico-calendar"></i>Appointments</a>
+          <a href="/demo/messages"><i class="ico-message"></i>Messages</a>
+          <a href="/demo/resources"><i class="ico-book"></i>Resources</a>
+          <a href="/demo/profile"><i class="ico-user"></i>Profile</a>
         </nav>
         <div class="wellness-sidebar-bottom">
-          <a class="wellness-settings"><i class="ico-gear"></i>Settings</a>
+          <a class="wellness-settings" href="/demo/settings"><i class="ico-gear"></i>Settings</a>
           <section class="support-card">
             <span class="support-heart"></span>
             <strong>Need help or have questions?</strong>
@@ -141,10 +141,10 @@
             <section class="quick-check">
               <h2>Quick check</h2>
               <div>
-                <a><span></span><strong>Movement</strong><small>Tracked</small></a>
-                <a><span></span><strong>Water intake</strong><small>Good</small></a>
-                <a><span></span><strong>Sleep</strong><small>7h 12m</small></a>
-                <a><span></span><strong>Medications</strong><small>Up to date</small></a>
+                <a href="/demo/vitals"><span></span><strong>Movement</strong><small>Tracked</small></a>
+                <a href="/demo/vitals"><span></span><strong>Water intake</strong><small>Good</small></a>
+                <a href="/demo/vitals"><span></span><strong>Sleep</strong><small>7h 12m</small></a>
+                <a href="/demo/profile"><span></span><strong>Medications</strong><small>Up to date</small></a>
               </div>
             </section>
           </div>
@@ -160,25 +160,30 @@
                 <g class="chart-dots"><circle cx="338" cy="72" r="4"/><circle cx="338" cy="58" r="4"/><circle cx="338" cy="112" r="4"/></g>
               </svg>
               <div class="chart-labels"><span>Aug 6</span><span>Today</span></div>
-              <a>View full history &rarr;</a>
+              <a href="/demo/vitals">View full history &rarr;</a>
             </article>
 
             <article class="tip-card">
               <h2>Today's tip</h2>
               <p>Stay hydrated, eat balanced, and take short walks. Small steps matter.</p>
-              <a>Learn more</a>
+              <a href="/demo/resources">Learn more</a>
             </article>
 
             <article class="help-now-card">
               <h2>Need help now?</h2>
               <p>If you feel unwell or something feels off, don't wait.</p>
-              <button>Emergency</button>
-              <a>Call local help</a>
+              <button onclick="location.href='/demo/emergency'">Emergency</button>
+              <a href="/demo/hospitals">Call local help</a>
             </article>
           </aside>
         </section>
 
-        <footer class="wellness-disclaimer"><span></span>Materna is for wellness tracking only and not a medical device. <a>Learn more</a></footer>
+        <section class="about-screen-card" id="about">
+          <h2>About this screen</h2>
+          <p>Today summarizes Maya's current bracelet readings, AI confidence, quick check-ins, and help options so a patient can understand her status in seconds.</p>
+        </section>
+
+        <footer class="wellness-disclaimer"><span></span>Materna is for wellness tracking only and not a medical device. <a href="#about">About</a></footer>
       </section>
     </main>
   </body>
